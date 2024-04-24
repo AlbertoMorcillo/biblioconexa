@@ -2,7 +2,7 @@
     <div class="navbar">
       <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
         aria-label="Te lleva al inicio">
-        <img src="../assets/images/corpo/logo.webp" alt="Logo de nuestra biblioteca BiblioConexa" class="rounded-image">
+        <img src="{{ asset('images/corpo/logo.webp') }}" alt="Logo de nuestra biblioteca BiblioConexa" class="rounded-image">
       </a>
 
       <ul class="nav me-auto mb-2 justify-content-center mb-md-0" aria-label="Sección de menú con links de navegación.">

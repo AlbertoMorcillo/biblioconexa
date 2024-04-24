@@ -25,6 +25,5 @@
   @yield('content') <!-- El contenido específico de cada página -->
 </main>
 
-@include('partials.footer') <!-- Incluyes el footer desde otro archivo Blade -->
 </body>
 </html>

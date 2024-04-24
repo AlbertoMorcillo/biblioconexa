@@ -3,7 +3,7 @@
       <!-- Contenedor de logo e información de contacto -->
       <div class="col-lg-3 mb-3 contenedor-logo-contacto">
         <a href="/" class="text-white text-decoration-none">
-          <img src="../assets/images/corpo/logo.webp" alt="Logo de nuestra biblioteca BiblioConexa"
+          <img src="{{ asset('images/corpo/logo.webp') }}" alt="Logo de nuestra biblioteca BiblioConexa"
             class="rounded-image">
         </a>
         <div class="informacion-contacto" aria-label="Sección de contacto">

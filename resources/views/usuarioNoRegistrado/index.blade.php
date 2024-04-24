@@ -13,7 +13,7 @@
 @section('content')
 
 
-<main class="content">
+
     <div class="banner">
         <div class="banner-text">
             <h1 class="logo" aria-label="Nombre de la Biblioteca">BibloConexa</h1>
@@ -30,7 +30,7 @@
             <div class="col">
                 <div class="card shadow-sm">
                     <a href="#" class="link-libros" aria-label="Información del libro que si aprietas te lleva al libro específico.">
-                        <img class="card-img-top" src="../assets/images/libros/sapiens.jpg" alt="Imagen de la portada del libro" width="100%" height="225" />
+                        <img class="card-img-top" src="{{ asset('images/libros/sapiens.jpg') }}" alt="Imagen de la portada del libro" width="100%" height="225" />
                         <div class="card-body">
                             <h5 class="card-title titulo-libro" aria-label="Título del libro">Sapiens: De animales a dioses</h5>
                             <p class="card-text nombre-autor" aria-label="Nombre del autor">Yuval Noah Harari</p>
@@ -49,7 +49,7 @@
             <div class="col">
                 <div class="card shadow-sm">
                     <a href="#" class="link-libros" aria-label="Información del libro que si aprietas te lleva al libro específico.">
-                        <img class="card-img-top" src="../assets/images/libros/murakami.jpg" alt="Imagen de la portada del libro" width="100%" height="225" />
+                        <img class="card-img-top" src="{{ asset('images/libros/murakami.jpg') }}" alt="Imagen de la portada del libro" width="100%" height="225" />
                         <div class="card-body">
                             <h5 class="card-title titulo-libro" aria-label="Título del libro">La ciudad y sus muros inciertos</h5>
                             <p class="card-text nombre-autor" aria-label="Nombre del autor">Haruki Murakami</p>
@@ -68,7 +68,7 @@
             <div class="col">
                 <div class="card shadow-sm">
                     <a href="#" class="link-libros" aria-label="Información del libro que si aprietas te lleva al libro específico.">
-                        <img class="card-img-top" src="../assets/images/libros/yumi.jpg" alt="Imagen de la portada del libro" width="100%" height="225" />
+                        <img class="card-img-top" src="{{ asset('images/libros/yumi.jpg') }}" alt="Imagen de la portada del libro" width="100%" height="225" />
                         <div class="card-body">
                             <h5 class="card-title titulo-libro" aria-label="Título del libro">Yumi y el pintor de pesadillas</h5>
                             <p class="card-text nombre-autor" aria-label="Nombre del autor">Brandon Sanderson</p>
@@ -97,7 +97,7 @@
             <div class="col">
                 <div class="card card-actividad shadow-sm">
                     <a href="#" class="link-libros" aria-label="Información de la actividad que si aprietas te lleva a la actividad específico.">
-                        <img class="card-actividad-img-top" src="../assets/images/actividades/lectura-conjunta-principito.jpg" alt="Imagen de la actividad" />
+                        <img class="card-actividad-img-top" src="{{ asset('images/actividades/lectura-conjunta-principito.jpg') }}" alt="Imagen de la actividad" />
                         <div class="card-actividad-body">
                             <h5 class="titulo-actividad" aria-label="Titulo de la actividad">¡Lectura conjunta de El Principito!</h5>
                             <p class="horario-actividad" aria-label="Horario de la actividad">10:30</p>
@@ -109,7 +109,7 @@
             <div class="col">
                 <div class="card card-actividad shadow-sm">
                     <a href="#" class="link-libros" aria-label="Información de la actividad que si aprietas te lleva a la actividad específico.">
-                        <img class="card-actividad-img-top" src="../assets/images/actividades/recomendaciones-iniciarte-literatura-japonesa.jpg" alt="Imagen de la actividad" />
+                        <img class="card-actividad-img-top" src="{{ asset('images/actividades/recomendaciones-iniciarte-literatura-japonesa.jpg') }}" alt="Imagen de la actividad" />
                         <div class="card-actividad-body">
                             <h5 class="titulo-actividad" aria-label="Titulo de la actividad">¡Introducción a la literatura japonesa!</h5>
                             <p class="horario-actividad" aria-label="Horario de la actividad">15:00</p>
@@ -122,7 +122,7 @@
             <div class="col">
                 <div class="card card-actividad shadow-sm">
                     <a href="#" class="link-libros" aria-label="Información de la actividad que si aprietas te lleva a la actividad específico.">
-                        <img class="card-actividad-img-top" src="../assets/images/actividades/aprende-escribir-libro.jpg" alt="Imagen de la actividad" />
+                        <img class="card-actividad-img-top" src="{{ asset('images/actividades/aprende-escribir-libro.jpg') }}" alt="Imagen de la actividad" />
                         <div class="card-actividad-body">
                             <h5 class="titulo-actividad" aria-label="Titulo de la actividad">¡Aprende a escribir un libro!</h5>
                             <p class="horario-actividad" aria-label="Horario de la actividad">16:00</p>
@@ -147,7 +147,7 @@
             <div class="col">
                 <div class="card card-noticias shadow-sm">
                     <a href="#" class="link-libros" aria-label="Información de la noticia que si aprietas te lleva a la noticia específico.">
-                        <img class="card-actividad-img-top" src="../assets/images/noticias/miguel-unamuno_97.webp" alt="Imagen de la noticia" />
+                        <img class="card-actividad-img-top" src="{{ asset('images/noticias/miguel-unamuno_97.webp') }}" alt="Imagen de la noticia" />
                         <div class="card-actividad-body">
                             <h5 class="titulo-actividad" aria-label="Titulo de la noticia">Manias de escritores</h5>
                             <p class="horario-actividad" aria-label="Horario de la Noticia">10:30</p>
@@ -159,7 +159,7 @@
             <div class="col">
                 <div class="card card-noticias shadow-sm">
                     <a href="#" class="link-libros" aria-label="Información de la noticia que si aprietas te lleva a la noticia específico.">
-                        <img class="card-actividad-img-top" src="../assets/images/noticias/evento.jpg" alt="Imagen de la actividad" />
+                        <img class="card-actividad-img-top" src="{{ asset('images/noticias/evento.jpg') }}" alt="Imagen de la actividad" />
                         <div class="card-actividad-body">
                             <h5 class="titulo-actividad" aria-label="Titulo de la noticia">Los libros más exitosos para los niños</h5>
                             <p class="horario-actividad" aria-label="Horario de la noticia">15:00</p>
@@ -172,7 +172,7 @@
             <div class="col">
                 <div class="card card-noticias shadow-sm">
                     <a href="#" class="link-libros" aria-label="Información de la noticia que si aprietas te lleva a la noticia específico.">
-                        <img class="card-actividad-img-top" src="../assets/images/noticias/Practicarum-Cover-and-Spine--644x300.webp" alt="Imagen de la actividad" />
+                        <img class="card-actividad-img-top" src="{{ asset('images/noticias/Practicarum-Cover-and-Spine--644x300.webp') }}" alt="Imagen de la actividad" />
                         <div class="card-actividad-body">
                             <h5 class="titulo-actividad" aria-label="Titulo de la noticia">¿Libros hechos con piel humana?</h5>
                             <p class="horario-actividad" aria-label="Horario de la noticia">16:00</p>
@@ -189,7 +189,5 @@
         </div>
     </section>
     <!-- Final de sección de noticias -->
-</main>
 
-@include('partials.footer')
 @endsection

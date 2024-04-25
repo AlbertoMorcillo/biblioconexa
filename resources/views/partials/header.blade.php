@@ -15,8 +15,8 @@
                 <li><a class="dropdown-item" href="/tarjetaPersonal">Tarjeta personal</a></li>
             </ul>
         </li>
-        <a href="/verActividades" class="nav-link">Actividades</a>
-        <a href="/verNoticias" class="nav-link">Noticias</a>
+        <a href="/actividades" class="nav-link">Actividades</a>
+        <a href="/" class="nav-link">Noticias</a>
         <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" id="bibliotecaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Sobre la biblioteca
@@ -26,7 +26,7 @@
                 <li><a class="dropdown-item" href="/horarioCalendario">Horario/Calendario</a></li>
             </ul>
         </li>
-        <a href="/verCatalogo" class="nav-link">Catálogo</a>
+        <a href="/catalogo" class="nav-link">Catálogo</a>
     </ul>
 
       <div class="search-and-buttons">

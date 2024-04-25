@@ -26,8 +26,8 @@
           <div class="col-md-3 seccion-enlace" aria-label="Sección de enlaces de noticias y actividades">
             <h5>Noticias y actividades</h5>
             <ul class="nav flex-column">
-              <li class="nav-item mb-2"><a href="/verNoticias" class="nav-link p-0">Noticias</a></li>
-              <li class="nav-item mb-2"><a href="/verActividades" class="nav-link p-0">Actividades</a></li>
+              <li class="nav-item mb-2"><a href="/noticias" class="nav-link p-0">Noticias</a></li>
+              <li class="nav-item mb-2"><a href="/actividades" class="nav-link p-0">Actividades</a></li>
             </ul>
           </div>
           <div class="col-md-3 seccion-enlace" aria-label="Sección de enlaces de información sobre la biblioteca">
@@ -40,7 +40,7 @@
           <div class="col-md-3 seccion-enlace" aria-label="Sección de enlaces de nuestro catálogo">
             <h5>Catálogo</h5>
             <ul class="nav flex-column">
-              <li class="nav-item mb-2"><a href="/verCatalogo" class="nav-link p-0">Nuestro catálogo</a></li>
+              <li class="nav-item mb-2"><a href="/catalogo" class="nav-link p-0">Nuestro catálogo</a></li>
             </ul>
           </div>
         </div>

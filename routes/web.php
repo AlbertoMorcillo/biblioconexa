@@ -14,9 +14,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('usuarioNoRegistrado.index');
 });
+
+Route::get('/noticias', function () {
+    return view('usuarioNoregistrado.noticias');
+});
+
+Route::get('/actividades', function () {
+    return view('usuarioNoregistrado.actividades');
+});
+
+route::get('/catalogo', function () {
+    return view('usuarioNoregistrado.catalogo');
+});
+
 
 
 Route::get('/dashboard', function () {

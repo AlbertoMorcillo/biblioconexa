@@ -1,6 +1,6 @@
 @extends('layouts.general')
 
-@section('title', 'catalogo')
+@section('title', 'Catálogo')
 
 @section('extra-css')
     <!-- Aquí puedes agregar CSS adicional específico de esta página si es necesario -->

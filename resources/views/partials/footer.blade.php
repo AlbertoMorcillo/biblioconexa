@@ -43,6 +43,12 @@
               <li class="nav-item mb-2"><a href="/catalogo" class="nav-link p-0">Nuestro catálogo</a></li>
             </ul>
           </div>
+          <div class="col-md-3 seccion-enlace" aria-label="Sección de enlaces de nuestros servicios">
+            <h5>Servicios</h5>
+            <ul class="nav flex-column">
+              <li class="nav-item mb-2"><a href="/tarjetaPersonal" class="nav-link p-0">Tarjeta personal</a></li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

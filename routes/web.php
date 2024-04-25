@@ -31,7 +31,17 @@ route::get('/catalogo', function () {
     return view('usuarioNoregistrado.catalogo');
 });
 
+route::get('sobreNosotros', function () {
+    return view('usuarioNoregistrado.sobreNosotros');
+});
 
+route::get('tarjetaPersonal', function () {
+    return view('usuarioNoregistrado.tarjetaPersonal');
+});
+
+route::get('horarioCalendario', function () {
+    return view('usuarioNoregistrado.horarioCalendario');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

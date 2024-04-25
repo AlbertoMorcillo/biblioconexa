@@ -13,6 +13,7 @@ class User extends Authenticatable
 
     // Indica la clave primaria y desactiva los incrementos automáticos
     protected $primaryKey = 'dni';
+    
     public $incrementing = false;
     // Indica que la clave primaria es una cadena y no un número
     protected $keyType = 'string';

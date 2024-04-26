@@ -1,0 +1,629 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
+
+/* Establece reglas generales para el body */
+html {
+    font-size: 1rem; 
+    box-sizing: border-box; 
+}
+
+body {
+    font-family: 'Merriweather', serif;
+    color: #333333; 
+    background-color: #F5F5DC;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Estilos para la tipografía Lato */
+.lato-thin { font-weight: 100; }
+.lato-light { font-weight: 300; }
+.lato-regular { font-weight: 400; }
+.lato-bold { font-weight: 700; }
+.lato-black { font-weight: 900; }
+.lato-thin-italic { font-weight: 100; font-style: italic; }
+.lato-light-italic { font-weight: 300; font-style: italic; }
+.lato-regular-italic { font-weight: 400; font-style: italic; }
+.lato-bold-italic { font-weight: 700; font-style: italic; }
+.lato-black-italic { font-weight: 900; font-style: italic; }
+
+.content {
+    flex: 1 0 auto; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 2rem;
+}
+/* Especifica las reglas para los encabezados, por ejemplo */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Lato', sans-serif; 
+    color: #204051; 
+    font-weight: bolder;
+}
+
+/* Estilo para el logo */
+.banner {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    background-color: #607D8B; 
+    padding: 0;
+  }
+  
+  .banner-image img {
+    max-width: 20.625rem;
+    max-height: 17.3125rem;
+    padding: 0;
+}
+@media (max-width: 800px) {
+    .banner-image img {
+        max-width: 12rem; /* Ajusta estos valores según tus necesidades */
+        max-height: 8.5rem;
+    }
+}
+  
+.logo {
+    color: #0A2331;
+    font-family: 'Nunito', sans-serif;
+    font-size: 4rem; /* Ajusta este valor según tus necesidades */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    padding-left: 9.93rem; 
+}
+
+@media (max-width: 900px) {
+    .logo {
+        font-size: 1.5rem; /* Tamaño de fuente mínimo */
+    }
+}
+
+.banner-logo {
+    background-color: #607D8B!important;
+    border-radius: 0 !important;
+}
+
+
+/* Estilo del header */
+header {
+    background-color: #204051;
+    height: 8.875rem; 
+    padding: 0.625rem 0; 
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+header .nav-link:hover {
+    color: #000;
+    background-color: #fffcfc;
+    padding: 0.5rem;
+    border-radius: 0.25rem; 
+}
+
+/* Estilo para el footer */
+
+footer {
+    background-color: #607D8B;
+    min-height: 15.25rem;
+    padding: 0.625rem 0; 
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-shrink: 0;
+    margin-top: 1rem;
+}
+
+
+  footer .contenedor-logo-contacto {
+    display: flex;
+    align-items: center;
+
+  }
+  
+  /* Estilos para la imagen del logo */
+  footer .contenedor-logo-contacto .rounded-image {
+    margin-right: 1rem; 
+  }
+  
+  /* Estilos para la información de contacto */
+  footer .informacion-contacto {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+  }
+  
+  /* Contenedor para las secciones de enlaces, alineado a la derecha */
+  footer .secciones-enlaces {
+    display: flex;
+    justify-content: flex-end; 
+    padding-left: 19rem;
+  }
+  
+  /* Estilos para secciones de enlaces individuales */
+
+  footer .nav-link {
+    color: #000000; 
+    padding: .5rem;
+    text-decoration: none;
+}
+  /* Asegúrate de que no haya margen en los elementos dentro del footer */
+  footer .row, footer .col {
+    margin-right: 0;
+  }
+  
+
+footer p, footer a, footer ul {
+    font-weight: 100;
+    color: #000000;
+}
+
+/* Para los títulos de las secciones dentro del footer */
+footer h5 {
+    color: #000000; 
+    font-weight:bolder; 
+    text-decoration: underline;
+}
+
+/* Para el texto en el footer que no son enlaces */
+footer p {
+    color: #000000; 
+    font-size: 0.8em; 
+    text-align: center;
+}
+.navbar {
+    width: 100%; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-link {
+    color: #ffffff; /* Color de tus enlaces */
+    text-decoration: none;
+    padding-right: 8px;
+    padding-left: 8px;
+}
+
+.nav-link:hover {
+    color: #F5F5DC; /* Un color claro sobre el fondo oscuro para más contraste */
+    background-color: #16384c; 
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+
+
+
+/* Estilo principal para los botones */
+.button, .secondary-button {
+    background-color: #228B22; 
+    color: rgb(0, 0, 0); 
+    border: none;
+    padding: 0.625rem 1.25rem; 
+    font-family: 'Lato', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 1rem;
+}
+
+/* Sobreescribe el color de fondo para botones secundarios */
+.secondary-button {
+    background-color: #607D8B;
+}
+
+/* Efectos hover para botones */
+.button:hover, .secondary-button:hover {
+    opacity: 0.8; 
+}
+
+.button:hover {
+    background-color: #1e7e1e;
+}
+
+.secondary-button:hover {
+    background-color: #506f7b; 
+}
+
+/* Estilo para botones de acción como 'Eliminar' */
+.danger-button {
+    background-color: #8B2222; 
+    color: white; 
+    transition: background-color 0.3s ease;
+}
+
+.danger-button:hover {
+    background-color: #7a1c1c; 
+}
+
+
+/* Modal background */
+.modal-background {
+    background-color: #DAA520; /* Color de fondo para los modales */
+}
+
+/* Cards de actividades */
+.activity-card {
+    background-color: #D1D1D1; 
+
+}
+
+/* Cards de novedades y libros específicos */
+.book-card {
+    background-color: #A9D8B8; 
+}
+
+/* Cards de noticias */
+.news-card {
+    background-color: #7EC8E3; 
+}
+
+/* Ajustes adicionales para mejorar la accesibilidad y la estética */
+a:hover,
+button:hover,
+.secondary-button:hover,
+.danger-button:hover {
+    opacity: 0.8; /* Efecto para cuando el mouse pasa sobre los elementos */
+}
+
+/* Hover*/
+button:hover, .button:hover {
+    background-color: #3ac43a; 
+    font-weight: bolder;
+}
+
+/* Efectos hover para botones secundarios */
+.secondary-button:hover {
+    background-color: #77a5b7; 
+    font-weight: bolder;
+}
+
+/* Efectos hover para botones de peligro/eliminar */
+.danger-button:hover {
+    background-color: #7a1c1c; 
+}
+
+.rounded-image {
+    border-radius: 50%;
+    width: 6.25rem;
+    height: 6.25rem;
+}
+
+.header .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.header .search-and-buttons {
+    display: flex;
+    gap: 1rem; 
+    align-items: center;
+}
+
+.header .search-and-buttons .form-control {
+    margin-right: 0.5rem; 
+}
+
+/* Estilos para el contenido principal */
+.seccion-titulo {
+    font-size: 2rem; /* 32px */
+    color: #204051;
+    display: flex;
+    justify-content: center;
+    margin-top:3.5rem;
+    margin-bottom: 3.5rem;
+    font-weight: bolder;
+}
+
+/*Si el titulo esta dentro de otro contenedor
+.contenedor-titulo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.seccion-titulo {
+    font-size: 2rem;
+    color: #204051;
+}*/
+
+.card {
+    width: 332px;
+    height: 613px;
+    margin-right:3.5rem ;
+    margin-bottom: 3.5rem;
+    display: flex;
+    flex-direction: column; 
+    overflow: hidden;
+    gap: 86px;
+    transition: transform 0.3s ease; 
+    background-color: #A9D8B8;
+}
+
+.card:hover {
+    transform: scale(1.1); 
+}
+
+
+.card-img-top {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    margin: 0;
+    margin-bottom: 5px;
+    min-height: 229px;
+}
+
+.card-body {
+    padding: 1rem; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-text {
+    margin: 0.5rem 0;
+    line-height: 1.5; 
+    font-size: 1rem; 
+    text-align: center;
+}
+
+.btn-group {
+    align-self: center; 
+}
+
+.card-title {
+    margin: 0;
+    padding-top: 0.5rem; /* Ajusta según la necesidad para posicionar el título más arriba */
+    text-align: center; /* Centra el título */
+    font-size: 1.5rem; /* Ajusta el tamaño del texto del título */
+    font-weight: bolder; /* Añade negrita al título */
+    color: #204051;
+
+}
+  .link-libros {
+    text-decoration: none; 
+    color: inherit;
+}
+
+.link-libros:hover {
+    opacity: 1; 
+}
+
+.botonDirigir {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+/* Estilos para las tarjetas de actividades */
+.card-actividad {
+    width: 314px; 
+    height: 413px; 
+    margin-right: 3.5rem;
+    margin-bottom: 3.5rem; /* Espacio debajo de cada tarjeta */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: #D1D1D1; /* Color de fondo de la tarjeta */
+}
+
+.card-actividad-img-top {
+    width: 100%;
+    height: auto; /* La altura se ajustará para mantener la proporción de la imagen */
+    object-fit: cover; /* Mantiene las proporciones de la imagen */
+    margin-bottom: 5px;
+    min-height: 190px;
+}
+
+.card-actividad-body {
+    padding: 1rem; /* Espaciado interior */
+    display: flex;
+    flex-direction: column;
+}
+
+.titulo-actividad, .horario-actividad, .sala-actividad {
+    text-align: center; /* Centra el texto */
+}
+
+.titulo-actividad {
+    font-size: 1.5rem; 
+    margin-bottom: 0.25rem; 
+}
+
+.horario-actividad, .sala-actividad {
+    font-size: 1rem; 
+    color: #333; 
+}
+
+/* Estilos adicionales para la sección de actividades */
+.seccion-actividades {
+    padding: 2rem; 
+    background-color: #f5f5dc;
+}
+
+
+/* Estilos para la sección de novedades */
+.card-noticias {
+    width: 314px; 
+    height: 413px; 
+    margin-right: 3.5rem;
+    margin-bottom: 3.5rem; /* Espacio debajo de cada tarjeta */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: #7EC8E3; /* Color de fondo de la tarjeta */
+}
+
+/*Estilos para login y registro*/
+.form-signin {
+    max-width: 330px;
+    padding: 1rem;
+}
+
+/*Estilos logos redes sociales*/
+
+.google-logo {
+    width: 20px; 
+    height: 20px; 
+    margin-right: 10px; /* Espaciado entre el logo y el texto */
+}
+.btn-google {
+    background-color: #ffffff; 
+    color: #5f6368; 
+    border: 1px solid #dadce0; 
+    display: inline-flex; /* Alinea el contenido del botón en línea */
+    align-items: center; 
+    justify-content: center; 
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    transition: background-color 0.2s, box-shadow 0.2s; /* Transiciones suaves para efectos hover */
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302), 0 2px 6px 2px rgba(60,64,67,0.149); /* Sombra sutil para darle profundidad */
+}
+
+.btn-google:hover {
+    background-color: #bbcce9; 
+    box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302), 0 2px 6px 2px rgba(60,64,67,0.149);
+}
+
+
+/* Estilos para el formulario de registro */
+.error-text, .email-error, .password-error, .passwordRepetida-error{
+    color: red;
+    font-size: 0.8em;
+    font-weight: bolder;
+}
+
+/* Estilos para el catálogo */
+.catalog-section {
+    width: 100%;
+    max-width: 600px; 
+    text-align: center;
+}
+
+
+.search-button {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    outline: none;
+}
+
+.search-button:hover {
+    background-color: #16384c; 
+    border-radius: 0.25rem;
+}
+.search-bar {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #f0f0f0;
+    border-radius: 50px;
+}
+
+.search-input {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    margin-right: 0.5rem; 
+    outline: none;
+}
+
+.search-instructions {
+    font-size: 0.8rem; 
+    color: #6c757d; 
+    text-align: center;
+    margin-top: 0.5rem; 
+}
+
+/* Estilos para la paginación */
+
+.pagination-custom .page-link {
+    background-color: #34568B;
+    color: white;
+}
+
+.pagination-custom .page-item.active .page-link {
+    background-color: #747180;
+    border-color: #23395d;
+    color: black;
+}
+
+.pagination-custom .page-link:hover {
+    background-color: #23395d;
+}
+
+/*Estilos para filtrado*/
+.filter-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Estilos para la etiqueta del filtro de ordenación */
+.filter-label {
+    margin-right: 0.5rem;
+}
+
+/* Estilos para el select del filtro de ordenación */
+.filter-select {
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+/* Estilos para el Modal */
+.modal-content {
+    background-color: #DAA520;
+    border-radius: 1.5rem;
+}
+
+.form-check-input {
+    background-color: #ffdd57; 
+    border-color: #ffdd57; 
+  }
+  
+  .form-check-label {
+    margin-right: 10px; 
+    color: rgb(0, 0, 0); 
+  }
+  
+  /* Personalizar los radio buttons cuando están seleccionados */
+  .form-check-input:checked {
+    background-color: #000000; 
+    border-color: #ffc107; 
+    color:#000000;
+  }
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%; /* O el ancho que prefieras */
+  box-sizing: border-box; /* Asegúrate de que padding y border no afecten el ancho */
+}
+
+.invalid-feedback {
+    min-height: 20px;
+    display: flex;
+    align-items: center;
+  }
+
+  #dni.form-control {
+    display: inline-block; /* O simplemente quitar el display: block; */
+    width: auto; /* O establecer un ancho fijo si prefieres */
+  }

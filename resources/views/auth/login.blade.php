@@ -1,47 +1,65 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('layouts.general')
 
-    <form method="POST" action="{{ route('login') }}">
+@section('title', 'Login')
+
+@section('extra-css')
+    <!-- Aquí puedes agregar CSS adicional específico de esta página si es necesario -->
+@endsection
+
+@section('extra-js')
+    <!-- Aquí puedes agregar JS adicional específico de esta página si es necesario -->
+@endsection
+
+@section('content')
+
+    <x-auth-session-status class="mb-4" :status="session('status')" />
+    <h1 class="my-3 mt-3">Iniciar sesión</h1>
+
+    <form method="POST" action="{{ route('login') }}" novalidate>
         @csrf
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+          <!-- Email Address -->
+          <div class="form-group my-3 mt-3">
+            <label for="email" class="form-label">{{ __('Correo electrónico') }}</label>
+            <input id="email" class="form-control rounded-pill @error('email') is-invalid @enderror" type="email" name="email" value="{{ old('email') }}" required autofocus placeholder="juan@ejemplo.com">
+            @error('email')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div class="form-group my-3 mt-3">
+            <label for="password" class="form-label">{{ __('Contraseña') }}</label>
+            <input id="password" class="form-control rounded-pill @error('password') is-invalid @enderror" type="password" name="password" required autocomplete="current-password" placeholder="********">
+            @error('password')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
 
         <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+        <!-- Quitado porque no estás seguro de implementarlo -->
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+        <button class="btn button w-100 py-2 my-3" type="submit">{{ __('Log in') }}</button>
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+        @if (Route::has('password.request'))
+            <a href="{{ route('password.request') }}" class="mb-3 d-block text-center">¿Has olvidado tu contraseña?</a>
+        @endif
+        <hr>
+        <p class="mt-2 mb-3 text-center">O inicia sesión con</p>
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-google" type="button" aria-label="Botón que te hará iniciar sesión con Google">
+                <img class="google-logo" src="{{ asset('images/logos/google-logo.png') }}" alt="Logo de Google">
+                Iniciar sesión con Google
+            </button>
         </div>
+        <!-- Omitimos el inicio de sesión con Google a menos que esté implementado -->
+
+        <p class="mt-5 mb-3 text-body-secondary">© BiblioConexa 2024</p>
     </form>
-</x-guest-layout>
+
+
+@endsection

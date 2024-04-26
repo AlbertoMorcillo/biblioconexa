@@ -12,6 +12,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+    <script defer src="{{ asset('js/comun.js') }}"></script>
   <link rel="stylesheet" href="{{ asset('build/assets/style.css') }}">
   @yield('extra-css') <!-- Para CSS adicional específico de algunas páginas -->
   @yield('extra-js') <!-- Para JS adicional específico de algunas páginas -->
@@ -19,12 +20,12 @@
 </head>
 <body>
 
-@include('partials.header') <!-- Incluyes el header desde otro archivo Blade -->
+@include('partials.header') <!-- Incluyo el header desde otro archivo Blade -->
 
 <main class="content">
   @yield('content') <!-- El contenido específico de cada página -->
 </main>
-@include('partials.footer') <!-- Incluyes el footer desde otro archivo Blade -->
+@include('partials.footer') <!-- Incluyo el footer desde otro archivo Blade -->
 
 </body>
 </html>

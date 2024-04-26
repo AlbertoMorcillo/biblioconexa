@@ -20,7 +20,7 @@
             <!-- DNI -->
             <div class="mb-3">
                 <label for="dni" class="form-label">{{ __('DNI') }}</label>
-                <input id="dni" type="text" placeholder="12345678E" class="form-control @error('dni') is-invalid @enderror" name="dni" value="{{ old('dni') }}" required autofocus>
+                <input id="dni" type="text" placeholder="12345678E" class="form-control rounded-pill @error('dni') is-invalid @enderror" name="dni" value="{{ old('dni') }}" required autofocus>
                 <div class="invalid-feedback js-error-dni" style="display:none;"></div>
                 @error('dni')
                     <span class="invalid-feedback" role="alert">
@@ -32,7 +32,7 @@
             <!-- Name -->
             <div class="mb-3">
                 <label for="name" class="form-label">{{ __('Nombre') }}</label>
-                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
+                <input id="name" type="text" class="form-control rounded-pill @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
                 <div class="invalid-feedback js-error-name" style="display:none;"></div>
                 @error('name')
                     <span class="invalid-feedback" role="alert">
@@ -44,7 +44,7 @@
             <!-- Email -->
             <div class="mb-3">
                 <label for="email" class="form-label">{{ __('Correo electrónico') }}</label>
-                <input id="email" type="email" placeholder="juan@ejemplo.com" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                <input id="email" type="email" placeholder="juan@ejemplo.com" class="form-control rounded-pill @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
                 <div class="invalid-feedback js-error-email" style="display:none;"></div>
                 @error('email')
                     <span class="invalid-feedback" role="alert">
@@ -56,7 +56,7 @@
             <!-- Password -->
             <div class="mb-3">
                 <label for="password" class="form-label">{{ __('Contraseña') }}</label>
-                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                <input id="password" type="password" class="form-control rounded-pill @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                 <div class="invalid-feedback js-error-password" style="display:none;"></div>
                 @error('password')
                     <span class="invalid-feedback" role="alert">
@@ -68,7 +68,7 @@
             <!-- Confirm Password -->
             <div class="mb-3">
                 <label for="password_confirmation" class="form-label">{{ __('Confirmar contraseña') }}</label>
-                <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                <input id="password_confirmation" type="password" class="form-control rounded-pill" name="password_confirmation" required autocomplete="new-password">
                 <div class="invalid-feedback js-error-password-confirmation" style="display:none;"></div>
             </div>
 

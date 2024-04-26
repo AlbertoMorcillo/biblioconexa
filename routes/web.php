@@ -23,6 +23,7 @@ Route::get('/noticias', function () {
     return view('usuarioNoregistrado.noticias');
 });
 
+
 Route::get('/actividades', function () {
     return view('usuarioNoregistrado.actividades');
 });

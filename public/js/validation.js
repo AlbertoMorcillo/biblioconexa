@@ -60,13 +60,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   
     function showError(input, message) {
-      const errorDiv = input.nextElementSibling; // Assumes error div is next to input
+      const errorDiv = input.nextElementSibling; 
       errorDiv.textContent = message;
       errorDiv.style.display = 'block';
     }
   
     function clearError(input) {
-      const errorDiv = input.nextElementSibling; // Assumes error div is next to input
+      const errorDiv = input.nextElementSibling; 
       errorDiv.textContent = '';
       errorDiv.style.display = 'none';
     }

@@ -11,7 +11,7 @@
                 Servicios
             </a>
             <ul class="dropdown-menu" aria-labelledby="serviciosDropdown">
-                <li><a class="dropdown-item" href="/prestamos">Préstamos</a></li>
+                {{-- <li><a class="dropdown-item" href="/prestamos">Préstamos</a></li> --}}
                 <li><a class="dropdown-item" href="/tarjetaPersonal">Tarjeta personal</a></li>
             </ul>
         </li>

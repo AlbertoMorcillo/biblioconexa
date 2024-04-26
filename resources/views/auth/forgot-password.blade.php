@@ -1,25 +1,40 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+@extends('layouts.general')
+
+@section('title', 'Recuperar contraseña')
+
+@section('extra-css')
+<!-- Aquí puedes agregar CSS adicional específico de esta página si es necesario -->
+@endsection
+
+@section('extra-js')
+<!-- Si necesitas JS específico -->
+@endsection
+
+@section('content')
+<h1 class="my-3 mt-3">Recuperar contraseña</h1>
+<p>Se enviará un link por correo electrónico para establecer una nueva contraseña.</p>
+
+<!-- Mostrar el estado de la sesión -->
+<x-auth-session-status class="mb-4" :status="session('status')" />
+
+<form method="POST" action="{{ route('password.email') }}" novalidate>
+    @csrf
+
+    <!-- Email Address -->
+    <div class="form-group my-3">
+        <label class="form-label" for="email">Correo electrónico</label>
+        <input type="email" class="form-control rounded-pill @error('email') is-invalid @enderror" id="email" name="email" placeholder="name@example.com" :value="old('email')" required autofocus>
+        @error('email')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+        <div id="email-error" class="error-text" style="display:none;"></div>
     </div>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('password.email') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    <button class="btn button w-100 py-2 my-3" type="submit">{{ __('Email Password Reset Link') }}</button>
+    
+    <a href="{{ route('login') }}" class="mb-3 d-block text-center">¿Ya recuerda la contraseña? Inicia sesión</a>
+    <p class="mt-5 mb-3 text-body-secondary">© BiblioConexa 2024</p>
+</form>
+@endsection

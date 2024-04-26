@@ -21,6 +21,7 @@
             <ul class="nav flex-column">
               <li class="nav-item mb-2"><a href="/login" class="nav-link p-0">Login</a></li>
               <li class="nav-item mb-2"><a href="/register" class="nav-link p-0">Registrarse</a></li>
+              <li class="nav-item mb-2"><a href="/forgot-password" class="nav-link p-0">Recuperar contraseña</a></li>
             </ul>
           </div>
           <div class="col-md-3 seccion-enlace" aria-label="Sección de enlaces de noticias y actividades">

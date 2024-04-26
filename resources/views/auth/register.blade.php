@@ -19,8 +19,8 @@
 
             <!-- DNI -->
             <div class="mb-3">
-                <label for="dni" class="form-label">{{ __('DNI') }}</label>
-                <input id="dni" type="text" placeholder="12345678E" class="form-control rounded-pill @error('dni') is-invalid @enderror" name="dni" value="{{ old('dni') }}" required autofocus>
+                <label for="dni" class="form-label d-block">{{ __('DNI') }}</label>
+                <input id="dni" type="text" placeholder="12345678E" class="form-control rounded-pill @error('dni') is-invalid @enderror" name="dni" value="{{ old('dni') }}" required autofocus >
                 <div class="invalid-feedback js-error-dni" style="display:none;"></div>
                 @error('dni')
                     <span class="invalid-feedback" role="alert">

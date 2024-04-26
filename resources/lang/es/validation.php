@@ -18,4 +18,14 @@ return [
     'email' => 'El campo :attribute debe ser una dirección de correo válida.',
     'confirmed' => 'El campo :attribute no coincide.',
     'password' => 'La contraseña es incorrecta.',
+    'password_confirmation' => 'La confirmación de la contraseña es incorrecta.',
+    'dni' => 'El campo :attribute no es válido.',
+    'regex' => 'El campo :attribute no es válido.',
+    'attributes' => [
+        'dni' => 'DNI',
+        'name' => 'nombre',
+        'email' => 'correo electrónico',
+        'password' => 'contraseña',
+        'password_confirmation' => 'confirmación de la contraseña',
+    ],
 ];

@@ -616,14 +616,3 @@ input[type="password"] {
   width: 100%; /* O el ancho que prefieras */
   box-sizing: border-box; /* Asegúrate de que padding y border no afecten el ancho */
 }
-
-.invalid-feedback {
-    min-height: 20px;
-    display: flex;
-    align-items: center;
-  }
-
-  #dni.form-control {
-    display: inline-block; /* O simplemente quitar el display: block; */
-    width: auto; /* O establecer un ancho fijo si prefieres */
-  }

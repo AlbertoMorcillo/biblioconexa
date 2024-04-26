@@ -87,7 +87,7 @@
                                     <label for="nombre" class="form-label">Nombre</label>
                                     <input type="text" class="form-control" id="nombre">
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <label for="dni" class="form-label">DNI</label>
                                     <input type="text" class="form-control" id="dni">
                                 </div>

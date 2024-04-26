@@ -49,4 +49,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function tarjetaPersonal()
+{
+    return $this->hasOne(TarjetaPersonal::class, 'user_dni', 'dni');
+}
 }

@@ -18,10 +18,9 @@
             @csrf
 
             <!-- DNI -->
-            <div class="mb-3">
+            <div class="form-group my-3 mt-3">
                 <label for="dni" class="form-label d-block">{{ __('DNI') }}</label>
                 <input id="dni" type="text" placeholder="12345678E" class="form-control rounded-pill @error('dni') is-invalid @enderror" name="dni" value="{{ old('dni') }}" required autofocus >
-                <div class="invalid-feedback js-error-dni" style="display:none;"></div>
                 @error('dni')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -30,10 +29,9 @@
             </div>
 
             <!-- Name -->
-            <div class="mb-3">
+            <div class="form-group my-3 mt-3">
                 <label for="name" class="form-label">{{ __('Nombre') }}</label>
                 <input id="name" type="text" class="form-control rounded-pill @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
-                <div class="invalid-feedback js-error-name" style="display:none;"></div>
                 @error('name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -42,10 +40,9 @@
             </div>
 
             <!-- Email -->
-            <div class="mb-3">
+            <div class="form-group my-3 mt-3">
                 <label for="email" class="form-label">{{ __('Correo electrónico') }}</label>
                 <input id="email" type="email" placeholder="juan@ejemplo.com" class="form-control rounded-pill @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-                <div class="invalid-feedback js-error-email" style="display:none;"></div>
                 @error('email')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -54,26 +51,29 @@
             </div>
 
             <!-- Password -->
-            <div class="mb-3">
+            <div class="form-group my-3 mt-3">
                 <label for="password" class="form-label">{{ __('Contraseña') }}</label>
                 <input id="password" type="password" class="form-control rounded-pill @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-                <div class="invalid-feedback js-error-password" style="display:none;"></div>
                 @error('password')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
             </div>
-
+            
             <!-- Confirm Password -->
-            <div class="mb-3">
+            <div class="form-group my-3 mt-3">
                 <label for="password_confirmation" class="form-label">{{ __('Confirmar contraseña') }}</label>
-                <input id="password_confirmation" type="password" class="form-control rounded-pill" name="password_confirmation" required autocomplete="new-password">
-                <div class="invalid-feedback js-error-password-confirmation" style="display:none;"></div>
+                <input id="password_confirmation" type="password" class="form-control rounded-pill @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password">
+                @error('password_confirmation')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
 
             <!-- Submit Button -->
-            <div class="mb-3">
+            <div class="form-group my-3 mt-3">
                 <button type="submit" class="btn button">
                     {{ __('Registrar') }}
                 </button>

@@ -10,11 +10,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Asegúrate de que la tabla 'users' ya exista antes de ejecutar esta migración
 
         Schema::create('tarjeta_personal', function (Blueprint $table) {
             $table->id();
-            $table->string('user_dni', 9)->nullable()->unique(); // Relacionado con 'users', pero opcional
+            $table->string('user_dni', 9)->nullable()->unique(); 
             $table->enum('genero', ['Hombre', 'Mujer', 'No binario', 'Privado']);
             $table->date('fecha_nacimiento');
             $table->string('nombre');
@@ -24,7 +23,6 @@ return new class extends Migration
             $table->string('telefono');
             $table->timestamps();
 
-            // Si un usuario no registrado puede tener una tarjeta, entonces la relación debe ser nullable
             $table->foreign('user_dni')->references('dni')->on('users')
                   ->onDelete('set null') // Si se borra el usuario, la referencia se pone en null
                   ->onUpdate('cascade'); // Si se actualiza el DNI del usuario, se actualiza aquí también

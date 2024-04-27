@@ -269,6 +269,10 @@ footer p {
     background-color: #7EC8E3; 
 }
 
+.noticia-descripcion {
+    margin-top: 20px;
+}
+
 /* Ajustes adicionales para mejorar la accesibilidad y la estética */
 a:hover,
 button:hover,

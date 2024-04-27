@@ -14,6 +14,7 @@ class CreateNoticiaTable extends Migration
             $table->text('descripcion');
             $table->date('fecha');
             $table->boolean('publicado')->default(false);
+            $table->string('imagen')->nullable();
             $table->string('UsuarioDNI', 9);
             $table->foreign('UsuarioDNI')->references('dni')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

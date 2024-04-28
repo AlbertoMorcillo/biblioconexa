@@ -35,7 +35,12 @@
           <input type="search" class="form-control form-control-dark rounded-pill" placeholder="Buscar libro..."
             aria-label="Campo para buscar el libro que quieras.">
         </form>
-        <button type="button" id="logout-button" class="btn button" aria-label="Botón para cerrar sesión">Logout</button>
+        <form method="POST" action="{{ route('logout') }}">
+          @csrf
+          <button type="submit" id="logout-button" class="btn button" aria-label="Botón para cerrar sesión">
+              {{ __('Logout') }}
+          </button>
+      </form>
         <a href="/profile">
           <img src="/ruta-a-la-imagen-de-perfil" alt="Imagen de perfil" class="foto-perfil">
         </a>

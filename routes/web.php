@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TarjetaPersonalController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -51,7 +53,10 @@ Route::get('/noticias/{noticia}', [NoticiaController::class, 'show'])->name('not
 
 //Usuario registrado
 
-
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->name('logout');
+    
+    
 Route::middleware('auth')->group(function () {
     // Home page para usuarios registrados
     Route::get('/index-logged', function () {
@@ -103,9 +108,9 @@ Route::middleware('auth')->group(function () {
 
     
     Route::get('/noticias-logged/{noticia}', [NoticiaController::class, 'show'])->name('noticias-logged.show');
+    
 
 });
-
 
 /*post*/
 Route::post('/tarjetaPersonal', [TarjetaPersonalController::class, 'store'])->name('tarjeta-personal.store');

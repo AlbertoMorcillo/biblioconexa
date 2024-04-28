@@ -21,6 +21,17 @@ return [
     'password_confirmation' => 'La confirmación de la contraseña es incorrecta.',
     'dni' => 'El campo :attribute no es válido.',
     'regex' => 'El campo :attribute no es válido.',
+    'credentials_do_not_match' => 'Estas credenciales no coinciden con nuestros registros.',
+    'throttle' => 'Demasiados intentos de acceso. Por favor intente nuevamente en :seconds segundos.',
+    'date' => 'El campo :attribute no es una fecha válida.',
+    'before' => 'El campo :attribute debe ser una fecha anterior a :date.',
+    'after' => 'El campo :attribute debe ser una fecha posterior a :date.',
+    'between' => [
+        'numeric' => 'El campo :attribute debe estar entre :min y :max.',
+        'file' => 'El archivo :attribute debe pesar entre :min y :max kilobytes.',
+        'string' => 'El campo :attribute debe contener entre :min y :max caracteres.',
+        'array' => 'El campo :attribute debe tener entre :min y :max elementos.',
+    ],
     'attributes' => [
         'dni' => 'DNI',
         'name' => 'nombre',

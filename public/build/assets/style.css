@@ -240,11 +240,19 @@ footer p {
 .danger-button {
     background-color: #8B2222; 
     color: white; 
+    border: none;
+    padding: 0.625rem 1.25rem; 
+    font-family: 'Lato', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
     transition: background-color 0.3s ease;
+    border-radius: 1rem;
 }
 
 .danger-button:hover {
-    background-color: #7a1c1c; 
+    background-color: #ff7e7e; 
+    color:#000;
 }
 
 
@@ -291,11 +299,6 @@ button:hover, .button:hover {
 .secondary-button:hover {
     background-color: #77a5b7; 
     font-weight: bolder;
-}
-
-/* Efectos hover para botones de peligro/eliminar */
-.danger-button:hover {
-    background-color: #7a1c1c; 
 }
 
 .rounded-image {

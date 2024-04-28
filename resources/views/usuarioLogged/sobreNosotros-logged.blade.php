@@ -1,4 +1,4 @@
-@extends('layouts.general')
+@extends('layouts.general-logged')
 
 @section('title', 'Sobre nosotros')
 

@@ -620,3 +620,13 @@ input[type="password"] {
   width: 100%; /* O el ancho que prefieras */
   box-sizing: border-box; /* Asegúrate de que padding y border no afecten el ancho */
 }
+
+/*Estilos para el perfil*/
+
+.foto-perfil {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto;
+    display: block;
+}

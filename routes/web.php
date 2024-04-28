@@ -15,7 +15,7 @@ use App\Http\Controllers\TarjetaPersonalController;
 |
 */
 
-
+//Usuario no registrado
 Route::get('/', function () {
     return view('usuarioNoRegistrado.index');
 });
@@ -45,19 +45,67 @@ route::get('/horarioCalendario', function () {
     return view('usuarioNoregistrado.horarioCalendario');
 })->name('horarioCalendario');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::get('/noticias/{noticia}', [NoticiaController::class, 'show'])->name('noticias.show');
 
+//Usuario registrado
 
 
 Route::middleware('auth')->group(function () {
+    // Home page para usuarios registrados
+    Route::get('/index-logged', function () {
+        return view('usuarioLogged.index-logged');
+    })->name('index-logged');
+
+    // Perfil del usuario
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Tarjeta personal
+    Route::get('/tarjetaPersonal-logged', function () {
+        return view('usuarioLogged.tarjetaPersonal-logged');
+    })->name('tarjetaPersonal-logged');
+
+    // Otras rutas...
+    Route::get('/actividades-logged', function () {
+        return view('usuarioLogged.actividades-logged');
+    })->name('actividades-logged');
+
+    Route::get('/noticias-logged', function () {
+        return view('usuarioLogged.noticias-logged');
+    })->name('noticias-logged');
+
+    Route::get('/catalogo-logged', function () {
+        return view('usuarioLogged.catalogo-logged');
+    })->name('catalogo-logged');
+
+    Route::get('/sobreNosotros-logged', function () {
+        return view('usuarioLogged.sobreNosotros-logged');
+    })->name('sobreNosotros-logged');
+
+    Route::get('/horarioCalendario-logged', function () {
+        return view('usuarioLogged.horarioCalendario-logged');
+    })->name('horarioCalendario-logged');
+
+    Route::get('/tarjetaPersonal-logged', function () {
+        return view('usuarioLogged.tarjetaPersonal-logged');
+    })->name('tarjetaPersonal-logged');
+
+    Route::get('/mis-libros', function () {
+        return view('usuarioLogged.mis-libros');
+    })->name('mis-libros');
+
+    Route::get('/mis-prestamos', function () {
+        return view('usuarioLogged.mis-prestamos');
+    })->name('mis-prestamos');
+
+    
+    Route::get('/noticias-logged/{noticia}', [NoticiaController::class, 'show'])->name('noticias-logged.show');
+
 });
+
 
 /*post*/
 Route::post('/tarjetaPersonal', [TarjetaPersonalController::class, 'store'])->name('tarjeta-personal.store');

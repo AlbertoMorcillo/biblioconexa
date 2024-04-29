@@ -24,6 +24,8 @@
             <div class="col-md-5">
                 <!-- Aquí va la imagen del libro -->
                 <img src="{{ asset('storage/' . $libro->imagen) }}" class="img-fluid" alt="Imagen del libro">
+                <button type="button" class="btn button">Reservar</button>
+                <button type="button" class="btn secondary-button">Quiero leerlo</button>
             </div>
             <div class="col-md-7">
                 <h1 class="seccion-titulo">{{ $libro->titulo }}</h1>
@@ -33,13 +35,21 @@
                     <h2>Sinopsis:</h2>
                     <p>{{ $libro->sinopsis }}</p>
                 </div>
+                <button type="button" class="btn button">Escribir un comentario</button>
                 <h2>Opiniones de los usuarios</h2>
                 @foreach ($libro->comentarios as $comentario)
                     <div class="user-opinion">
                         <p><strong>Nombre:</strong> {{ $comentario->usuario->nombre }}</p>
                         <p class="puntuacion"><strong>Puntuación:</strong> {{ $comentario->puntuacion }}</p>
-                        <p><strong>Fecha de la opinión:</strong> {{ $comentario->fechaCreacion->format('dd/mm/YYYY') }}</p>
+                        <p><strong>Fecha de la opinión:</strong> {{ $comentario->fechaCreacion->format('d/m/Y') }}</p>
                         <p>{{ $comentario->texto }}</p>
+                        @if (auth()->check() && auth()->user()->id == $comentario->usuario->id)
+                            <form action="{{ route('comentario.destroy', $comentario->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn danger-button">Eliminar</button>
+                            </form>
+                        @endif
                     </div>
                 @endforeach
             </div>

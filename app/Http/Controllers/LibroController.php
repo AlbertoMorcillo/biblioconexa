@@ -16,13 +16,9 @@ class LibroController extends Controller
         $libro = Libro::with('comentarios.usuario')->findOrFail($id);
 
 
-        if (Auth::check()) {
-            // Devuelve la vista para usuarios autenticados con la capacidad de añadir comentarios
-            return view('libros.show-logged', compact('libro'));
-        } else {
             // Devuelve la vista para usuarios no autenticados sin la capacidad de añadir comentarios
             return view('libros.show', compact('libro'));
-        }
+
     }
 
     public function storeComentario(Request $request, $libroId)
@@ -44,4 +40,13 @@ class LibroController extends Controller
         // Redirige de vuelta con un mensaje de éxito
         return back()->with('success', 'Opinión guardada correctamente.');
     }
+
+    public function showLogged($id)
+{
+    // Recupera el libro con comentarios y el usuario asociado a cada comentario
+    $libro = Libro::with('comentarios.usuario')->findOrFail($id);
+
+    // Devuelve la vista para usuarios autenticados con la capacidad de añadir comentarios
+    return view('libros.show-logged', compact('libro'));
+}
 }

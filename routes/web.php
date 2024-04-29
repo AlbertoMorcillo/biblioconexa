@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TarjetaPersonalController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\LibroController;
+use App\Http\Controllers\ComentarioController;
 
 
 /*
@@ -51,7 +53,7 @@ route::get('/horarioCalendario', function () {
 
 Route::get('/noticias/{noticia}', [NoticiaController::class, 'show'])->name('noticias.show');
 Route::get('/noticias-logged/{noticia}', [NoticiaController::class, 'showLogged'])->name('noticias-logged.show');
-Route::get('/libros/{libro}', [NoticiaController::class, 'show'])->name('libros.show');
+Route::get('/libros/{libro}', [LibroController::class, 'show'])->name('libros.show');
 
 //Usuario registrado
 
@@ -69,6 +71,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //Comentarios libros
+    Route::get('/libros-logged/{libro}', [LibroController::class, 'showLogged'])->name('libros-logged.show');
+
+    // Ruta para almacenar un comentario de un libro
+    Route::post('/libros/{libro}/comentarios', [ComentarioController::class, 'store'])->name('libros.comentarios.store');
+
+    // Ruta para eliminar un comentario de un libro
+    Route::delete('/libros/comentarios/{comentario}', [ComentarioController::class, 'destroy'])->name('libros.comentarios.destroy');
+
 
     // Tarjeta personal
     Route::get('/tarjetaPersonal-logged', function () {

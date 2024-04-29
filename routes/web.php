@@ -50,6 +50,8 @@ route::get('/horarioCalendario', function () {
 
 
 Route::get('/noticias/{noticia}', [NoticiaController::class, 'show'])->name('noticias.show');
+Route::get('/noticias-logged/{noticia}', [NoticiaController::class, 'showLogged'])->name('noticias-logged.show');
+Route::get('/libros/{libro}', [NoticiaController::class, 'show'])->name('libros.show');
 
 //Usuario registrado
 
@@ -105,11 +107,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/mis-prestamos', function () {
         return view('usuarioLogged.mis-prestamos');
     })->name('mis-prestamos');
-
-    
-    Route::get('/noticias-logged/{noticia}', [NoticiaController::class, 'show'])->name('noticias-logged.show');
-    
-
 });
 
 /*post*/

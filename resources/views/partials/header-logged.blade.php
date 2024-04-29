@@ -42,7 +42,7 @@
           </button>
       </form>
         <a href="/profile">
-          <img src="/ruta-a-la-imagen-de-perfil" alt="Imagen de perfil" class="foto-perfil">
+          <img src="{{ asset('images/perfil/empathy.jpg') }}" alt="Imagen de perfil" class="foto-perfil">
         </a>
       </div>
     </div>

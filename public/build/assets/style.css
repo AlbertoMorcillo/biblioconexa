@@ -633,3 +633,36 @@ input[type="password"] {
     margin: 0 auto;
     display: block;
 }
+
+/*Estilos para la sección de opiniones*/
+.user-opinion {
+    background-color: #fff; /* Fondo blanco para destacar del fondo del body */
+    border: 1px solid #ddd; /* Borde sutil */
+    border-radius: 0.5rem; /* Bordes redondeados */
+    padding: 1rem; /* Espaciado interior */
+    margin-bottom: 1rem; /* Separación entre opiniones */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    font-family: 'Lato', sans-serif; /* Fuente Lato para el texto */
+}
+
+.user-opinion strong {
+    color: #204051; /* Color de los títulos */
+    font-weight: 700; /* Negrita para los títulos */
+}
+
+.user-opinion p {
+    color: #333; /* Color del texto */
+    margin: 0.5rem 0; /* Espaciado entre párrafos */
+    line-height: 1.6; /* Altura de línea para mejorar la lectura */
+}
+
+/* Estilos para la puntuación, si tienes un elemento específico para ello */
+.user-opinion .puntuacion {
+    display: inline-block; /* Si quieres mostrar la puntuación en línea */
+    background-color: #228B22; /* Fondo verde para destacar la puntuación */
+    color: #fff; /* Texto en blanco para contraste */
+    padding: 0.25rem 0.5rem; /* Espaciado interno */
+    border-radius: 0.25rem; /* Bordes redondeados */
+    margin-right: 0.5rem; /* Espacio a la derecha */
+    font-weight: 700; /* Negrita para los números de la puntuación */
+}

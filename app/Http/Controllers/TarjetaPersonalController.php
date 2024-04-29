@@ -39,4 +39,5 @@ class TarjetaPersonalController extends Controller
         // Redirigir a donde sea necesario con un mensaje de éxito
         return redirect()->route('tarjetaPersonal')->with('success', 'Tarjeta personal creada correctamente.');
     }
+    
 }

@@ -6,6 +6,8 @@ use App\Http\Controllers\TarjetaPersonalController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\LibroController;
 use App\Http\Controllers\ComentarioController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\EstanteriaController;
 
 
 /*
@@ -82,6 +84,12 @@ Route::middleware('auth')->group(function () {
     // Ruta para eliminar un comentario de un libro
     Route::delete('/libros/comentarios/{comentario}', [ComentarioController::class, 'destroy'])->name('libros.comentarios.destroy');
 
+    Route::get('/mis-libros', [UserController::class, 'misLibros'])->name('mis-libros');
+    Route::patch('/estanterias/{estanteria}/libros/{libro}/cambiarEstado', [EstanteriaController::class, 'cambiarEstado'])->name('estanterias.libros.cambiarEstado');
+    Route::delete('/estanterias/{estanteria}/libros/{libro}', [EstanteriaController::class, 'eliminarLibro'])->name('estanterias.libros.eliminar');
+    
+
+
 
     // Tarjeta personal
     Route::get('/tarjetaPersonal-logged', function () {
@@ -120,6 +128,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/mis-prestamos', function () {
         return view('usuarioLogged.mis-prestamos');
     })->name('mis-prestamos');
+
+    
 });
 
 /*post*/

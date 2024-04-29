@@ -2,56 +2,51 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    // Indica la clave primaria y desactiva los incrementos automáticos
     protected $primaryKey = 'dni';
-    
     public $incrementing = false;
-    // Indica que la clave primaria es una cadena y no un número
     protected $keyType = 'string';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
-        'dni', // Asegúrate de incluir 'dni' aquí
+        'dni',
         'name',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 
+    // Relación uno a uno con TarjetaPersonal
     public function tarjetaPersonal()
-{
-    return $this->hasOne(TarjetaPersonal::class, 'user_dni', 'dni');
-}
+    {
+        return $this->hasOne(TarjetaPersonal::class, 'user_dni', 'dni');
+    }
+
+    // Relación uno a muchos con Estanterias
+    public function estanterias()
+    {
+        return $this->belongsTo(User::class, 'UsuarioDNI', 'dni');
+    }
+
+    // Relación muchos a muchos con Libros a través de EstanteriasLibros
+    public function libros()
+    {
+        return $this->belongsToMany(Libro::class, 'estanteriaslibros', 'EstanteriasID', 'LibroID');
+    }
 }

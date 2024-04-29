@@ -3,53 +3,43 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Estanterias; // Asegúrate de que este modelo exista en tu directorio de modelos
+use App\Models\EstanteriasLibros; // Modelo que representa la tabla intermedia
+use Illuminate\Support\Facades\Auth;
 
 class EstanteriaController extends Controller
 {
-    // Muestra una lista de las estanterías
-    public function index()
+    public function cambiarEstado(Request $request, $estanteriaId, $libroId)
     {
-        $estanterias = Estanterias::all();
-        return view('estanterias.index', compact('estanterias'));
+        // Asegúrate de que el usuario actual es el propietario de la estantería
+        // y que el libro existe y está en la estantería especificada.
+
+        $validatedData = $request->validate([
+            'estado' => 'required|in:leyendo,leidos,quieroLeer,dropped',
+        ]);
+
+        // Encuentra la relación entre la estantería y el libro
+        $estanteriasLibros = EstanteriasLibros::where('EstanteriasID', $estanteriaId)
+                            ->where('LibroID', $libroId)
+                            ->firstOrFail();
+
+        // Cambia el estado y guarda
+        $estanteriasLibros->estado = $validatedData['estado'];
+        $estanteriasLibros->save();
+
+        // Redirige con un mensaje de éxito
+        return back()->with('success', 'El estado del libro ha sido actualizado.');
     }
 
-    // Muestra el formulario para crear una nueva estantería
-    public function create()
+    public function eliminarLibro($estanteriaId, $libroId)
     {
-        return view('estanterias.create');
-    }
+        // Encuentra la relación entre la estantería y el libro y la elimina
+        $estanteriasLibros = EstanteriasLibros::where('EstanteriasID', $estanteriaId)
+                            ->where('LibroID', $libroId)
+                            ->firstOrFail();
 
-    // Almacena una nueva estantería en la base de datos
-    public function store(Request $request)
-    {
-        $estanteria = Estanterias::create($request->all());
-        return redirect()->route('estanterias.index');
-    }
+        $estanteriasLibros->delete();
 
-    // Muestra una estantería específica
-    public function show(Estanterias $estanteria)
-    {
-        return view('estanterias.show', compact('estanteria'));
-    }
-
-    // Muestra el formulario para editar una estantería existente
-    public function edit(Estanterias $estanteria)
-    {
-        return view('estanterias.edit', compact('estanteria'));
-    }
-
-    // Actualiza una estantería existente en la base de datos
-    public function update(Request $request, Estanterias $estanteria)
-    {
-        $estanteria->update($request->all());
-        return redirect()->route('estanterias.index');
-    }
-
-    // Elimina una estanteria existente de la base de datos
-    public function destroy(Estanterias $estanteria)
-    {
-        $estanteria->delete();
-        return redirect()->route('estanterias.index');
+        // Redirige con un mensaje de éxito
+        return back()->with('success', 'El libro ha sido eliminado de la estantería.');
     }
 }

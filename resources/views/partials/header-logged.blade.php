@@ -26,8 +26,8 @@
             </ul>
         </li>
         <a href="/catalogo-logged" class="nav-link">Catálogo</a>
-        <a href="/mis-libros-logged" class="nav-link">Mis libros</a>
-        <a href="/mis-prestamos-logged" class="nav-link">Mis préstamos</a>
+        <a href="/mis-libros" class="nav-link">Mis libros</a>
+        <a href="/mis-prestamos" class="nav-link">Mis préstamos</a>
     </ul>
 
       <div class="search-and-buttons">

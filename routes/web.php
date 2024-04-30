@@ -8,6 +8,12 @@ use App\Http\Controllers\LibroController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EstanteriaController;
+use App\Http\Controllers\NoticiaController;
+use App\Http\Controllers\LibroSugeridoController;
+use App\Http\Controllers\EventoController;
+use App\Http\Controllers\EstanteriaLibroController;
+use App\Http\Controllers\AutorController;
+use App\Http\Controllers\CategoriaController;
 
 
 /*
@@ -52,9 +58,9 @@ route::get('/horarioCalendario', function () {
 })->name('horarioCalendario');
 
 
-
+Route::get('/noticias', [NoticiaController::class, 'index'])->name('noticias.index');
 Route::get('/noticias/{noticia}', [NoticiaController::class, 'show'])->name('noticias.show');
-Route::get('/noticias-logged/{noticia}', [NoticiaController::class, 'showLogged'])->name('noticias-logged.show');
+
 Route::get('/libros/{libro}', [LibroController::class, 'show'])->name('libros.show');
 
 //Usuario registrado
@@ -132,6 +138,35 @@ Route::middleware('auth')->group(function () {
     Route::get('/tarjetaPersonal-logged/{id}/edit', [TarjetaPersonalController::class, 'editLogged'])->name('tarjetaPersonal-logged.edit');
     Route::patch('/tarjetaPersonal-logged/{id}', [TarjetaPersonalController::class, 'updateLogged'])->name('tarjetaPersonal-logged.update');
     Route::delete('/tarjetaPersonal-logged/{id}', [TarjetaPersonalController::class, 'destroyLogged'])->name('tarjetaPersonal-logged.destroy');
+});
+
+Route::resource('librosSugeridos', LibroSugeridoController::class);
+Route::resource('eventos', EventoController::class);
+Route::resource('estanterias', EstanteriaController::class);
+Route::resource('comentarios', ComentarioController::class);
+Route::resource('estanteriasLibros', EstanteriaLibroController::class);
+Route::resource('comentarios', ComentarioController::class);
+Route::resource('libros', LibroController::class);
+Route::resource('autores', AutorController::class);
+Route::resource('categorias', CategoriaController::class);
+
+
+
+
+
+//rutas para noticias
+Route::middleware('auth')->group(function () {
+    Route::get('/noticias-logged', [NoticiaController::class, 'indexLogged'])->name('noticias-logged.index');
+    Route::get('/noticias-logged/{noticia}', [NoticiaController::class, 'showLogged'])->name('noticias-logged.show');
+
+    // Rutas adicionales para administradores o usuarios con permisos especiales
+    Route::middleware('can:manage-news')->group(function () {
+        Route::get('/noticias/create', [NoticiaController::class, 'create'])->name('noticias.create');
+        Route::post('/noticias', [NoticiaController::class, 'store'])->name('noticias.store');
+        Route::get('/noticias/{noticia}/edit', [NoticiaController::class, 'edit'])->name('noticias.edit');
+        Route::patch('/noticias/{noticia}', [NoticiaController::class, 'update'])->name('noticias.update');
+        Route::delete('/noticias/{noticia}', [NoticiaController::class, 'destroy'])->name('noticias.destroy');
+    });
 });
 
 Route::get('/tarjetaPersonal', [TarjetaPersonalController::class, 'index'])->name('tarjetaPersonal.index');

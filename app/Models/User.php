@@ -32,18 +32,29 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'birthdate' => 'date',
         'isAdmin' => 'boolean', // Asegúrate de manejar isAdmin como booleano
     ];
 
     // Relaciones
     public function estanterias()
     {
-        return $this->hasMany(Estanterias::class);
+        return $this->hasMany(Estanteria::class);
     }
 
     public function comentarios()
     {
         return $this->hasMany(Comentario::class);
+    }
+
+    public function noticias()
+    {
+        return $this->hasMany(Noticia::class, 'user_id');
+    }
+
+    public function eventos()
+    {
+        return $this->hasMany(Evento::class, 'user_id');
     }
 }
 

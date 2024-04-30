@@ -21,17 +21,19 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'dni' => 'required|unique:users|max:9',
-            'name' => 'required|max:255',
-            'email' => 'required|unique:users|email',
-            'password' => 'required|min:6',
+            'dni' => 'required|string|max:9|unique:users,dni',
+            'name' => 'required|string|max:255',
+            'surname' => 'nullable|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8',
+            'phone' => 'nullable|string|max:255',
+            'birthdate' => 'required|date',
+            'isAdmin' => 'sometimes|boolean'
         ]);
 
-        $user = new User($validated);
-        $user->password = bcrypt($validated['password']);
-        $user->save();
-
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+        $validated['password'] = bcrypt($validated['password']);
+        User::create($validated);
+        return redirect()->route('users.index')->with('success', 'Usuario creado con éxito.');
     }
 
     public function show(User $user)
@@ -47,23 +49,26 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
-            'dni' => 'required|max:9|unique:users,dni,' . $user->id,
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|min:6',
+            'dni' => 'required|string|max:9|unique:users,dni,' . $user->id,
+            'name' => 'required|string|max:255',
+            'surname' => 'nullable|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'phone' => 'nullable|string|max:255',
+            'birthdate' => 'required|date',
+            'isAdmin' => 'sometimes|boolean'
         ]);
 
-        if ($validated['password']) {
-            $user->password = bcrypt($validated['password']);
+        if ($request->filled('password')) {
+            $validated['password'] = bcrypt($request->password);
         }
-        $user->update($validated);
 
-        return redirect()->route('users.index')->with('success', 'User updated successfully.');
+        $user->update($validated);
+        return redirect()->route('users.index')->with('success', 'Usuario actualizado con éxito.');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+        return redirect()->route('users.index')->with('success', 'Usuario eliminado con éxito.');
     }
 }

@@ -1,52 +1,69 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Libro;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Comentario;
 
+use App\Models\Libro;
+use App\Models\Categoria;
+use Illuminate\Http\Request;
 
 class LibroController extends Controller
 {
-    public function show($id)
+    public function index()
     {
-        // Recupera el libro y sus comentarios asociados
-        $libro = Libro::with('comentarios.usuario')->findOrFail($id);
-
-
-            // Devuelve la vista para usuarios no autenticados sin la capacidad de añadir comentarios
-            return view('libros.show', compact('libro'));
-
+        $libros = Libro::with('categoria', 'autores')->get();
+        return view('libros.index', compact('libros'));
     }
 
-    public function storeComentario(Request $request, $libroId)
+    public function create()
+    {
+        $categorias = Categoria::all();
+        return view('libros.create', compact('categorias'));
+    }
+
+    public function store(Request $request)
     {
         $request->validate([
-            'texto' => 'required|string',
-            'puntuacion' => 'required|numeric|min:1|max:5',
+            'isbn' => 'required|unique:libros,isbn|max:13',
+            'titulo' => 'required|max:255',
+            'sinopsis' => 'required',
+            'puntuacion' => 'nullable|numeric|between:0,5',
+            'cantidad' => 'required|integer',
+            'categoriaID' => 'required|exists:categorias,id'
         ]);
 
-        // Crea un nuevo comentario y lo asocia al usuario y al libro correspondientes
-        $comentario = new Comentario;
-        $comentario->usuario_id = Auth::id();
-        $comentario->libro_id = $libroId;
-        $comentario->texto = $request->texto;
-        $comentario->puntuacion = $request->puntuacion;
-        $comentario->fechaCreacion = now();
-        $comentario->save();
-
-        // Redirige de vuelta con un mensaje de éxito
-        return back()->with('success', 'Opinión guardada correctamente.');
+        Libro::create($request->all());
+        return redirect()->route('libros.index')->with('success', 'Libro creado exitosamente.');
     }
 
-    public function showLogged($id)
-{
-    // Recupera el libro con comentarios y el usuario asociado a cada comentario
-    $libro = Libro::with('comentarios.usuario')->findOrFail($id);
+    public function show(Libro $libro)
+    {
+        return view('libros.show', compact('libro'));
+    }
 
-    // Devuelve la vista para usuarios autenticados con la capacidad de añadir comentarios
-    return view('libros.show-logged', compact('libro'));
-}
+    public function edit(Libro $libro)
+    {
+        $categorias = Categoria::all();
+        return view('libros.edit', compact('libro', 'categorias'));
+    }
+
+    public function update(Request $request, Libro $libro)
+    {
+        $request->validate([
+            'isbn' => 'required|max:13|unique:libros,isbn,' . $libro->id,
+            'titulo' => 'required|max:255',
+            'sinopsis' => 'required',
+            'puntuacion' => 'nullable|numeric|between:0,5',
+            'cantidad' => 'required|integer',
+            'categoriaID' => 'required|exists:categorias,id'
+        ]);
+
+        $libro->update($request->all());
+        return redirect()->route('libros.index')->with('success', 'Libro actualizado exitosamente.');
+    }
+
+    public function destroy(Libro $libro)
+    {
+        $libro->delete();
+        return redirect()->route('libros.index')->with('success', 'Libro eliminado exitosamente.');
+    }
 }

@@ -2,53 +2,68 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Estanteria;
 use Illuminate\Http\Request;
-use App\Models\EstanteriasLibros; // Modelo que representa la tabla intermedia
-use Illuminate\Support\Facades\Auth;
-
 
 class EstanteriaController extends Controller
 {
-    public function cambiarEstado(Request $request, $estanteriaId, $libroId)
+    // Muestra todas las estanterías
+    public function index()
     {
-        $validatedData = $request->validate([
-            'estado' => 'required|in:leyendo,leidos,quieroLeer,dropped',
+        $estanterias = Estanteria::all();
+        return view('estanterias.index', ['estanterias' => $estanterias]);
+    }
+
+    // Muestra el formulario para crear una nueva estantería
+    public function create()
+    {
+        return view('estanterias.create');
+    }
+
+    // Almacena una nueva estantería en la base de datos
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'estado' => 'required|in:leyendo,leidos,quieroLeer,abandonado'
         ]);
-    
-        try {
-            $estanteriasLibros = EstanteriasLibros::where('EstanteriasID', $estanteriaId)
-                                ->where('LibroID', $libroId)
-                                ->firstOrFail();
-    
-            if ($estanteriasLibros->estanteria->UsuarioDNI !== Auth::id()) {
-                return back()->with('error', 'No tienes permiso para cambiar el estado de este libro.');
-            }
-    
-            $estanteriasLibros->estado = $validatedData['estado'];
-            $estanteriasLibros->save();
-    
-            return back()->with('success', 'El estado del libro ha sido actualizado.');
-        } catch (\Exception $e) {
-            return back()->with('error', 'No se pudo actualizar el estado del libro.');
-        }
+
+        $estanteria = new Estanteria($request->all());
+        $estanteria->save();
+
+        return redirect()->route('estanterias.index')->with('success', 'Estantería creada con éxito.');
     }
-    
-    public function eliminarLibro($estanteriaId, $libroId)
+
+    // Muestra una estantería específica
+    public function show(Estanteria $estanteria)
     {
-        try {
-            $estanteriasLibros = EstanteriasLibros::where('EstanteriasID', $estanteriaId)
-                                ->where('LibroID', $libroId)
-                                ->firstOrFail();
-    
-            if ($estanteriasLibros->estanteria->UsuarioDNI !== Auth::id()) {
-                return back()->with('error', 'No tienes permiso para eliminar este libro.');
-            }
-    
-            $estanteriasLibros->delete();
-            return back()->with('success', 'El libro ha sido eliminado de la estantería.');
-        } catch (\Exception $e) {
-            return back()->with('error', 'No se pudo eliminar el libro.');
-        }
+        return view('estanterias.show', compact('estanteria'));
     }
-    
+
+    // Muestra el formulario para editar una estantería
+    public function edit(Estanteria $estanteria)
+    {
+        return view('estanterias.edit', compact('estanteria'));
+    }
+
+    // Actualiza una estantería en la base de datos
+    public function update(Request $request, Estanteria $estanteria)
+    {
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'estado' => 'required|in:leyendo,leidos,quieroLeer,abandonado'
+        ]);
+
+        $estanteria->update($request->all());
+
+        return redirect()->route('estanterias.index')->with('success', 'Estantería actualizada con éxito.');
+    }
+
+    // Elimina una estantería
+    public function destroy(Estanteria $estanteria)
+    {
+        $estanteria->delete();
+
+        return redirect()->route('estanterias.index')->with('success', 'Estantería eliminada con éxito.');
+    }
 }

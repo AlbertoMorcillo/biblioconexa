@@ -4,44 +4,35 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Autor;
 class Libro extends Model
 {
     use HasFactory;
 
+
+    protected $table = 'libros';
+
     protected $fillable = [
-        'isbn',
-        'titulo',
-        'autor',
-        'sinopsis',
-        'puntuacion',
-        'cantidad',
-        'portada',
-        'categoriaID',
+        'isbn', 'titulo', 'sinopsis', 'puntuacion', 'cantidad', 'portada', 'google_book_id', 'categoriaID'
     ];
 
     public function categoria()
     {
-
         return $this->belongsTo(Categoria::class, 'categoriaID');
+    }
+
+    public function autores()
+    {
+        return $this->belongsToMany(Autor::class, 'libro_autores', 'libro_id', 'autor_id');
     }
 
     public function comentarios()
     {
-        // Si existe una relación uno a muchos con la tabla 'comentario'
         return $this->hasMany(Comentario::class, 'LibroID');
     }
 
-    public function estanteriasLibros()
+    public function estanterias()
     {
-        // Si existe una relación uno a muchos con la tabla 'estanteriaslibros'
-        return $this->hasMany(EstanteriasLibros::class, 'LibroID');
+        return $this->belongsToMany(Estanteria::class, 'estanterias_libros', 'libro_id', 'estanteria_id');
     }
-
-    public function usuarios()
-{
-    return $this->belongsToMany(User::class, 'estanterias_libros', 'libro_id', 'user_id')
-                ->withPivot('estanteria_id')
-                ->withTimestamps();
-}
 }

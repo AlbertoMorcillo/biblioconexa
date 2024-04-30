@@ -10,31 +10,39 @@ class Noticia extends Model
 {
     use HasFactory;
 
-
-    // Especifica la tabla si es diferente del nombre del modelo en plural
-    protected $table = 'noticias';
-
-    // Proporciona un array de campos que puedes asignar masivamente.
+    // Lista de propiedades que se pueden asignar masivamente
     protected $fillable = [
         'titulo',
         'descripcion',
         'fecha',
-        'UsuarioDNI', 
+        'publicado',
+        'imagen',
+        'user_id' // Asegúrate de que user_id es asignable masivamente si es que se usará en formularios
     ];
 
-    // Si deseas trabajar con fechas, especifica qué campos son de tipo fecha
-    protected $dates = [
-        'fecha',
-        'created_at',
-        'updated_at',
+    // Casts para convertir los tipos de datos de las propiedades
+    protected $casts = [
+        'fecha' => 'date',
+        'publicado' => 'boolean'
     ];
 
-    // Relaciona la noticia con el usuario que la publicó
+    /**
+     * Relación Usuario-Noticia: cada noticia pertenece a un usuario.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'UsuarioDNI', 'dni');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
+    /**
+     * Scope para ordenar las noticias por fecha.
+     *
+     * @param Builder $query
+     * @param string $orden 'most-recent' para los más recientes primero, 'oldest-first' para los más antiguos primero
+     * @return Builder
+     */
     public function scopeOrdenarPorFecha(Builder $query, $orden = 'most-recent')
     {
         if ($orden == 'most-recent') {

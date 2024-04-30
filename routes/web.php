@@ -62,7 +62,8 @@ Route::get('/libros/{libro}', [LibroController::class, 'show'])->name('libros.sh
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
     
-    
+
+    // Rutas para perfiles de usuarios
 Route::middleware('auth')->group(function () {
     // Home page para usuarios registrados
     Route::get('/index-logged', function () {
@@ -70,25 +71,17 @@ Route::middleware('auth')->group(function () {
     })->name('index-logged');
 
     // Perfil del usuario
+    Route::resource('users', UserController::class);
+
+    // Rutas para perfiles de usuarios
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    //Comentarios libros
+    // Rutas adicionales para la funcionalidad del usuario registrado
+    Route::get('/mis-libros', [UserController::class, 'misLibros'])->name('mis-libros');
     Route::get('/libros-logged/{libro}', [LibroController::class, 'showLogged'])->name('libros-logged.show');
 
-    // Ruta para almacenar un comentario de un libro
-    Route::post('/libros/{libro}/comentarios', [ComentarioController::class, 'store'])->name('libros.comentarios.store');
-
-    // Ruta para eliminar un comentario de un libro
-    Route::delete('/libros/comentarios/{comentario}', [ComentarioController::class, 'destroy'])->name('libros.comentarios.destroy');
-
-    Route::get('/mis-libros', [UserController::class, 'misLibros'])->name('mis-libros');
-    Route::patch('/estanterias/{estanteria}/libros/{libro}/cambiarEstado', [EstanteriaController::class, 'cambiarEstado'])->name('estanterias.libros.cambiarEstado');
-    Route::delete('/estanterias/{estanteria}/libros/{libro}', [EstanteriaController::class, 'eliminarLibro'])->name('estanterias.libros.eliminar');
-    
-    
 
 
     // Tarjeta personal
@@ -128,9 +121,26 @@ Route::middleware('auth')->group(function () {
     Route::get('/mis-prestamos', function () {
         return view('usuarioLogged.mis-prestamos');
     })->name('mis-prestamos');
-
     
 });
+
+//tarjeta personal logged
+Route::middleware('auth')->group(function () {
+    Route::get('/tarjetaPersonal-logged', [TarjetaPersonalController::class, 'loggedIndex'])->name('tarjetaPersonal-logged.index');
+    Route::post('/tarjetaPersonal-logged', [TarjetaPersonalController::class, 'storeLogged'])->name('tarjetaPersonal-logged.store');
+    Route::get('/tarjetaPersonal-logged/create', [TarjetaPersonalController::class, 'createLogged'])->name('tarjetaPersonal-logged.create');
+    Route::get('/tarjetaPersonal-logged/{id}/edit', [TarjetaPersonalController::class, 'editLogged'])->name('tarjetaPersonal-logged.edit');
+    Route::patch('/tarjetaPersonal-logged/{id}', [TarjetaPersonalController::class, 'updateLogged'])->name('tarjetaPersonal-logged.update');
+    Route::delete('/tarjetaPersonal-logged/{id}', [TarjetaPersonalController::class, 'destroyLogged'])->name('tarjetaPersonal-logged.destroy');
+});
+
+Route::get('/tarjetaPersonal', [TarjetaPersonalController::class, 'index'])->name('tarjetaPersonal.index');
+Route::post('/tarjetaPersonal', [TarjetaPersonalController::class, 'store'])->name('tarjetaPersonal.store');
+Route::get('/tarjetaPersonal/create', [TarjetaPersonalController::class, 'create'])->name('tarjetaPersonal.create');
+Route::get('/tarjetaPersonal/{id}/edit', [TarjetaPersonalController::class, 'edit'])->name('tarjetaPersonal.edit');
+Route::patch('/tarjetaPersonal/{id}', [TarjetaPersonalController::class, 'update'])->name('tarjetaPersonal.update');
+Route::delete('/tarjetaPersonal/{id}', [TarjetaPersonalController::class, 'destroy'])->name('tarjetaPersonal.destroy');
+
 
 /*post*/
 Route::post('/tarjetaPersonal', [TarjetaPersonalController::class, 'store'])->name('tarjeta-personal.store');

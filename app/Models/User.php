@@ -6,8 +6,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\Estanterias;
-use Illuminate\Database\Eloquent\Model;
 
 class User extends Authenticatable
 {
@@ -17,11 +15,35 @@ class User extends Authenticatable
     public $incrementing = true;   
     protected $keyType = 'int';   
 
-    protected $fillable = ['dni', 'name', 'email', 'password'];
-    protected $hidden = ['password', 'remember_token'];
+    protected $fillable = [
+        'dni', 
+        'name', 
+        'surname', 
+        'email', 
+        'password', 
+        'phone', 
+        'birthdate', 
+        'isAdmin'
+    ];
+    protected $hidden = [
+        'password', 
+        'remember_token'
+    ];
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'isAdmin' => 'boolean', // Asegúrate de manejar isAdmin como booleano
     ];
+
+    // Relaciones
+    public function estanterias()
+    {
+        return $this->hasMany(Estanterias::class);
+    }
+
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario::class);
+    }
 }
 

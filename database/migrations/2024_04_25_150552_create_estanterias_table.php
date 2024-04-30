@@ -11,7 +11,7 @@ class CreateEstanteriasTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');  // Clave foránea del usuario
             $table->string('nombre');  // Nombre de la estantería, que puede ser personalizado o uno de los estados predeterminados
-            $table->enum('estado', ['leyendo', 'leidos', 'quieroLeer', 'dropped'])->default('quieroLeer');  // Campo estado con valores predeterminados
+            $table->enum('estado', ['leyendo', 'leidos', 'quieroLeer', 'abandonado'])->default('quieroLeer');  // Campo estado con valores predeterminados
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

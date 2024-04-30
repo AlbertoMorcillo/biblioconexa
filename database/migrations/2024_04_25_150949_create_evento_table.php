@@ -9,13 +9,15 @@ class CreateEventoTable extends Migration
     {
         Schema::create('evento', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable(); // 
             $table->string('titulo', 255);
             $table->text('descripcion');
             $table->date('fecha');
             $table->time('hora');
             $table->string('sala', 255)->nullable();
             $table->string('UsuarioDNI', 9);
-            $table->foreign('UsuarioDNI')->references('dni')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users') // Referencia al ID del usuario
+            ->onDelete('set null');
             $table->timestamps();
         });
     }

@@ -88,7 +88,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/estanterias/{estanteria}/libros/{libro}/cambiarEstado', [EstanteriaController::class, 'cambiarEstado'])->name('estanterias.libros.cambiarEstado');
     Route::delete('/estanterias/{estanteria}/libros/{libro}', [EstanteriaController::class, 'eliminarLibro'])->name('estanterias.libros.eliminar');
     
-
+    
 
 
     // Tarjeta personal

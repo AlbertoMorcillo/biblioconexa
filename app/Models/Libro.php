@@ -37,4 +37,11 @@ class Libro extends Model
         // Si existe una relación uno a muchos con la tabla 'estanteriaslibros'
         return $this->hasMany(EstanteriasLibros::class, 'LibroID');
     }
+
+    public function usuarios()
+{
+    return $this->belongsToMany(User::class, 'estanterias_libros', 'libro_id', 'user_id')
+                ->withPivot('estanteria_id')
+                ->withTimestamps();
+}
 }

@@ -9,10 +9,12 @@ class CreateEstanteriasTable extends Migration
     {
         Schema::create('estanterias', function (Blueprint $table) {
             $table->id();
-            $table->string('UsuarioDNI', 9);
-            $table->foreign('UsuarioDNI')->references('dni')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->enum('Estado', ['leyendo','leidos','quieroLeer','dropped']);
+            $table->unsignedBigInteger('user_id');  // Clave foránea del usuario
+            $table->string('nombre');  // Nombre de la estantería, que puede ser personalizado o uno de los estados predeterminados
+            $table->enum('estado', ['leyendo', 'leidos', 'quieroLeer', 'dropped'])->default('quieroLeer');  // Campo estado con valores predeterminados
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -21,4 +23,5 @@ class CreateEstanteriasTable extends Migration
         Schema::dropIfExists('estanterias');
     }
 }
+
 

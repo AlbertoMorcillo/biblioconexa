@@ -9,14 +9,20 @@ class EstanteriasLibros extends Model
 {
     use HasFactory;
 
-
-    public function libro()
-    {
-        return $this->belongsTo(Libro::class, 'LibroID');
-    }
-
+    // Define la relación de vuelta hacia la estantería
     public function estanteria()
     {
-        return $this->belongsTo(Estanterias::class, 'EstanteriasID');
+        return $this->belongsTo(Estanterias::class);
+    }
+    
+    public function libro()
+    {
+        return $this->belongsTo(Libro::class);
+    }
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
+

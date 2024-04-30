@@ -5,15 +5,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-
         Schema::create('tarjeta_personal', function (Blueprint $table) {
             $table->id();
-            $table->string('user_dni', 9)->nullable()->unique(); 
+            $table->unsignedBigInteger('user_id')->nullable(); // Usamos el ID del usuario
             $table->enum('genero', ['Hombre', 'Mujer', 'No binario', 'Privado']);
             $table->date('fecha_nacimiento');
             $table->string('nombre');
@@ -23,18 +19,14 @@ return new class extends Migration
             $table->string('telefono');
             $table->timestamps();
 
-            $table->foreign('user_dni')->references('dni')->on('users')
+            $table->foreign('user_id')->references('id')->on('users') // Referencia al ID del usuario
                   ->onDelete('set null') // Si se borra el usuario, la referencia se pone en null
-                  ->onUpdate('cascade'); // Si se actualiza el DNI del usuario, se actualiza aquí también
+                  ->onUpdate('cascade'); // Si se actualiza el ID del usuario, se actualiza aquí también
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('tarjeta_personal');
     }
 };
-

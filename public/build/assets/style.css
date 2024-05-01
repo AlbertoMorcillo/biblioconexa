@@ -666,3 +666,48 @@ input[type="password"] {
     margin-right: 0.5rem; /* Espacio a la derecha */
     font-weight: 700; /* Negrita para los números de la puntuación */
 }
+
+/* Estilos para la sección de pestañas */
+
+.tab-content {
+    background-color: #f5f5f5; /* Fondo claro para el contenido */
+    border: 1px solid #dee2e6; /* Borde sutil */
+    padding: 15px; /* Espaciado interno */
+    border-radius: 0.25rem; /* Esquinas redondeadas */
+}
+
+.tab-pane {
+    animation: fadeEffect 0.5s; /* Animación para la transición entre pestañas */
+}
+
+@keyframes fadeEffect {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.book-card {
+    width: 100%; /* Ajuste de anchura */
+    margin-bottom: 1rem; /* Espacio entre tarjetas */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
+    transition: transform 0.3s ease-in-out; /* Animación al pasar el mouse */
+    cursor: pointer; /* Cursor indicativo */
+}
+
+.book-card:hover {
+    transform: translateY(-5px); /* Elevación al pasar el mouse */
+}
+
+.nav-tabs .nav-link {
+    color: #204051; /* Un color gris oscuro para los enlaces no activos */
+    border: 1px solid #e2e8f0; /* Un borde gris claro para los enlaces */
+}
+
+.nav-tabs .nav-link.active {
+    color: #3182ce; /* Un color azul para los enlaces activos */
+    border-color: #e2e8f0 #e2e8f0 #fff; /* Un borde gris claro en la parte superior e izquierda, y blanco en la parte inferior */
+}
+
+.nav-tabs .nav-link:hover {
+    color: #ffffff; /* Un color gris oscuro para los enlaces no activos */
+    border: 1px solid #e2e8f0; /* Un borde gris claro para los enlaces */
+}

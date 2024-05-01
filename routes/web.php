@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
         return view('usuarioLogged.index-logged');
     })->name('index-logged');
 
+    Route::get('/mis-libros', [UserController::class, 'misLibros'])->name('mis-libros');
+
     Route::resources([
         'users' => UserController::class,
         'libros' => LibroController::class,
@@ -50,7 +52,6 @@ Route::middleware('auth')->group(function () {
         'estanteriasLibros' => EstanteriaLibroController::class,
     ]);
 
-    // Specific routes for editing and deleting Tarjeta Personal that should only be accessible to logged-in users
     Route::resource('tarjetaPersonal', TarjetaPersonalController::class)
         ->only(['edit', 'update', 'destroy']);
 
@@ -58,7 +59,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::view('/mis-libros', 'usuarioLogged.mis-libros')->name('mis-libros');
     Route::view('/tarjetaPersonal-logged', 'usuarioLogged.tarjetaPersonal-logged')->name('tarjetaPersonal-logged');
     Route::view('/actividades-logged', 'usuarioLogged.actividades-logged')->name('actividades-logged');
     Route::view('/noticias-logged', 'usuarioLogged.noticias-logged')->name('noticias-logged');

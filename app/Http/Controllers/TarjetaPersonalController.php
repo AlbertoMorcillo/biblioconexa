@@ -42,7 +42,6 @@ class TarjetaPersonalController extends Controller
 
         $tarjeta = new TarjetaPersonal($request->all());
         if (auth()->check()) {
-            // Si el usuario está autenticado, asigna su ID
             $tarjeta->user_id = auth()->id();
         } else {
             // Si no hay un usuario autenticado, busca un usuario con el mismo DNI

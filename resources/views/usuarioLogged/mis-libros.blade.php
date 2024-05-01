@@ -11,33 +11,44 @@
 @endsection
 
 @section('content')
-    <div class="container">
-        <h1 class="seccion-titulo">Mis libros</h1>
-
-        @foreach($estanterias as $estanteria)
-        <div class="estanteria">
-            <h2>{{ $estanteria->estado }}</h2> 
-            <ul>
-                @foreach($estanteria->estanteriasLibros as $estanteriasLibros) {{-- Cambio aquí --}}
-                    <li>
-                        {{ $estanteriasLibros->libro->titulo }} {{-- Accediendo a través de la relación --}}
-                        - Puntuación: {{ $estanteriasLibros->libro->pivot->puntuacion ?? 'No calificado' }}
-                        - Estado: {{ $estanteriasLibros->estado }}
-                        <form action="{{ route('estanterias.libros.cambiarEstado', ['estanteria' => $estanteria->id, 'libro' => $estanteriasLibros->libro->id]) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
-                            <!-- Aquí pondrías tu input o select para cambiar el estado -->
-                            <button type="submit" class="btn button">Cambiar estado</button>
-                        </form>
-                        <form action="{{ route('estanterias.libros.eliminar', ['estanteria' => $estanteria->id, 'libro' => $estanteriasLibros->libro->id]) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn danger-button">Eliminar</button>
-                        </form>
-                    </li>
-                @endforeach
+<div class="container mt-4">
+    <h1 class="seccion-titulo">Mis Libros</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#leidos" data-toggle="tab">Leídos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#leyendo" data-toggle="tab">Leyendo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#quieroleer" data-toggle="tab">Quiero Leer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#abandonado" data-toggle="tab">Abandonados</a>
+                </li>
             </ul>
+
+            <div class="tab-content p-3">
+                <div class="tab-pane active" id="leidos">
+                    @include('profile.partials.books-grid', ['books' => $libros['leidos']])
+                </div>
+                
+                <div class="tab-pane" id="leyendo">
+                    @include('profile.partials.books-grid', ['books' => $libros['leyendo']])
+                </div>
+                
+                <div class="tab-pane" id="quieroleer">
+                    @include('profile.partials.books-grid', ['books' => $libros['quieroleer']])
+                </div>
+                
+                <div class="tab-pane" id="abandonado">
+                    @include('profile.partials.books-grid', ['books' => $libros['abandonado']])
+                </div>
+            </div>
         </div>
-    @endforeach
     </div>
+</div>
 @endsection
+

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Libro;
+use App\Models\Estanteria;
 
 class UserController extends Controller
 {
@@ -71,4 +73,23 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('users.index')->with('success', 'Usuario eliminado con éxito.');
     }
+
+    public function misLibros()
+    {
+        $userId = auth()->id();  // Asegúrate que el usuario esté autenticado para hacer esta llamada
+    
+        $estanterias = Estanteria::with(['libros' => function ($query) {
+            $query->with('autores'); // Incluimos autores para evitar N+1 en la vista
+        }])->where('user_id', $userId)->get();
+    
+        $libros = [
+            'leidos' => $estanterias->where('estado', 'leidos')->flatMap->libros,
+            'leyendo' => $estanterias->where('estado', 'leyendo')->flatMap->libros,
+            'quieroleer' => $estanterias->where('estado', 'quieroLeer')->flatMap->libros,
+            'abandonado' => $estanterias->where('estado', 'abandonado')->flatMap->libros,
+        ];
+    
+        return view('usuarioLogged.mis-libros', ['libros' => $libros]);
+    }
+    
 }

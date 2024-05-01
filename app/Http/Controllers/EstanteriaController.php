@@ -51,7 +51,7 @@ class EstanteriaController extends Controller
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'estado' => 'required|in:leyendo,leidos,quieroLeer,abandonado'
+            'estado' => 'required|in:leyendo,leidos,quieroLeer,abandonado,sinEstado'
         ]);
 
         $estanteria->update($request->all());

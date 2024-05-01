@@ -7,30 +7,26 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('tarjeta-personal.store') }}">
+                <form method="POST" action="{{ route('tarjetaPersonal.store') }}">
                     @csrf
                     <div class="mb-3 row">
                         <div class="col">
                             <label class="form-label">Género</label>
                             <div class="d-flex">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="genero" id="hombre"
-                                        value="hombre">
+                                    <input class="form-check-input" type="radio" name="genero" id="hombre" value="Hombre">
                                     <label class="form-check-label" for="hombre">Hombre</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="genero" id="mujer"
-                                        value="mujer">
+                                    <input class="form-check-input" type="radio" name="genero" id="mujer" value="Mujer">
                                     <label class="form-check-label" for="mujer">Mujer</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="genero" id="noBinario"
-                                        value="noBinario">
+                                    <input class="form-check-input" type="radio" name="genero" id="noBinario" value="No binario">
                                     <label class="form-check-label" for="noBinario">No binario</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="genero" id="privado"
-                                        value="privado">
+                                    <input class="form-check-input" type="radio" name="genero" id="privado" value="Privado">
                                     <label class="form-check-label" for="privado">Privado</label>
                                 </div>
                             </div>

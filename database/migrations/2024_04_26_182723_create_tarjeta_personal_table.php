@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('segundo_apellido');
             $table->string('correo_electronico');
             $table->string('telefono');
+            $table->string('dni', 9); // Añade esta línea para el DNI
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users') // Referencia al ID del usuario

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
+    GoogleBooksController,
     ProfileController,
     TarjetaPersonalController,
     Auth\AuthenticatedSessionController,
@@ -14,7 +15,7 @@ use App\Http\Controllers\{
     EventoController,
     EstanteriaLibroController,
     AutorController,
-    CategoriaController
+    CategoriaController,
 };
 
 // Routes for non-registered users
@@ -27,6 +28,9 @@ Route::view('/actividades', 'usuarioNoRegistrado.actividades')->name('actividade
 Route::view('/catalogo', 'usuarioNoRegistrado.catalogo')->name('catalogo');
 Route::view('/sobreNosotros', 'usuarioNoRegistrado.sobreNosotros')->name('sobreNosotros');
 Route::view('/horarioCalendario', 'usuarioNoRegistrado.horarioCalendario')->name('horarioCalendario');
+// web.php
+Route::get('/search', [GoogleBooksController::class, 'search'])->name('search-books');
+
 
 // Tarjeta Personal routes accessible to both registered and non-registered users
 Route::resource('tarjetaPersonal', TarjetaPersonalController::class)

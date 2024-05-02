@@ -31,10 +31,9 @@
     </ul>
 
       <div class="search-and-buttons">
-        <form class="form-inline" role="search">
-          <input type="search" class="form-control form-control-dark rounded-pill" placeholder="Buscar libro..."
-            aria-label="Campo para buscar el libro que quieras.">
-        </form>
+        <form class="form-inline" role="search" action="{{ route('search-books') }}" method="GET">
+          <input type="search" id="book-search" class="form-control form-control-dark rounded-pill" placeholder="Buscar libro..." aria-label="Campo para buscar el libro que quieras." autocomplete="off">
+        </form>      
         <form method="POST" action="{{ route('logout') }}">
           @csrf
           <button type="submit" id="logout-button" class="btn button" aria-label="Botón para cerrar sesión">

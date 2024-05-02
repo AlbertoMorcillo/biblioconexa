@@ -13,6 +13,7 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
     <script defer src="{{ asset('js/comun.js') }}"></script>
+    <script defer src="{{ asset('js/searchBooks.js') }}"></script>
   <link rel="stylesheet" href="{{ asset('build/assets/style.css') }}">
   @yield('extra-css') <!-- Para CSS adicional específico de algunas páginas -->
   @yield('extra-js') <!-- Para JS adicional específico de algunas páginas -->

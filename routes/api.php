@@ -19,4 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/search-books', [GoogleBooksController::class, 'search']);
+Route::get('/search-books', [GoogleBooksController::class, 'search'])->name('search-books');
+

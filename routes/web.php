@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
         'estanterias' => EstanteriaController::class,
         'comentarios' => ComentarioController::class,
         'estanteriasLibros' => EstanteriaLibroController::class,
+        
     ]);
 
     Route::resource('tarjetaPersonal', TarjetaPersonalController::class)

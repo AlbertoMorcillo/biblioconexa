@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class GoogleBooksController extends Controller
 {
     public function search(Request $request)
     {
-        $searchTerm = $request->input('q'); // Asegúrate de que el nombre del parámetro coincide con el nombre del campo de entrada en tu formulario
+        $searchTerm = $request->input('q');
         $client = new Client();
 
         try {
@@ -23,7 +24,11 @@ class GoogleBooksController extends Controller
             ]);
 
             $books = json_decode($response->getBody()->getContents(), true);
-            return view('catalogo.search-results', ['books' => $books]);
+
+            // Seleccionar la vista basada en el estado de autenticación del usuario
+            $view = Auth::check() ? 'catalogo.search-results-logged' : 'catalogo.search-results';
+
+            return view($view, ['books' => $books]);
         } catch (\Exception $e) {
             return back()->withErrors(['msg' => 'Error al buscar libros: ' . $e->getMessage()]);
         }

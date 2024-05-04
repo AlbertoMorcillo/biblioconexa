@@ -13,13 +13,15 @@
 @section('content')
     <section class="catalog-section">
         <h1 class="section-title">Nuestro catálogo</h1>
-        <div class="search-bar">
-            <input type="search" id="book-search" class="search-input" placeholder="Buscar libro..."
-                aria-label="Campo para buscar libros por título, autor o ISBN">
-            <button type="submit" class="search-button" aria-label="Clic para buscar">
-                <i class="fa fa-search"></i>
-            </button>
-        </div>
+        <form class="form-inline" role="search" action="{{ route('search-books') }}" method="GET">
+            <div class="search-bar">
+                <input type="search" name="q" id="book-search" class="search-input" placeholder="Buscar libro..."
+                    aria-label="Campo para buscar libros por título, autor o ISBN" autocomplete="off">
+                <button type="submit" class="search-button" aria-label="Clic para buscar">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </form>
         <p class="search-instructions">Pulsa Enter o haz clic en la lupa para buscar</p>
     </section>
 

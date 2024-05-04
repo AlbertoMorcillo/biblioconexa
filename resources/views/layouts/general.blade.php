@@ -14,6 +14,7 @@
     crossorigin="anonymous"></script>
     <script defer src="{{ asset('js/comun.js') }}"></script>
     <script defer src="{{ asset('js/searchBooks.js') }}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="{{ asset('build/assets/style.css') }}">
   @yield('extra-css') <!-- Para CSS adicional específico de algunas páginas -->
   @yield('extra-js') <!-- Para JS adicional específico de algunas páginas -->

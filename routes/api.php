@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleBooksController;
+use App\Http\Controllers\OpenLibraryBooksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/search-books', [GoogleBooksController::class, 'search'])->name('search-books');
+//Route::get('/search-books', [GoogleBooksController::class, 'search'])->name('search-books');
+Route::get('/search-books', [OpenLibraryBooksController::class, 'search'])->name('search-books');
+
 

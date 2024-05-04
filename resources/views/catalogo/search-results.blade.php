@@ -12,6 +12,7 @@
 @section('content')
 <div class="container mt-4">
     <h1 class="seccion-titulo">Resultados de la búsqueda</h1>
+    @include('components.search-form', ['searchTerm' => $searchTerm, 'searchType' => $searchType])
     @if(isset($books['items']) && count($books['items']) > 0)
         <div class="row">
             @foreach($books['items'] as $book)

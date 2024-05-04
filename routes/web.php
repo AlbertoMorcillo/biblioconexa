@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
+    OpenLibraryBooksController,
     GoogleBooksController,
     ProfileController,
     TarjetaPersonalController,
@@ -29,7 +30,8 @@ Route::view('/catalogo', 'usuarioNoRegistrado.catalogo')->name('catalogo');
 Route::view('/sobreNosotros', 'usuarioNoRegistrado.sobreNosotros')->name('sobreNosotros');
 Route::view('/horarioCalendario', 'usuarioNoRegistrado.horarioCalendario')->name('horarioCalendario');
 
-Route::get('/search', [GoogleBooksController::class, 'search'])->name('search-books');
+//Route::get('/search', [GoogleBooksController::class, 'search'])->name('search-books');
+Route::get('/search', [OpenLibraryBooksController::class, 'search'])->name('search-books');
 
 
 

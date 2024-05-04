@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('book-search');
     const resultsContainer = document.getElementById('search-results-container');
 
+    let lastQuery = ''; // Asegúrate de declarar la variable lastQuery
+
     if (!resultsContainer) {
         console.error('No se encontró el contenedor de resultados.');
         return; // Detiene la ejecución si no existe el contenedor
@@ -20,11 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (!response.ok) {
                         throw new Error('Failed to fetch: ' + response.statusText);
                     }
-                    // Verificar si la respuesta es JSON antes de intentar parsearla
-                    const contentType = response.headers.get('content-type');
-                    if (!contentType || !contentType.includes('application/json')) {
-                        throw new Error('Invalid content type: Expected JSON, received ' + contentType);
-                    }
                     return response.json();
                 })
                 .then(data => {
@@ -40,11 +37,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function displayResults(data) {
         resultsContainer.innerHTML = ''; // Limpiar resultados anteriores
-        if (data && data.items && data.items.length > 0) {
-            data.items.forEach(book => {
+        if (data && data.docs && data.docs.length > 0) {
+            data.docs.forEach(book => {
                 const div = document.createElement('div');
                 div.className = 'book-result';
-                div.innerHTML = `<h4>${book.volumeInfo.title}</h4><p>${book.volumeInfo.authors.join(', ')}</p>`;
+                div.innerHTML = `<h4>${book.title}</h4><p>${book.author_name ? book.author_name.join(', ') : 'Autor desconocido'}</p>`;
                 resultsContainer.appendChild(div);
             });
         } else {

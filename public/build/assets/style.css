@@ -554,7 +554,7 @@ button:hover, .button:hover {
 
 .search-instructions {
     font-size: 0.8rem; 
-    color: #6c757d; 
+    color: #32363a; 
     text-align: center;
     margin-top: 0.5rem; 
 }
@@ -729,10 +729,10 @@ input[type="password"] {
 }
 
 .pagination a, .pagination span {
-    color: #4A90E2; /* Color del texto */
+    color: #ffffff; /* Color del texto */
     padding: 8px 16px;
     text-decoration: none;
-    background-color: #f8f9fa;
+    background-color: #204051;
     border: 1px solid #dee2e6;
     border-radius: 50px; /* Hace los botones redondeados */
     transition: background-color 0.3s, color 0.3s;
@@ -740,7 +740,7 @@ input[type="password"] {
 
 .pagination a:hover {
     background-color: #4A90E2; /* Color de fondo al pasar el ratón */
-    color: white; /* Color de texto al pasar el ratón */
+    color: rgb(0, 0, 0); /* Color de texto al pasar el ratón */
 }
 
 .pagination .active span {
@@ -750,7 +750,7 @@ input[type="password"] {
 }
 
 .pagination .disabled span, .pagination .disabled a, .pagination .disabled a:hover {
-    color: #6c757d; /* Color de texto deshabilitado */
+    color: #000000; /* Color de texto deshabilitado */
     background-color: #f8f9fa; /* Fondo de botón deshabilitado */
     cursor: not-allowed;
 }

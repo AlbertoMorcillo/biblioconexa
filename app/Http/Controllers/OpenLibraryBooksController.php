@@ -75,19 +75,18 @@ class OpenLibraryBooksController extends Controller
         }
     }
 
-    private function fetchCovers(array $docs, $client)
+    private function fetchCovers(array $docs)
     {
         $covers = [];
         foreach ($docs as $book) {
-            $isbn = $book['isbn'][0] ?? null;
-            if ($isbn) {
-                $coverKey = "cover_{$isbn}";
-                $covers[$isbn] = Cache::remember($coverKey, 3600, function () use ($client, $isbn) {
-                    $response = $client->request('GET', "https://covers.openlibrary.org/b/isbn/{$isbn}-L.jpg");
-                    return base64_encode($response->getBody()->getContents());
-                });
+            if (isset($book['cover_i'])) {
+                $cover_id = $book['cover_i'];
+                $covers[$book['key']] = "https://covers.openlibrary.org/b/id/{$cover_id}-L.jpg";
+            } else {
+                // Asigna una URL de imagen por defecto si no hay cover_i
+                $covers[$book['key']] = asset('images/default_cover.jpg');  // Asegúrate de que esta ruta sea correcta
             }
         }
         return $covers;
-    }
+    }    
 }

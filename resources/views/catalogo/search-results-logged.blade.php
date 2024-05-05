@@ -6,6 +6,7 @@
     <!-- Estilos adicionales si son necesarios -->
 @endsection
 
+
 @section('content')
     <div class="container mt-4">
         <h1 class="seccion-titulo">Resultados de la búsqueda</h1>
@@ -36,16 +37,9 @@
                         <div class="card shadow-sm">
                             <a href="https://openlibrary.org{{ $book['key'] }}" class="link-libros"
                                 aria-label="Información del libro">
-                                @if (array_key_exists($book['isbn'][0] ?? '', $covers))
-                                    <img class="card-img-top"
-                                        src="data:image/jpeg;base64,{{ $covers[$book['isbn'][0]] }}"
-                                        alt="Portada del libro: {{ $book['title'] }}">
-                                @else
-                                    <div class="card-img-top bg-light d-flex justify-content-center align-items-center"
-                                        style="height: 225px;">
-                                        <span class="text-secondary">Imagen no disponible</span>
-                                    </div>
-                                @endif
+                                <img class="card-img-top"
+                                    src="{{ $covers[$book['key']] }}"
+                                    alt="Portada del libro: {{ $book['title'] }}">
                                 <div class="card-body">
                                     <h5 class="card-title titulo-libro">{{ $book['title'] }}</h5>
                                     <p class="card-text nombre-autor">{{ implode(', ', $book['author_name'] ?? ['Autor Desconocido']) }}</p>

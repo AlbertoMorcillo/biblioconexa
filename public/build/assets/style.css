@@ -715,3 +715,43 @@ input[type="password"] {
     font-weight: bolder;
 }
 
+/* Paginación Personalizada */
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    justify-content: center; /* Centra la paginación horizontalmente */
+    margin-top: 20px; /* Espacio arriba de la paginación */
+}
+
+.pagination li {
+    margin: 0 5px; /* Espacio entre botones */
+}
+
+.pagination a, .pagination span {
+    color: #4A90E2; /* Color del texto */
+    padding: 8px 16px;
+    text-decoration: none;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 50px; /* Hace los botones redondeados */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #4A90E2; /* Color de fondo al pasar el ratón */
+    color: white; /* Color de texto al pasar el ratón */
+}
+
+.pagination .active span {
+    background-color: #4A90E2; /* Fondo del botón de la página actual */
+    color: white; /* Texto del botón de la página actual */
+    border-color: #4A90E2;
+}
+
+.pagination .disabled span, .pagination .disabled a, .pagination .disabled a:hover {
+    color: #6c757d; /* Color de texto deshabilitado */
+    background-color: #f8f9fa; /* Fondo de botón deshabilitado */
+    cursor: not-allowed;
+}
+

@@ -33,7 +33,7 @@
         <form class="form-inline" role="search" action="{{ route('search-books') }}" method="GET">
           <input type="search" name="q" id="book-search" class="form-control form-control-dark rounded-pill"
               placeholder="Buscar libro..." aria-label="Campo para buscar el libro que quieras." autocomplete="off">
-        </form>      
+      </form>      
         <button type="button" id="login-button" class="btn button" aria-label="Botón para ir a loguearse">Login</button>
         <button type="button" id="sign-up-button" class="btn secondary-button" aria-label="Botón para ir a registrarse">Sign-up</button>
       </div>

@@ -7,6 +7,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class OpenLibraryBooksController extends Controller
 {
@@ -15,13 +16,13 @@ class OpenLibraryBooksController extends Controller
         $searchTerm = $request->input('q');
         $searchType = $request->input('type', 'all');
         $page = $request->input('page', 1);
-        $maxResults = 6;
-        $offset = ($page - 1) * $maxResults;
+        $maxResults = 6; // Número de resultados por página
+        $offset = ($page - 1) * $maxResults; // Cálculo del desplazamiento para la paginación
         $searchField = $this->determineSearchField($searchType);
-
+    
         $cacheKey = "search_{$searchField}_{$searchTerm}_page_{$page}";
         $client = new Client();
-
+    
         try {
             $books = Cache::remember($cacheKey, 3600, function () use ($client, $searchField, $searchTerm, $page, $maxResults, $offset) {
                 $response = $client->request('GET', 'https://openlibrary.org/search.json', [
@@ -34,27 +35,33 @@ class OpenLibraryBooksController extends Controller
                 ]);
                 return json_decode($response->getBody()->getContents(), true);
             });
-
+    
             if (isset($books['error'])) {
                 Log::error('Open Library API Error:', [$books['error']]);
                 throw new \Exception("Open Library API returned an error: " . $books['error']['message']);
             }
-
+    
             $covers = $this->fetchCovers($books['docs'], $client);
-
+    
             $totalItems = $books['numFound'];
-            $totalPages = ceil($totalItems / $maxResults);
-            $view = Auth::check() ? 'catalogo.search-results-logged' : 'catalogo.search-results';
-
-            return view($view, [
-                'books' => $books['docs'],
+            $paginator = new LengthAwarePaginator(
+                $books['docs'],
+                $totalItems,
+                $maxResults,
+                $page,
+                [
+                    'path' => $request->url(),
+                    'query' => $request->query() // Para mantener los parámetros de búsqueda en la paginación
+                ]
+            );
+    
+            return view('catalogo.search-results-logged', [
+                'books' => $paginator,
                 'covers' => $covers,
-                'currentPage' => $page,
-                'totalPages' => $totalPages,
                 'searchTerm' => $searchTerm,
                 'searchType' => $searchType
             ]);
-
+    
         } catch (\Exception $e) {
             Log::error('Search exception:', ['message' => $e->getMessage()]);
             return back()->withErrors(['msg' => 'Error al buscar libros: ' . $e->getMessage()]);
@@ -84,7 +91,7 @@ class OpenLibraryBooksController extends Controller
                 $covers[$book['key']] = "https://covers.openlibrary.org/b/id/{$cover_id}-L.jpg";
             } else {
                 // Asigna una URL de imagen por defecto si no hay cover_i
-                $covers[$book['key']] = asset('images/default_cover.jpg');  // Asegúrate de que esta ruta sea correcta
+                $covers[$book['key']] = asset('images/libros/default_cover.webp');  
             }
         }
         return $covers;

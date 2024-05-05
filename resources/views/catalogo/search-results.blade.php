@@ -7,42 +7,83 @@
 @endsection
 
 @section('extra-js')
+    <!-- Scripts adicionales si son necesarios -->
 @endsection
 
 @section('content')
-<div class="container mt-4">
-    <h1 class="seccion-titulo">Resultados de la búsqueda</h1>
-    @include('components.search-form', ['searchTerm' => $searchTerm, 'searchType' => $searchType])
-    @if(isset($books['items']) && count($books['items']) > 0)
-        <div class="row">
-            @foreach($books['items'] as $book)
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm">
-                        <a href="{{ $book['volumeInfo']['infoLink'] ?? '#' }}" class="link-libros" aria-label="Información del libro">
-                            @if(isset($book['volumeInfo']['imageLinks']['thumbnail']))
-                                <img class="card-img-top" src="{{ $book['volumeInfo']['imageLinks']['thumbnail'] }}" alt="Portada del libro: {{ $book['volumeInfo']['title'] }}">
-                            @else
-                                <div class="card-img-top bg-light d-flex justify-content-center align-items-center" style="height: 225px;">
-                                    <span class="text-secondary">Imagen no disponible</span>
-                                </div>
-                            @endif
-                            <div class="card-body">
-                                <h5 class="card-title titulo-libro">{{ $book['volumeInfo']['title'] }}</h5>
-                                @if(isset($book['volumeInfo']['authors']))
-                                    <p class="card-text nombre-autor">{{ implode(', ', $book['volumeInfo']['authors']) }}</p>
-                                @else
-                                    <p class="card-text nombre-autor">Autor Desconocido</p>
-                                @endif
-                            </div>
-                        </a>
-                    </div>
+    <div class="container mt-4">
+        <h1 class="seccion-titulo">Resultados de la búsqueda</h1>
+        <section class="catalog-section">
+            <form class="form-inline" role="search" action="{{ route('search-books') }}" method="GET">
+                <div class="search-bar">
+                    <input type="search" name="q" id="book-search" class="search-input" placeholder="Buscar libro..."
+                        aria-label="Campo para buscar libros por título, autor o ISBN" autocomplete="off"
+                        value="{{ $searchTerm ?? '' }}">
+                    <select name="type" class="form-select">
+                        <option value="all" {{ $searchType == 'all' ? 'selected' : '' }}>Todos</option>
+                        <option value="title" {{ $searchType == 'title' ? 'selected' : '' }}>Título</option>
+                        <option value="author" {{ $searchType == 'author' ? 'selected' : '' }}>Autor</option>
+                        <option value="isbn" {{ $searchType == 'isbn' ? 'selected' : '' }}>ISBN</option>
+                    </select>
+                    <button type="submit" class="search-button" aria-label="Clic para buscar">
+                        <i class="fa fa-search"></i>
+                    </button>
                 </div>
-            @endforeach
-        </div>
-    @else
-        <div class="alert alert-warning" role="alert">
-            No se encontraron libros para la búsqueda realizada. Intenta con otros términos.
-        </div>
-    @endif
-</div>
+            </form>
+            <p class="search-instructions mb-3">Pulsa Enter o haz clic en la lupa para buscar</p>
+        </section>
+
+        @if (!empty($books))
+            <div class="row mt-4">
+                @foreach ($books as $book)
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm">
+                            <a href="https://openlibrary.org{{ $book['key'] }}" class="link-libros"
+                                aria-label="Información del libro">
+                                <img class="card-img-top" src="{{ $covers[$book['key']] }}"
+                                    alt="Portada del libro: {{ $book['title'] }}">
+                                <div class="card-body">
+                                    <h5 class="card-title titulo-libro">{{ $book['title'] }}</h5>
+                                    <p class="card-text nombre-autor">
+                                        {{ implode(', ', $book['author_name'] ?? ['Autor Desconocido']) }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            @if ($books->lastPage() > 1)
+                <nav aria-label="Página de navegación">
+                    <ul class="pagination">
+                        {{-- Página anterior --}}
+                        <li class="page-item {{ $books->onFirstPage() ? 'disabled' : '' }}">
+                            <a class="page-link" href="{{ $books->previousPageUrl() }}" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        {{-- Mostrar algunos enlaces de página --}}
+                        @foreach (range(1, $books->lastPage()) as $i)
+                            @if ($i >= $books->currentPage() - 2 && $i <= $books->currentPage() + 2)
+                                <li class="page-item {{ $books->currentPage() == $i ? 'active' : '' }}">
+                                    <a class="page-link" href="{{ $books->url($i) }}">{{ $i }}</a>
+                                </li>
+                            @endif
+                        @endforeach
+
+                        {{-- Página siguiente --}}
+                        <li class="page-item {{ $books->currentPage() == $books->lastPage() ? 'disabled' : '' }}">
+                            <a class="page-link" href="{{ $books->nextPageUrl() }}" aria-label="Siguiente">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            @endif
+        @else
+            <div class="alert alert-warning" role="alert">
+                No se encontraron libros para la búsqueda realizada. Intenta con otros términos.
+            </div>
+        @endif
+    </div>
 @endsection

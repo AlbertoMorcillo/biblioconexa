@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Libro;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 
 class LibroController extends Controller
 {
@@ -35,10 +36,29 @@ class LibroController extends Controller
         return redirect()->route('libros.index')->with('success', 'Libro creado exitosamente.');
     }
 
-    public function show(Libro $libro)
+    public function show($libro)
     {
-        return view('libros.show', compact('libro'));
+        $client = new Client();
+        try {
+            $client = new Client();
+            $response = $client->request('GET', "https://openlibrary.org/works/$libro.json");
+            $bookDetails = json_decode($response->getBody()->getContents(), true);
+            $book = [
+                'title' => $bookDetails['title'],
+                'authors' => array_column($bookDetails['authors'], 'name'), // Suponiendo que 'authors' es un array de arrays con 'name'
+                'description' => $bookDetails['description']['value'] ?? 'Descripción no disponible.',
+                'cover_url' => "https://covers.openlibrary.org/b/id/{$bookDetails['covers'][0]}-L.jpg"
+            ];
+    
+            return view('libros.detalle', ['book' => $book]);
+        } catch (\Exception $e) {
+            return back()->withErrors('Error al recuperar los detalles del libro.');
+        }
     }
+    
+    
+    
+
 
     public function edit(Libro $libro)
     {

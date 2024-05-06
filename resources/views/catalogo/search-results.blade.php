@@ -26,23 +26,26 @@
     </section>
 
     @if (!empty($books))
-        <div class="row mt-4">
-            @foreach ($books as $book)
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm">
-                        <a href="https://openlibrary.org{{ $book['key'] }}" class="link-libros">
-                            <img class="card-img-top" src="{{ $covers[$book['key']] }}"
-                                alt="Portada del libro: {{ $book['title'] }}">
-                            <div class="card-body">
-                                <h5 class="card-title titulo-libro">{{ $book['title'] }}</h5>
-                                <p class="card-text nombre-autor">
-                                    {{ implode(', ', $book['author_name'] ?? ['Autor Desconocido']) }}</p>
-                            </div>
-                        </a>
-                    </div>
+    <div class="row mt-4">
+        @foreach ($books as $book)
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <!-- Asegúrate de que el 'key' sea una parte de la URL de libro -->
+                    <a href="{{ route('libros.show', ['key' => $book['key']]) }}" class="link-libros">
+                        <img class="card-img-top" src="{{ $covers[$book['key']] }}"
+                            alt="Portada del libro: {{ $book['title'] }}">
+                        <div class="card-body">
+                            <h5 class="card-title titulo-libro">{{ $book['title'] }}</h5>
+                            <p class="card-text nombre-autor">
+                                {{ implode(', ', $book['author_name'] ?? ['Autor Desconocido']) }}</p>
+                        </div>
+                    </a>
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
+    </div>
+@endif
+
         @if ($books->lastPage() > 1)
             <nav aria-label="Página de navegación">
                 <ul class="pagination justify-content-center">

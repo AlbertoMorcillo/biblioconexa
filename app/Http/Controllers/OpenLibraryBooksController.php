@@ -79,6 +79,7 @@ class OpenLibraryBooksController extends Controller
         }
     }
 
+
     private function determineSearchField($searchType)
     {
         switch ($searchType) {

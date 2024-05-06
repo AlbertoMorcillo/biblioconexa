@@ -32,6 +32,13 @@ Route::view('/horarioCalendario', 'usuarioNoRegistrado.horarioCalendario')->name
 
 //Route::get('/search', [GoogleBooksController::class, 'search'])->name('search-books');
 Route::get('/search', [OpenLibraryBooksController::class, 'search'])->name('search-books');
+//Route::get('/libros/{key}', [OpenLibraryBooksController::class, 'show'])->name('libros.show');
+
+
+Route::get('/libros/{libro}', [LibroController::class, 'show'])->name('libros.show');
+
+
+
 
 
 

@@ -37,27 +37,37 @@ class LibroController extends Controller
     }
 
     public function show($libro)
-    {
-        $client = new Client();
-        try {
-            $client = new Client();
-            $response = $client->request('GET', "https://openlibrary.org/works/$libro.json");
-            $bookDetails = json_decode($response->getBody()->getContents(), true);
-            $book = [
-                'title' => $bookDetails['title'],
-                'authors' => array_column($bookDetails['authors'], 'name'), // Suponiendo que 'authors' es un array de arrays con 'name'
-                'description' => $bookDetails['description']['value'] ?? 'Descripción no disponible.',
-                'cover_url' => "https://covers.openlibrary.org/b/id/{$bookDetails['covers'][0]}-L.jpg"
-            ];
-    
-            return view('libros.detalle', ['book' => $book]);
-        } catch (\Exception $e) {
-            return back()->withErrors('Error al recuperar los detalles del libro.');
-        }
+{
+    $client = new Client();
+    try {
+        $response = $client->request('GET', "https://openlibrary.org/works/$libro.json");
+        $bookDetails = json_decode($response->getBody()->getContents(), true);
+
+        $book = [
+            'title' => $bookDetails['title'],
+            'authors' => array_column($bookDetails['authors'], 'name'), // Asegúrate que 'authors' está presente como esperado
+            'description' => $this->cleanDescription($bookDetails['description']['value'] ?? 'Descripción no disponible.'),
+            'cover_url' => "https://covers.openlibrary.org/b/id/{$bookDetails['covers'][0]}-L.jpg",
+            'rating' => $bookDetails['ratings_average'] ?? 'No disponible'
+        ];
+
+        $view = auth()->check() ? 'libros.detalle-logged' : 'libros.detalle';
+        return view($view, ['book' => $book]);
+    } catch (\Exception $e) {
+        return back()->withErrors('Error al recuperar los detalles del libro: ' . $e->getMessage());
     }
+}
+
     
-    
-    
+    private function cleanDescription($description)
+{
+  
+    $description = preg_replace('/\[(.*?)\]\(.*?\)/', '$1', $description);
+    $description = preg_replace('/\bhttps?:\/\/\S+/i', '', $description);
+
+    return $description;
+}
+
 
 
     public function edit(Libro $libro)

@@ -1,6 +1,5 @@
 @extends('layouts.general-logged')
 
-
 @section('title', $book['title'])
 
 @section('content')
@@ -11,8 +10,12 @@
         </div>
         <div class="col-md-8">
             <h1>{{ $book['title'] }}</h1>
-            <p><strong>Autor(es):</strong> {{ implode(', ', $book['authors']) }}</p>
-            <p><strong>Descripción:</strong> {{ $book['description'] }}</p>
+            <p><strong>Autor/a:</strong> {{ implode(', ', $book['authors']) }}</p>
+            <p><strong>Puntuación:</strong> {{ $book['rating'] }}</p>
+            <p><strong>Sinopsis:</strong> {{ $book['description'] }}</p>
+            <!-- Ejemplo de opciones adicionales para usuarios logueados -->
+            <button class="btn btn-primary">Editar</button>
+            <button class="btn btn-danger">Eliminar</button>
         </div>
     </div>
 </div>

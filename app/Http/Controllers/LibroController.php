@@ -6,6 +6,8 @@ use App\Models\Libro;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class LibroController extends Controller
 {
@@ -37,36 +39,64 @@ class LibroController extends Controller
     }
 
     public function show($libro)
-{
-    $client = new Client();
-    try {
-        $response = $client->request('GET', "https://openlibrary.org/works/$libro.json");
-        $bookDetails = json_decode($response->getBody()->getContents(), true);
-
-        $book = [
-            'title' => $bookDetails['title'],
-            'authors' => array_column($bookDetails['authors'], 'name'), // Asegúrate que 'authors' está presente como esperado
-            'description' => $this->cleanDescription($bookDetails['description']['value'] ?? 'Descripción no disponible.'),
-            'cover_url' => "https://covers.openlibrary.org/b/id/{$bookDetails['covers'][0]}-L.jpg",
-            'rating' => $bookDetails['ratings_average'] ?? 'No disponible'
-        ];
-
-        $view = auth()->check() ? 'libros.detalle-logged' : 'libros.detalle';
-        return view($view, ['book' => $book]);
-    } catch (\Exception $e) {
-        return back()->withErrors('Error al recuperar los detalles del libro: ' . $e->getMessage());
-    }
-}
-
+    {
+        $client = new Client();
+        try {
+            $response = $client->request('GET', "https://openlibrary.org/works/$libro.json");
+            $bookDetails = json_decode($response->getBody()->getContents(), true);
     
-    private function cleanDescription($description)
-{
-  
-    $description = preg_replace('/\[(.*?)\]\(.*?\)/', '$1', $description);
-    $description = preg_replace('/\bhttps?:\/\/\S+/i', '', $description);
+            // Default cover image if none exists
+            $defaultCoverUrl = asset('images/libros/default_cover.jpg');
+    
+            // Extracting author information
+            $authors = 'Autor no disponible';
+            if (isset($bookDetails['authors']) && is_array($bookDetails['authors'])) {
+                $authorKeys = array_column($bookDetails['authors'], 'author');
+                $authorNames = [];
+                foreach ($authorKeys as $key) {
+                    $authorResponse = $client->request('GET', 'https://openlibrary.org' . $key['key'] . '.json');
+                    $authorDetails = json_decode($authorResponse->getBody()->getContents(), true);
+                    $authorNames[] = $authorDetails['name'] ?? 'Nombre no disponible';
+                }
+                $authors = implode(', ', $authorNames);
+            }
+    
+            // Accessing description safely
+            $description = isset($bookDetails['description']['value'])
+                            ? $this->cleanDescription($bookDetails['description']['value'])
+                            : 'Descripción no disponible';
+    
+            // Use first cover if available
+            $coverUrl = isset($bookDetails['covers'][0])
+                        ? "https://covers.openlibrary.org/b/id/{$bookDetails['covers'][0]}-L.jpg"
+                        : $defaultCoverUrl;
+    
+            // There's no ratings_average in your example JSON, you might need to handle it based on your API or set a default
+            $rating = 'No disponible';
+    
+            $book = [
+                'title' => $bookDetails['title'] ?? 'Título no disponible',
+                'authors' => $authors,
+                'description' => $description,
+                'cover_url' => $coverUrl,
+                'rating' => $rating
+            ];
+    
+            $view = Auth::check() ? 'libros.detalle-logged' : 'libros.detalle';
+            return view($view, ['book' => $book]);
+        } catch (\Exception $e) {
+            return back()->withErrors('Error al recuperar los detalles del libro: ' . $e->getMessage());
+        }
+    }
 
-    return $description;
-}
+    private function cleanDescription($description)
+    {
+
+        $description = preg_replace('/\[(.*?)\]\(.*?\)/', '$1', $description);
+        $description = preg_replace('/\bhttps?:\/\/\S+/i', '', $description);
+
+        return $description;
+    }
 
 
 

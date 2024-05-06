@@ -741,6 +741,7 @@ input[type="password"] {
 .pagination a:hover {
     background-color: #4A90E2; /* Color de fondo al pasar el ratón */
     color: rgb(0, 0, 0); /* Color de texto al pasar el ratón */
+    font-weight: bolder;
 }
 
 .pagination .active span {
@@ -753,5 +754,6 @@ input[type="password"] {
     color: #000000; /* Color de texto deshabilitado */
     background-color: #f8f9fa; /* Fondo de botón deshabilitado */
     cursor: not-allowed;
+    font-weight: bolder;
 }
 

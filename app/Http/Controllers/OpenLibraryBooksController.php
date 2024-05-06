@@ -55,12 +55,23 @@ class OpenLibraryBooksController extends Controller
                 ]
             );
     
-            return view('catalogo.search-results-logged', [
-                'books' => $paginator,
-                'covers' => $covers,
-                'searchTerm' => $searchTerm,
-                'searchType' => $searchType
-            ]);
+            if (Auth::check()) {
+                // Si el usuario está autenticado, devuelve la vista para usuarios logueados
+                return view('catalogo.search-results-logged', [
+                    'books' => $paginator,
+                    'covers' => $covers,
+                    'searchTerm' => $searchTerm,
+                    'searchType' => $searchType
+                ]);
+            } else {
+                // Si el usuario no está autenticado, devuelve la vista para usuarios no logueados
+                return view('catalogo.search-results', [
+                    'books' => $paginator,
+                    'covers' => $covers,
+                    'searchTerm' => $searchTerm,
+                    'searchType' => $searchType
+                ]);
+            }
     
         } catch (\Exception $e) {
             Log::error('Search exception:', ['message' => $e->getMessage()]);

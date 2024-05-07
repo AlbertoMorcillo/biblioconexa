@@ -9,12 +9,22 @@ use Illuminate\Support\Facades\Auth;
 
 class ComentarioController extends Controller
 {
+
     public function index()
     {
         // Carga todos los comentarios junto con la información del usuario asociado
         $comentarios = Comentario::with('usuario')->get();
-        return view('comentarios.index', compact('comentarios'));
+    
+        if(auth()->check()) {
+            // Muestra la vista para usuarios registrados
+            return view('libros.detalle-logged', ['comentarios' => $comentarios]);
+        } else {
+            // Muestra la vista para usuarios no registrados
+            return view('libros.detalle', ['comentarios' => $comentarios]);
+        } 
     }
+
+
     
     public function store(Request $request)
     {

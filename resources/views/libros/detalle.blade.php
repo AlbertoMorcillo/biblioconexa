@@ -13,7 +13,17 @@
             <p><strong>Autor/a:</strong> {{ $book['authors'] }}</p>
             <p><strong>Puntuación:</strong> {{ $book['rating'] }}</p>
             <p><strong>Sinopsis:</strong> {{ $book['description'] }}</p>
+
+            <!-- Comentarios -->
+            <h3>Comentarios</h3>
+            @forelse ($book['comentarios'] as $comentario)
+                <p>{{ $comentario->texto }}</p>
+                <p>Por: {{ $comentario->usuario->name }}</p>
+            @empty
+                <p>No hay comentarios aún.</p>
+            @endforelse
         </div>
     </div>
 </div>
 @endsection
+

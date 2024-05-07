@@ -78,7 +78,8 @@ class LibroController extends Controller
                 'description' => $description,
                 'cover_url' => $coverUrl,
                 'rating' => $rating,
-                'comentarios' => $comentarios
+                'comentarios' => $comentarios,
+                'external_id' => $libro 
             ];
 
             $view = Auth::check() ? 'libros.detalle-logged' : 'libros.detalle';

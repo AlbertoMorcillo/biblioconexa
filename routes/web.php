@@ -36,7 +36,7 @@ Route::get('/search', [OpenLibraryBooksController::class, 'search'])->name('sear
 
 
 Route::get('/libros/{libro}', [LibroController::class, 'show'])->name('libros.show');
-
+Route::post('/comentarios', 'ComentarioController@store')->name('comentarios.store');
 
 
 

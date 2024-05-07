@@ -10,7 +10,7 @@
         </div>
         <div class="col-md-8">
             <h1>{{ $book['title'] }}</h1>
-            <p><strong>Autor/a:</strong> {{ implode(', ', $book['authors']) }}</p>
+            <p><strong>Autor/a:</strong> {{ $book['authors'] }}</p>
             <p><strong>Puntuación:</strong> {{ $book['rating'] }}</p>
             <p><strong>Sinopsis:</strong> {{ $book['description'] }}</p>
         </div>

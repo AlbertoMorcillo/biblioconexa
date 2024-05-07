@@ -42,6 +42,7 @@ class LibroController extends Controller
     {
         $client = new Client();
         try {
+            
             $response = $client->request('GET', "https://openlibrary.org/works/$libro.json");
             $bookDetails = json_decode($response->getBody()->getContents(), true);
     

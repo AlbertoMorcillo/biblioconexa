@@ -41,7 +41,6 @@ Route::get('/libros/{libro}', [LibroController::class, 'show'])->name('libros.sh
 
 
 
-
 // Tarjeta Personal routes accessible to both registered and non-registered users
 Route::resource('tarjetaPersonal', TarjetaPersonalController::class)
     ->only(['create', 'store', 'index', 'show']);  // Exposing only non-sensitive routes
@@ -56,7 +55,6 @@ Route::middleware('auth')->group(function () {
 
     Route::resources([
         'users' => UserController::class,
-        'libros' => LibroController::class,
         'autores' => AutorController::class,
         'categorias' => CategoriaController::class,
         'librosSugeridos' => LibroSugeridoController::class,

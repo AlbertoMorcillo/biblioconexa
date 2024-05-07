@@ -10,18 +10,16 @@ class CreateEstanteriasLibrosTable extends Migration
         Schema::create('estanterias_libros', function (Blueprint $table) {
             $table->unsignedBigInteger('estanteria_id');
             $table->unsignedBigInteger('libro_id');
-            $table->timestamps();  // Para registrar cuándo se añadió un libro a una estantería
+            $table->timestamps(); // Para registrar cuándo se añadió un libro a una estantería
 
-            $table->primary(['estanteria_id', 'libro_id']);
+            $table->primary(['estanteria_id', 'libro_id']); // Llave primaria compuesta
             $table->foreign('estanteria_id')->references('id')->on('estanterias')->onDelete('cascade');
-            $table->foreign('libro_id')->references('id')->on('libro')->onDelete('cascade');
+            $table->foreign('libro_id')->references('id')->on('libros')->onDelete('cascade'); // Asegúrate de que la tabla de libros se llama 'libros'
         });
     }
 
     public function down()
     {
-        
         Schema::dropIfExists('estanterias_libros');
     }
 }
-

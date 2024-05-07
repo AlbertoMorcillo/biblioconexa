@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\Comentario;
 
 class LibroController extends Controller
 {
@@ -42,14 +43,10 @@ class LibroController extends Controller
     {
         $client = new Client();
         try {
-            
             $response = $client->request('GET', "https://openlibrary.org/works/$libro.json");
             $bookDetails = json_decode($response->getBody()->getContents(), true);
-    
-        
-            $defaultCoverUrl = asset('images/libros/default_cover.jpg');
-    
 
+            $defaultCoverUrl = asset('images/libros/default_cover.jpg');
             $authors = 'Autor no disponible';
             if (isset($bookDetails['authors']) && is_array($bookDetails['authors'])) {
                 $authorKeys = array_column($bookDetails['authors'], 'author');
@@ -61,34 +58,35 @@ class LibroController extends Controller
                 }
                 $authors = implode(', ', $authorNames);
             }
-    
+
             $description = isset($bookDetails['description']['value'])
                             ? $this->cleanDescription($bookDetails['description']['value'])
                             : 'Descripción no disponible';
-    
 
             $coverUrl = isset($bookDetails['covers'][0])
                         ? "https://covers.openlibrary.org/b/id/{$bookDetails['covers'][0]}-L.jpg"
                         : $defaultCoverUrl;
-    
 
             $rating = 'No disponible';
-    
+
+            // Fetch comments from the database using the external_id
+            $comentarios = Comentario::where('external_id', $libro)->get();
+
             $book = [
                 'title' => $bookDetails['title'] ?? 'Título no disponible',
                 'authors' => $authors,
                 'description' => $description,
                 'cover_url' => $coverUrl,
-                'rating' => $rating
+                'rating' => $rating,
+                'comentarios' => $comentarios
             ];
-    
+
             $view = Auth::check() ? 'libros.detalle-logged' : 'libros.detalle';
             return view($view, ['book' => $book]);
         } catch (\Exception $e) {
             return back()->withErrors('Error al recuperar los detalles del libro: ' . $e->getMessage());
         }
     }
-
     private function cleanDescription($description)
     {
 

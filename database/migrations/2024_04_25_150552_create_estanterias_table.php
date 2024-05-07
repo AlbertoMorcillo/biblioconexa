@@ -9,9 +9,9 @@ class CreateEstanteriasTable extends Migration
     {
         Schema::create('estanterias', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');  // Clave foránea del usuario
-            $table->string('nombre');  // Nombre de la estantería, que puede ser personalizado o uno de los estados predeterminados
-            $table->enum('estado', ['leyendo', 'leidos', 'quieroLeer', 'abandonado', 'sinEstado'])->default('sinEstado');  // Campo estado con valores predeterminados
+            $table->unsignedBigInteger('user_id'); // Clave foránea del usuario
+            $table->string('nombre', 255); // Nombre de la estantería, que puede ser personalizado
+            $table->enum('estado', ['leyendo', 'leidos', 'quieroLeer', 'abandonado', 'sinEstado'])->default('sinEstado'); // Estado predeterminado
 
             $table->timestamps();
 

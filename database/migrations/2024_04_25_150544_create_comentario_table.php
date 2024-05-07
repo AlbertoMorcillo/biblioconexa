@@ -8,20 +8,20 @@ class CreateComentarioTable extends Migration
 {
     public function up()
     {
-
-        Schema::create('comentario', function (Blueprint $table) {
+        Schema::create('comentarios', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->index(); // Usamos el ID del usuario
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('LibroID')->index();
-            $table->foreign('LibroID')->references('id')->on('libro')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->string('external_id');  // Cambiado para almacenar el ID externo de Open Library
             $table->text('texto');
-            $table->timestamps(); 
+            $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // No hay necesidad de una clave foránea hacia la tabla 'libro'
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('comentario');
+        Schema::dropIfExists('comentarios');
     }
 }

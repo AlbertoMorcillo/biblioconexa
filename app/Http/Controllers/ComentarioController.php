@@ -11,57 +11,27 @@ class ComentarioController extends Controller
 {
     public function index()
     {
-        $comentarios = Comentario::with(['usuario', 'libro'])->get();
+        // Carga todos los comentarios junto con la información del usuario asociado
+        $comentarios = Comentario::with('usuario')->get();
         return view('comentarios.index', compact('comentarios'));
     }
-
-    public function create()
-    {
-        $libros = Libro::all();
-        return view('comentarios.create', compact('libros'));
-    }
-
+    
     public function store(Request $request)
     {
+        // Valida que los campos necesarios están presentes y son correctos
         $request->validate([
-            'LibroID' => 'required|exists:libros,id',
-            'texto' => 'required|string'
+            'external_id' => 'required|string', // ID externo del libro de Open Library
+            'texto' => 'required|string'        // Texto del comentario
         ]);
 
+        // Crea un nuevo comentario asociado al usuario actual
         Comentario::create([
-            'user_id' => Auth::id(),
-            'LibroID' => $request->LibroID,
-            'texto' => $request->texto
+            'user_id' => Auth::id(),              // ID del usuario autenticado
+            'external_id' => $request->external_id, // ID externo proporcionado en el formulario
+            'texto' => $request->texto           // Texto del comentario
         ]);
 
+        // Redirecciona al índice de comentarios con un mensaje de éxito
         return redirect()->route('comentarios.index')->with('success', 'Comentario agregado con éxito.');
-    }
-
-    public function show(Comentario $comentario)
-    {
-        return view('comentarios.show', compact('comentario'));
-    }
-
-    public function edit(Comentario $comentario)
-    {
-        $libros = Libro::all();
-        return view('comentarios.edit', compact('comentario', 'libros'));
-    }
-
-    public function update(Request $request, Comentario $comentario)
-    {
-        $request->validate([
-            'LibroID' => 'required|exists:libros,id',
-            'texto' => 'required|string'
-        ]);
-
-        $comentario->update($request->all());
-        return redirect()->route('comentarios.index')->with('success', 'Comentario actualizado con éxito.');
-    }
-
-    public function destroy(Comentario $comentario)
-    {
-        $comentario->delete();
-        return redirect()->route('comentarios.index')->with('success', 'Comentario eliminado con éxito.');
     }
 }

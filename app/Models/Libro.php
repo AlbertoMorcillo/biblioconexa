@@ -13,7 +13,7 @@ class Libro extends Model
     protected $table = 'libros';
 
     protected $fillable = [
-        'isbn', 'titulo', 'sinopsis', 'puntuacion', 'cantidad', 'portada', 'google_book_id', 'categoriaID'
+        'isbn', 'titulo', 'sinopsis', 'puntuacion', 'cantidad', 'portada', 'external_id', 'categoriaID'
     ];
 
     public function categoria()

@@ -45,10 +45,10 @@ class LibroController extends Controller
             $response = $client->request('GET', "https://openlibrary.org/works/$libro.json");
             $bookDetails = json_decode($response->getBody()->getContents(), true);
     
-            // Default cover image if none exists
+        
             $defaultCoverUrl = asset('images/libros/default_cover.jpg');
     
-            // Extracting author information
+
             $authors = 'Autor no disponible';
             if (isset($bookDetails['authors']) && is_array($bookDetails['authors'])) {
                 $authorKeys = array_column($bookDetails['authors'], 'author');
@@ -61,17 +61,16 @@ class LibroController extends Controller
                 $authors = implode(', ', $authorNames);
             }
     
-            // Accessing description safely
             $description = isset($bookDetails['description']['value'])
                             ? $this->cleanDescription($bookDetails['description']['value'])
                             : 'Descripción no disponible';
     
-            // Use first cover if available
+
             $coverUrl = isset($bookDetails['covers'][0])
                         ? "https://covers.openlibrary.org/b/id/{$bookDetails['covers'][0]}-L.jpg"
                         : $defaultCoverUrl;
     
-            // There's no ratings_average in your example JSON, you might need to handle it based on your API or set a default
+
             $rating = 'No disponible';
     
             $book = [

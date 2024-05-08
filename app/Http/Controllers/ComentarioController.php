@@ -14,34 +14,34 @@ class ComentarioController extends Controller
     {
         // Carga todos los comentarios junto con la información del usuario asociado
         $comentarios = Comentario::with('usuario')->get();
-    
-        if(auth()->check()) {
+
+        if (auth()->check()) {
             // Muestra la vista para usuarios registrados
             return view('libros.detalle-logged', ['comentarios' => $comentarios]);
         } else {
             // Muestra la vista para usuarios no registrados
             return view('libros.detalle', ['comentarios' => $comentarios]);
-        } 
+        }
     }
 
 
-    
+
     public function store(Request $request)
     {
-        // Valida que los campos necesarios están presentes y son correctos
         $request->validate([
-            'external_id' => 'required|string', // ID externo del libro de Open Library
+            'external_id' => 'required|string',  // ID externo del libro de Open Library
             'texto' => 'required|string'        // Texto del comentario
         ]);
 
         // Crea un nuevo comentario asociado al usuario actual
         Comentario::create([
-            'user_id' => Auth::id(),              // ID del usuario autenticado
-            'external_id' => $request->external_id, // ID externo proporcionado en el formulario
-            'texto' => $request->texto           // Texto del comentario
+            'user_id' => Auth::id(),                 // ID del usuario autenticado
+            'external_id' => $request->external_id,  // ID externo proporcionado en el formulario
+            'texto' => $request->texto              // Texto del comentario
         ]);
 
-        // Redirecciona al índice de comentarios con un mensaje de éxito
-        return redirect()->route('comentarios.index')->with('success', 'Comentario agregado con éxito.');
+        // Redirect back to the book's detail page with success message
+        return redirect()->route('libros.show', ['libro' => $request->external_id])
+            ->with('success', 'Comentario agregado con éxito.');
     }
 }

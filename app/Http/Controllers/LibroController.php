@@ -80,7 +80,6 @@ class LibroController extends Controller
 
             $rating = 'No disponible';
 
-            // Fetch comments from the database using the external_id
             $comentarios = Comentario::where('external_id', $libro)->get();
 
             $book = [

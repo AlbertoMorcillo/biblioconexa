@@ -44,4 +44,18 @@ class ComentarioController extends Controller
         return redirect()->route('libros.show', ['libro' => $request->external_id])
             ->with('success', 'Comentario agregado con éxito.');
     }
+
+    public function destroy($id)
+    {
+        $comentario = Comentario::findOrFail($id);
+
+        if (Auth::id() !== $comentario->user_id) {
+            return back()->with('error', 'No tienes permiso para realizar esta acción.');
+        }
+
+        $comentario->delete();
+
+        return back()->with('success', 'Comentario eliminado con éxito.');
+    }
 }
+

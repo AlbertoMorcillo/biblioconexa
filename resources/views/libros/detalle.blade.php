@@ -17,8 +17,16 @@
             <!-- Comentarios -->
             <h3>Comentarios</h3>
             @forelse ($book['comentarios'] as $comentario)
-                <p>{{ $comentario->texto }}</p>
-                <p>Por: {{ $comentario->usuario->name }}</p>
+                <div class="comentario">
+                    <div class="header">
+                        <span class="nombre">{{ $comentario->usuario->name }}</span>
+                        <span class="puntuacion">Puntuación: {{ $comentario->puntuacion }}</span>
+                        <span class="fecha">{{ $comentario->created_at->format('d/m/Y') }}</span>
+                    </div>
+                    <div class="contenido">
+                        {{ $comentario->texto }}
+                    </div>
+                </div>
             @empty
                 <p>No hay comentarios aún.</p>
             @endforelse

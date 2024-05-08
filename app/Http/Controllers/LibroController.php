@@ -59,9 +59,20 @@ class LibroController extends Controller
                 $authors = implode(', ', $authorNames);
             }
 
-            $description = isset($bookDetails['description']['value'])
-                            ? $this->cleanDescription($bookDetails['description']['value'])
-                            : 'Descripción no disponible';
+            $description = 'Descripción no disponible'; 
+            if (!empty($bookDetails['description'])) {
+                $description = is_array($bookDetails['description']) ? $bookDetails['description']['value'] : $bookDetails['description'];
+                $description = $this->cleanDescription($description);
+            } elseif (isset($bookDetails['editions'])) {
+                foreach ($bookDetails['editions'] as $edition) {
+                    $editionResponse = $client->request('GET', 'https://openlibrary.org' . $edition . '.json');
+                    $editionDetails = json_decode($editionResponse->getBody()->getContents(), true);
+                    if (!empty($editionDetails['description'])) {
+                        $description = is_array($editionDetails['description']) ? $editionDetails['description']['value'] : $editionDetails['description'];
+                        break; 
+                    }
+                }
+            }
 
             $coverUrl = isset($bookDetails['covers'][0])
                         ? "https://covers.openlibrary.org/b/id/{$bookDetails['covers'][0]}-L.jpg"

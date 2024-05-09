@@ -254,11 +254,20 @@ footer p {
     background-color: #ff7e7e; 
     color:#000;
 }
+.extra-small-button {
+    padding: 5px 10px;
+    font-size: 12px;
+}
 
 
 /* Modal background */
 .modal-background {
-    background-color: #DAA520; /* Color de fondo para los modales */
+    background-color: #204051; /* Color de fondo para los modales */ 
+}
+
+.modal-background h1,
+.modal-background p {
+    color: #ffffff;
 }
 
 /* Cards de actividades */
@@ -597,10 +606,17 @@ button:hover, .button:hover {
 
 /* Estilos para el Modal */
 .modal-content {
-    background-color: #DAA520;
+    background-color: #204051;
     border-radius: 1.5rem;
 }
 
+
+.modal-title {
+    color: #ffffff;
+}
+.modal-body {
+    color: #ffffff;
+}
 .form-check-input {
     background-color: #ffdd57; 
     border-color: #ffdd57; 

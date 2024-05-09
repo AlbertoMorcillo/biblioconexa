@@ -1,21 +1,31 @@
-let stars = document.querySelectorAll('.star-rating .star');
-let ratingForm = document.querySelector('.rating-area form');
+let stars = document.querySelectorAll('.star-rating label');
+let ratingInputs = document.querySelectorAll('.star-rating .radio-btn'); // Captura todos los inputs
+let submitButton = document.querySelector('.submit-rating-button');
+
+
+submitButton.style.visibility = 'hidden';  // Inicialmente oculto
 
 stars.forEach((star, index) => {
     star.addEventListener('mouseover', () => highlightStars(index));
-    star.addEventListener('click', (event) => saveRating(event, index));
+    star.addEventListener('mouseout', () => removeHighlight(index));
+    star.addEventListener('click', (event) => {
+        saveRating(index);  // Actualizado para simplificar
+        submitButton.style.visibility = 'visible';  // Muestra el botón al seleccionar una puntuación
+    });
 });
 
 function highlightStars(index) {
     stars.forEach((star, i) => {
-        star.style.color = i <= index ? 'gold' : 'gray';
+        star.classList.toggle('hover', i <= index);
     });
 }
 
-function saveRating(event, index) {
-    event.preventDefault();  // Detiene el comportamiento por defecto para no recargar la página
-    rating = index + 1;      // Establece el rating seleccionado
-    console.log('Rating is', rating);
-    ratingForm.querySelector(`input[name="puntuacion"][value="${rating}"]`).checked = true;
-    ratingForm.submit();  // Envía el formulario
+function removeHighlight(index) {
+    stars.forEach((star) => {
+        star.classList.remove('hover');
+    });
+}
+
+function saveRating(index) {
+    ratingInputs[index].checked = true;  // Asegura que el input correcto está seleccionado
 }

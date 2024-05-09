@@ -216,6 +216,7 @@ footer p {
     cursor: pointer;
     transition: background-color 0.3s ease;
     border-radius: 1rem;
+    font-weight: bolder;
 }
 
 /* Sobreescribe el color de fondo para botones secundarios */
@@ -248,6 +249,7 @@ footer p {
     cursor: pointer;
     transition: background-color 0.3s ease;
     border-radius: 1rem;
+    font-weight: bolder;
 }
 
 .danger-button:hover {
@@ -295,7 +297,7 @@ a:hover,
 button:hover,
 .secondary-button:hover,
 .danger-button:hover {
-    opacity: 0.8; /* Efecto para cuando el mouse pasa sobre los elementos */
+    opacity: 0.8; 
 }
 
 /* Hover*/
@@ -834,6 +836,13 @@ input[type="password"] {
 .star-rating input[type="radio"]:checked ~ label,
 .star-rating label:hover ~ label,
 .star-rating label:hover {
-    color: #fff;
+    color: #000000;
     background: #f90;
+}
+
+.submit-rating-button {
+    visibility: hidden;
+}
+.submit-rating-button.visible {
+    visibility: visible;
 }

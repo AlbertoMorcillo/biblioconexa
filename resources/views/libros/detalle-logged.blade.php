@@ -19,10 +19,10 @@
                     <div class="star-rating">
                         @for ($i = 5; $i >= 1; $i--)
                         <input id="star{{ $i }}" name="puntuacion" type="radio" value="{{ $i }}" class="radio-btn hide" />
-                        <label for="star{{ $i }}" >☆</label>
+                        <label for="star{{ $i }}" class="star" >☆</label>
                         @endfor
                     </div>
-                    <button type="submit" class="btn button mt-2">Enviar Puntuación</button>
+                    <button type="submit" class="btn button mt-2" style="display: none;">Enviar Puntuación</button>
                 </form>
             </div>
         </div>
@@ -92,9 +92,9 @@
                     @method('DELETE')
                     <input type="hidden" name="comentarioId" id="comentarioIdToDelete">
                 </form>
-                <button type="button" class="btn secondary-button" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn danger-button" id="confirmDeleteButton"
+                <button type="button" the "confirmDeleteButton" class="btn danger-button"
                     onclick="deleteComment()">Eliminar</button>
+                <button type="button" class="btn secondary-button" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>

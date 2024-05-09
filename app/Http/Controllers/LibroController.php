@@ -43,11 +43,15 @@ class LibroController extends Controller
     {
         $client = new Client();
         try {
+            // Obtención de datos del libro de Open Library o cualquier otra fuente.
             $response = $client->request('GET', "https://openlibrary.org/works/$libro.json");
             $bookDetails = json_decode($response->getBody()->getContents(), true);
-
+    
+            // Configuración de valores predeterminados
             $defaultCoverUrl = asset('images/libros/default_cover.jpg');
             $authors = 'Autor no disponible';
+    
+            // Procesamiento de autores si están disponibles
             if (isset($bookDetails['authors']) && is_array($bookDetails['authors'])) {
                 $authorKeys = array_column($bookDetails['authors'], 'author');
                 $authorNames = [];
@@ -58,7 +62,8 @@ class LibroController extends Controller
                 }
                 $authors = implode(', ', $authorNames);
             }
-
+    
+            // Procesamiento de la descripción
             $description = 'Descripción no disponible';
             if (!empty($bookDetails['description'])) {
                 $description = is_array($bookDetails['description']) ? $bookDetails['description']['value'] : $bookDetails['description'];
@@ -73,18 +78,22 @@ class LibroController extends Controller
                     }
                 }
             }
-
+    
+            // Configuración de la portada del libro
             $coverUrl = isset($bookDetails['covers'][0])
                 ? "https://covers.openlibrary.org/b/id/{$bookDetails['covers'][0]}-L.jpg"
                 : $defaultCoverUrl;
-
+    
+            // Búsqueda del modelo Libro en la base de datos local
             $libroModel = Libro::where('external_id', $libro)->first();
-
-            // Calculate the average rating
+    
+            // Cálculo de la puntuación media
             $rating = $libroModel ? number_format($libroModel->promedioPuntuacion(), 1) : 'No disponible';
-
+    
+            // Obtención de comentarios
             $comentarios = Comentario::where('external_id', $libro)->get();
-
+    
+            // Preparación de la respuesta a la vista
             $book = [
                 'title' => $bookDetails['title'] ?? 'Título no disponible',
                 'authors' => $authors,
@@ -94,13 +103,16 @@ class LibroController extends Controller
                 'comentarios' => $comentarios,
                 'external_id' => $libro
             ];
-
+    
+            // Determinación de la vista en base al estado de autenticación del usuario
             $view = Auth::check() ? 'libros.detalle-logged' : 'libros.detalle';
             return view($view, ['book' => $book]);
         } catch (\Exception $e) {
+            // Manejo de errores
             return back()->withErrors('Error al recuperar los detalles del libro: ' . $e->getMessage());
         }
     }
+    
     private function cleanDescription($description)
     {
 

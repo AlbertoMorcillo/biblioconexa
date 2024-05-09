@@ -40,11 +40,14 @@ Route::post('/comentarios', [ComentarioController::class], 'store')->name('comen
 
 Route::delete('/comentarios/{comentario}', [ComentarioController::class, 'destroy'])->name('comentarios.destroy');
 
+Route::post('/puntuaciones/{externalId}', [App\Http\Controllers\PuntuacionController::class, 'store'])->name('puntuaciones.store');
+
 
 
 // Tarjeta Personal routes accessible to both registered and non-registered users
 Route::resource('tarjetaPersonal', TarjetaPersonalController::class)
     ->only(['create', 'store', 'index', 'show']);  // Exposing only non-sensitive routes
+
 
 // Routes for registered users
 Route::middleware('auth')->group(function () {

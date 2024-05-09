@@ -799,3 +799,41 @@ input[type="password"] {
     font-size: 1rem;
 }
 
+/* Estilos para estrellas */
+
+.rating-area {
+    float:left;
+    /* width:300px; */
+}
+
+.star-rating {
+    direction: rtl;
+    /* float: left; */
+}
+
+.star-rating input[type="radio"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.star-rating label {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    color: #333;
+    background: #ccc;
+    font-size: 30px;
+    margin-right: 2px;
+    line-height: 30px;
+    transition: color 0.2s, background 0.2s;
+}
+
+.star-rating input[type="radio"]:checked ~ label,
+.star-rating label:hover ~ label,
+.star-rating label:hover {
+    color: #fff;
+    background: #f90;
+}

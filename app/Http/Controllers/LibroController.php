@@ -59,7 +59,7 @@ class LibroController extends Controller
                 $authors = implode(', ', $authorNames);
             }
 
-            $description = 'Descripción no disponible'; 
+            $description = 'Descripción no disponible';
             if (!empty($bookDetails['description'])) {
                 $description = is_array($bookDetails['description']) ? $bookDetails['description']['value'] : $bookDetails['description'];
                 $description = $this->cleanDescription($description);
@@ -69,16 +69,19 @@ class LibroController extends Controller
                     $editionDetails = json_decode($editionResponse->getBody()->getContents(), true);
                     if (!empty($editionDetails['description'])) {
                         $description = is_array($editionDetails['description']) ? $editionDetails['description']['value'] : $editionDetails['description'];
-                        break; 
+                        break;
                     }
                 }
             }
 
             $coverUrl = isset($bookDetails['covers'][0])
-                        ? "https://covers.openlibrary.org/b/id/{$bookDetails['covers'][0]}-L.jpg"
-                        : $defaultCoverUrl;
+                ? "https://covers.openlibrary.org/b/id/{$bookDetails['covers'][0]}-L.jpg"
+                : $defaultCoverUrl;
 
-            $rating = 'No disponible';
+            $libroModel = Libro::where('external_id', $libro)->first();
+
+            // Calculate the average rating
+            $rating = $libroModel ? number_format($libroModel->promedioPuntuacion(), 1) : 'No disponible';
 
             $comentarios = Comentario::where('external_id', $libro)->get();
 
@@ -89,7 +92,7 @@ class LibroController extends Controller
                 'cover_url' => $coverUrl,
                 'rating' => $rating,
                 'comentarios' => $comentarios,
-                'external_id' => $libro 
+                'external_id' => $libro
             ];
 
             $view = Auth::check() ? 'libros.detalle-logged' : 'libros.detalle';
@@ -101,7 +104,7 @@ class LibroController extends Controller
     private function cleanDescription($description)
     {
 
-         // Elimina enlaces en formato Markdown
+        // Elimina enlaces en formato Markdown
         $description = preg_replace('/\[(.*?)\]\(.*?\)/', '$1', $description);
         // Elimina enlaces directos en formato HTML
         $description = preg_replace('/\bhttps?:\/\/\S+/i', '', $description);

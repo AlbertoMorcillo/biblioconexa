@@ -15,4 +15,10 @@ class Comentario extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function puntuacion()
+    {
+        return $this->hasOne(Puntuacion::class, 'external_id', 'external_id')
+                    ->where('user_id', $this->user_id);
+    }
 }

@@ -11,7 +11,7 @@
         <div class="col-md-8">
             <h1>{{ $book['title'] }}</h1>
             <p><strong>Autor/a:</strong> {{ $book['authors'] }}</p>
-            <p><strong>Puntuación:</strong> {{ $book['rating'] }}</p>
+            <p><strong>Puntuación media:</strong> {{ $book['rating'] }}</p>
             <p><strong>Sinopsis:</strong> {{ $book['description'] }}</p>
 
             <!-- Comentarios -->
@@ -20,7 +20,8 @@
                 <div class="comentario">
                     <div class="header">
                         <span class="nombre">{{ $comentario->usuario->name }}</span>
-                        <span class="puntuacion">Puntuación: {{ $comentario->puntuacion }}</span>
+                        <!-- Accede a la puntuación relacionada -->
+                        <span class="puntuacion">Puntuación: {{ $comentario->puntuacion->puntuacion ?? 'No disponible' }}</span>
                         <span class="fecha">{{ $comentario->created_at->format('d/m/Y') }}</span>
                     </div>
                     <div class="contenido">
@@ -34,4 +35,3 @@
     </div>
 </div>
 @endsection
-

@@ -47,4 +47,12 @@ class Libro extends Model
     {
         return $this->puntuaciones()->avg('puntuacion');
     }
+
+
+    public function puntuacionDeUsuario($userId)
+    {
+        return $this->hasOne(Puntuacion::class, 'external_id', 'external_id')
+            ->where('user_id', $userId)
+            ->first();
+    }
 }

@@ -11,7 +11,6 @@ class CreateEstanteriasTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id'); // Clave foránea del usuario
             $table->string('nombre', 255); // Nombre de la estantería, que puede ser personalizado
-            $table->enum('estado', ['leyendo', 'leidos', 'quieroLeer', 'abandonado', 'sinEstado'])->default('sinEstado'); // Estado predeterminado
 
             $table->timestamps();
 
@@ -24,5 +23,3 @@ class CreateEstanteriasTable extends Migration
         Schema::dropIfExists('estanterias');
     }
 }
-
-

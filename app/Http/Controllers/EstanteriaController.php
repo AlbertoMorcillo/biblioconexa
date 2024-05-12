@@ -24,13 +24,13 @@ class EstanteriaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|string|max:255',
-            'estado' => 'required|in:leyendo,leidos,quieroLeer,abandonado'
+            'nombre' => 'required|string|max:255'
         ]);
-
+    
         $estanteria = new Estanteria($request->all());
+        $estanteria->user_id = auth()->id(); // Asegurarse de que la estantería esté vinculada al usuario autenticado
         $estanteria->save();
-
+    
         return redirect()->route('estanterias.index')->with('success', 'Estantería creada con éxito.');
     }
 
@@ -46,16 +46,14 @@ class EstanteriaController extends Controller
         return view('estanterias.edit', compact('estanteria'));
     }
 
-    // Actualiza una estantería en la base de datos
     public function update(Request $request, Estanteria $estanteria)
     {
         $request->validate([
-            'nombre' => 'required|string|max:255',
-            'estado' => 'required|in:leyendo,leidos,quieroLeer,abandonado,sinEstado'
+            'nombre' => 'required|string|max:255'
         ]);
-
+    
         $estanteria->update($request->all());
-
+    
         return redirect()->route('estanterias.index')->with('success', 'Estantería actualizada con éxito.');
     }
 

@@ -1,7 +1,7 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
+    PuntuacionController,
     OpenLibraryBooksController,
     GoogleBooksController,
     ProfileController,
@@ -30,33 +30,26 @@ Route::view('/catalogo', 'usuarioNoRegistrado.catalogo')->name('catalogo');
 Route::view('/sobreNosotros', 'usuarioNoRegistrado.sobreNosotros')->name('sobreNosotros');
 Route::view('/horarioCalendario', 'usuarioNoRegistrado.horarioCalendario')->name('horarioCalendario');
 
-//Route::get('/search', [GoogleBooksController::class, 'search'])->name('search-books');
 Route::get('/search', [OpenLibraryBooksController::class, 'search'])->name('search-books');
-//Route::get('/libros/{key}', [OpenLibraryBooksController::class, 'show'])->name('libros.show');
-
 
 Route::get('/libros/{libro}', [LibroController::class, 'show'])->name('libros.show');
-Route::post('/comentarios', [ComentarioController::class], 'store')->name('comentarios.store');
-
+Route::post('/comentarios', [ComentarioController::class, 'store'])->name('comentarios.store');
 Route::delete('/comentarios/{comentario}', [ComentarioController::class, 'destroy'])->name('comentarios.destroy');
+Route::post('/puntuaciones/{externalId}', [PuntuacionController::class, 'store'])->name('puntuaciones.store');
 
-Route::post('/puntuaciones/{externalId}', [App\Http\Controllers\PuntuacionController::class, 'store'])->name('puntuaciones.store');
-
-
-
-// Tarjeta Personal routes accessible to both registered and non-registered users
-Route::resource('tarjetaPersonal', TarjetaPersonalController::class)
-    ->only(['create', 'store', 'index', 'show']);  // Exposing only non-sensitive routes
-
+// Handling bookshelves and book statuses
+Route::middleware('auth')->group(function () {
+    Route::get('/estanterias/{user}', [EstanteriaController::class, 'index'])->name('estanterias.index');
+    Route::post('/estanterias-libros', [EstanteriaLibroController::class, 'store'])->name('estanteriasLibros.store');
+    Route::put('/estanterias-libros/{externalId}', [EstanteriaLibroController::class, 'update'])->name('estanteriasLibros.update');
+});
 
 // Routes for registered users
 Route::middleware('auth')->group(function () {
     Route::get('/index-logged', function () {
         return view('usuarioLogged.index-logged');
     })->name('index-logged');
-
     Route::get('/mis-libros', [UserController::class, 'misLibros'])->name('mis-libros');
-
     Route::resources([
         'users' => UserController::class,
         'autores' => AutorController::class,
@@ -66,23 +59,18 @@ Route::middleware('auth')->group(function () {
         'estanterias' => EstanteriaController::class,
         'comentarios' => ComentarioController::class,
         'estanteriasLibros' => EstanteriaLibroController::class,
-        
     ]);
-
     Route::resource('tarjetaPersonal', TarjetaPersonalController::class)
         ->only(['edit', 'update', 'destroy']);
-
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
     Route::view('/tarjetaPersonal-logged', 'usuarioLogged.tarjetaPersonal-logged')->name('tarjetaPersonal-logged');
     Route::view('/actividades-logged', 'usuarioLogged.actividades-logged')->name('actividades-logged');
     Route::view('/noticias-logged', 'usuarioLogged.noticias-logged')->name('noticias-logged');
     Route::view('/catalogo-logged', 'usuarioLogged.catalogo-logged')->name('catalogo-logged');
     Route::view('/sobreNosotros-logged', 'usuarioLogged.sobreNosotros-logged')->name('sobreNosotros-logged');
     Route::view('/horarioCalendario-logged', 'usuarioLogged.horarioCalendario-logged')->name('horarioCalendario-logged');
-
     Route::middleware('can:manage-news')->group(function () {
         Route::get('/noticias/create', [NoticiaController::class, 'create'])->name('noticias.create');
         Route::post('/noticias', [NoticiaController::class, 'store'])->name('noticias.store');

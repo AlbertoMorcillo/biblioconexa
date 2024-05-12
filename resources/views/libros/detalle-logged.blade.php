@@ -12,6 +12,9 @@
         <div class="row">
             <div class="col-md-4">
                 <img src="{{ $book['cover_url'] }}" class="img-fluid" alt="Portada del libro: {{ $book['title'] }}">
+                <button type="button" class="btn button mt-4" data-bs-toggle="modal" data-bs-target="#estadoLibroModal">
+                    Actualizar estado del libro
+                </button>
                 <!-- Sistema de puntuación -->
                 <div class="rating-area mt-4">
                     <form action="{{ route('puntuaciones.store', $book['external_id']) }}" method="POST">
@@ -103,4 +106,31 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal estanterias -->
+<div class="modal fade" id="estadoLibroModal" tabindex="-1" aria-labelledby="estadoLibroModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="estadoLibroModalLabel">Actualizar Estado del Libro</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{{ route('estanteriasLibros.update', ['estanteriasLibro' => $book['external_id']]) }}" method="post">                @csrf
+            @method('PUT')
+            <div class="mb-3">
+              <label for="estado" class="form-label">Elige un estado:</label>
+              <select class="form-select" name="estado" required>
+                <option value="leyendo">Leyendo</option>
+                <option value="leidos">Leídos</option>
+                <option value="quieroLeer">Quiero leer</option>
+                <option value="abandonado">Abandonado</option>
+              </select>
+            </div>
+            <button type="submit" class="btn button">Actualizar Estado</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection

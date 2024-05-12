@@ -55,4 +55,12 @@ class Libro extends Model
             ->where('user_id', $userId)
             ->first();
     }
+
+    public function estadoParaUsuario($userId)
+{
+    return $this->hasMany(EstanteriaLibro::class, 'external_id', 'external_id')
+                ->where('user_id', $userId)
+                ->first();
+}
+
 }

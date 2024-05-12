@@ -27,13 +27,13 @@ class EstanteriaLibroController extends Controller
     {
         $validatedData = $request->validate([
             'estanteria_id' => 'required|exists:estanterias,id',
-            'external_id' => 'required'  // Asegúrate de validar adecuadamente el external_id
+            'external_id' => 'required' 
         ]);
     
         EstanteriaLibro::create([
             'estanteria_id' => $validatedData['estanteria_id'],
             'external_id' => $validatedData['external_id'],
-            'estado' => 'sinEstado'  // Estado inicial, ajusta según necesidad
+            'estado' => 'sinEstado' 
         ]);
     
         return redirect()->route('estanteriasLibros.index')->with('success', 'Libro añadido a la estantería exitosamente.');

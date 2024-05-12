@@ -35,6 +35,7 @@
             <div class="col-md-8">
                 <h1>{{ $book['title'] }}</h1>
                 <p><strong>Autor/a:</strong> {{ $book['authors'] }}</p>
+                <p><strong>Estado:</strong> {{ $book['estadoDelLibro'] }}</p>
                 <p><strong>Puntuación media:</strong> {{ $book['rating'] }}</p>
                 <p><strong>Tu puntuación:</strong> {{ $book['userPuntuacion'] }}</p>
                 <p lang="en"><strong>Sinopsis:</strong> {{ $book['description'] }}</p>

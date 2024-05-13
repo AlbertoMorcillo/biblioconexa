@@ -36,12 +36,13 @@ Route::get('/libros/{libro}', [LibroController::class, 'show'])->name('libros.sh
 Route::post('/comentarios', [ComentarioController::class, 'store'])->name('comentarios.store');
 Route::delete('/comentarios/{comentario}', [ComentarioController::class, 'destroy'])->name('comentarios.destroy');
 Route::post('/puntuaciones/{externalId}', [PuntuacionController::class, 'store'])->name('puntuaciones.store');
-
+Route::post('/tarjetaPersonal', [App\Http\Controllers\TarjetaPersonalController::class, 'store'])->name('tarjetaPersonal.store');
 // Handling bookshelves and book statuses
 Route::middleware('auth')->group(function () {
     Route::get('/estanterias/{user}', [EstanteriaController::class, 'index'])->name('estanterias.index');
     Route::post('/estanterias-libros', [EstanteriaLibroController::class, 'store'])->name('estanteriasLibros.store');
     Route::put('/estanterias-libros/{externalId}', [EstanteriaLibroController::class, 'update'])->name('estanteriasLibros.update');
+    Route::get('/mis-libros', [EstanteriaLibroController::class, 'index'])->name('estanteriasLibros.index'); // Modificado para usar EstanteriaLibroController
 });
 
 // Routes for registered users
@@ -61,7 +62,7 @@ Route::middleware('auth')->group(function () {
         'estanteriasLibros' => EstanteriaLibroController::class,
     ]);
     Route::resource('tarjetaPersonal', TarjetaPersonalController::class)
-        ->only(['edit', 'update', 'destroy']);
+    ->only(['index', 'edit', 'update', 'destroy']);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

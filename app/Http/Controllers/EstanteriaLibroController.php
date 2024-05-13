@@ -12,9 +12,22 @@ class EstanteriaLibroController extends Controller
 {
     public function index()
     {
-        $estanteriasLibros = EstanteriaLibro::with(['estanteria', 'libro'])->get();
-        return view('estanteriasLibros.index', compact('estanteriasLibros'));
+        // Asegúrate de que el usuario está autenticado
+        $userId = auth()->id(); // Obtiene el ID del usuario autenticado
+
+        // Obtiene todos los libros en las estanterías del usuario con detalles del libro y la estantería
+        $libros = EstanteriaLibro::with(['libro', 'estanteria'])
+                    ->join('estanterias', 'estanterias_libros.estanteria_id', '=', 'estanterias.id')
+                    ->join('libros', 'estanterias_libros.external_id', '=', 'libros.external_id')
+                    ->where('estanterias.user_id', $userId)
+                    ->orderBy('estanterias_libros.estado')
+                    ->get();
+
+        // Retorna la vista con los libros obtenidos
+        return view('estanteriasLibros.index', ['libros' => $libros]);
     }
+    
+    
 
     public function create()
     {

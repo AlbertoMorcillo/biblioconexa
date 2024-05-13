@@ -733,6 +733,12 @@ input[type="password"] {
     font-weight: bolder;
 }
 
+.nav-tabs .nav-link.active:hover {
+    color: #3182ce; /* Un color azul para los enlaces activos */
+    border-color: #e2e8f0 #e2e8f0 #fff; /* Un borde gris claro en la parte superior e izquierda, y blanco en la parte inferior */
+    font-weight: bolder;
+}
+
 /* Paginación Personalizada */
 .pagination {
     display: flex;

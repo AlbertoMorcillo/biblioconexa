@@ -20,7 +20,7 @@ class Estanteria extends Model
 
     public function libros()
     {
-        return $this->belongsToMany(Libro::class, 'estanterias_libros', 'estanteria_id', 'libro_id')
+        return $this->belongsToMany(Libro::class, 'estanterias_libros', 'estanteria_id', 'external_id')
                     ->withTimestamps(); // Esta relación también podría incluir el manejo del estado si es necesario
     }
 }

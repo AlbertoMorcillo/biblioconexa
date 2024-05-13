@@ -33,7 +33,7 @@ class Libro extends Model
 
     public function estanterias()
     {
-        return $this->belongsToMany(Estanteria::class, 'estanterias_libros', 'libro_id', 'estanteria_id');
+        return $this->belongsToMany(Estanteria::class, 'estanterias_libros', 'external_id', 'estanteria_id');
     }
 
     // Corrige la relación de puntuaciones para usar 'external_id'
@@ -57,10 +57,9 @@ class Libro extends Model
     }
 
     public function estadoParaUsuario($userId)
-{
-    return $this->hasMany(EstanteriaLibro::class, 'external_id', 'external_id')
-                ->where('user_id', $userId)
-                ->first();
-}
-
+    {
+        return $this->hasMany(EstanteriaLibro::class, 'external_id', 'external_id')
+            ->where('user_id', $userId)
+            ->first();
+    }
 }

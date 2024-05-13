@@ -20,6 +20,6 @@ class EstanteriaLibro extends Model
 
     public function libro()
     {
-        return $this->belongsTo(Libro::class, 'libro_id');
+        return $this->belongsTo(Libro::class, 'external_id');
     }
 }

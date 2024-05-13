@@ -43,87 +43,87 @@ class LibroController extends Controller
     }
 
     public function show($libro)
-{
-    $client = new Client();
-    try {
-        // Obtención de datos del libro de Open Library o cualquier otra fuente.
-        $response = $client->request('GET', "https://openlibrary.org/works/$libro.json");
-        $bookDetails = json_decode($response->getBody()->getContents(), true);
+    {
+        $client = new Client();
+        try {
+            // Obtención de datos del libro de Open Library o cualquier otra fuente.
+            $response = $client->request('GET', "https://openlibrary.org/works/$libro.json");
+            $bookDetails = json_decode($response->getBody()->getContents(), true);
 
-        // Configuración de valores predeterminados
-        $defaultCoverUrl = asset('images/libros/default_cover.jpg');
-        $authors = 'Autor no disponible';
+            // Configuración de valores predeterminados
+            $defaultCoverUrl = asset('images/libros/default_cover.jpg');
+            $authors = 'Autor no disponible';
 
-        // Procesamiento de autores si están disponibles
-        if (isset($bookDetails['authors']) && is_array($bookDetails['authors'])) {
-            $authorKeys = array_column($bookDetails['authors'], 'author');
-            $authorNames = [];
-            foreach ($authorKeys as $key) {
-                $authorResponse = $client->request('GET', 'https://openlibrary.org' . $key['key'] . '.json');
-                $authorDetails = json_decode($authorResponse->getBody()->getContents(), true);
-                $authorNames[] = $authorDetails['name'] ?? 'Nombre no disponible';
+            // Procesamiento de autores si están disponibles
+            if (isset($bookDetails['authors']) && is_array($bookDetails['authors'])) {
+                $authorKeys = array_column($bookDetails['authors'], 'author');
+                $authorNames = [];
+                foreach ($authorKeys as $key) {
+                    $authorResponse = $client->request('GET', 'https://openlibrary.org' . $key['key'] . '.json');
+                    $authorDetails = json_decode($authorResponse->getBody()->getContents(), true);
+                    $authorNames[] = $authorDetails['name'] ?? 'Nombre no disponible';
+                }
+                $authors = implode(', ', $authorNames);
             }
-            $authors = implode(', ', $authorNames);
-        }
 
-        // Procesamiento de la descripción
-        $description = 'Descripción no disponible';
-        if (!empty($bookDetails['description'])) {
-            $description = is_array($bookDetails['description']) ? $bookDetails['description']['value'] : $bookDetails['description'];
-            $description = $this->cleanDescription($description);
-        } elseif (isset($bookDetails['editions'])) {
-            foreach ($bookDetails['editions'] as $edition) {
-                $editionResponse = $client->request('GET', 'https://openlibrary.org' . $edition . '.json');
-                $editionDetails = json_decode($editionResponse->getBody()->getContents(), true);
-                if (!empty($editionDetails['description'])) {
-                    $description = is_array($editionDetails['description']) ? $editionDetails['description']['value'] : $editionDetails['description'];
-                    break;
+            // Procesamiento de la descripción
+            $description = 'Descripción no disponible';
+            if (!empty($bookDetails['description'])) {
+                $description = is_array($bookDetails['description']) ? $bookDetails['description']['value'] : $bookDetails['description'];
+                $description = $this->cleanDescription($description);
+            } elseif (isset($bookDetails['editions'])) {
+                foreach ($bookDetails['editions'] as $edition) {
+                    $editionResponse = $client->request('GET', 'https://openlibrary.org' . $edition . '.json');
+                    $editionDetails = json_decode($editionResponse->getBody()->getContents(), true);
+                    if (!empty($editionDetails['description'])) {
+                        $description = is_array($editionDetails['description']) ? $editionDetails['description']['value'] : $editionDetails['description'];
+                        break;
+                    }
                 }
             }
+
+            // Configuración de la portada del libro
+            $coverUrl = isset($bookDetails['covers'][0]) ? "https://covers.openlibrary.org/b/id/{$bookDetails['covers'][0]}-L.jpg" : $defaultCoverUrl;
+
+            // Búsqueda del modelo Libro en la base de datos local y el estado actual del libro para el usuario
+            $libroModel = Libro::where('external_id', $libro)->first();
+
+            // Cálculo de la puntuación media
+            $rating = Puntuacion::promedioPuntuacion($libro);
+
+            // Obtención de comentarios
+            $comentarios = Comentario::where('external_id', $libro)->get();
+
+            // Puntuación del usuario actual
+            $userPuntuacion = Auth::check() ? $this->getUserPuntuacion($libro) : 'No has puntuado este libro';
+
+            // Estado del libro para el usuario actual
+            $estado = EstanteriaLibro::join('estanterias', 'estanterias_libros.estanteria_id', '=', 'estanterias.id')
+                ->where('estanterias_libros.external_id', $libro)
+                ->where('estanterias.user_id', auth()->id())
+                ->first();
+
+            // Preparación de la respuesta a la vista
+            $book = [
+                'title' => $bookDetails['title'] ?? 'Título no disponible',
+                'authors' => $authors,
+                'description' => $description,
+                'cover_url' => $coverUrl,
+                'rating' => $rating,
+                'comentarios' => $comentarios,
+                'userPuntuacion' => $userPuntuacion,
+                'estadoDelLibro' => $estado ? $this->formatoEstadoLibros($estado->estado) : 'Sin Estado',
+                'external_id' => $libro
+            ];
+
+            // Determinación de la vista en base al estado de autenticación del usuario
+            $view = Auth::check() ? 'libros.detalle-logged' : 'libros.detalle';
+            return view($view, ['book' => $book]);
+        } catch (\Exception $e) {
+            // Manejo de errores
+            return back()->withErrors('Error al recuperar los detalles del libro: ' . $e->getMessage());
         }
-
-        // Configuración de la portada del libro
-        $coverUrl = isset($bookDetails['covers'][0]) ? "https://covers.openlibrary.org/b/id/{$bookDetails['covers'][0]}-L.jpg" : $defaultCoverUrl;
-
-        // Búsqueda del modelo Libro en la base de datos local y el estado actual del libro para el usuario
-        $libroModel = Libro::where('external_id', $libro)->first();
-
-        // Cálculo de la puntuación media
-        $rating = $libroModel ? number_format($libroModel->promedioPuntuacion(), 1) : 'No disponible';
-
-        // Obtención de comentarios
-        $comentarios = Comentario::where('external_id', $libro)->get();
-
-        // Puntuación del usuario actual
-        $userPuntuacion = Auth::check() ? $this->getUserPuntuacion($libro) : 'No has puntuado este libro';
-
-        // Estado del libro para el usuario actual
-        $estado = EstanteriaLibro::join('estanterias', 'estanterias_libros.estanteria_id', '=', 'estanterias.id')
-            ->where('estanterias_libros.external_id', $libro)
-            ->where('estanterias.user_id', auth()->id())
-            ->first();
-
-        // Preparación de la respuesta a la vista
-        $book = [
-            'title' => $bookDetails['title'] ?? 'Título no disponible',
-            'authors' => $authors,
-            'description' => $description,
-            'cover_url' => $coverUrl,
-            'rating' => $rating,
-            'comentarios' => $comentarios,
-            'userPuntuacion' => $userPuntuacion,
-            'estadoDelLibro' => $estado ? $this->formatoEstadoLibros($estado->estado) : 'Sin Estado',
-            'external_id' => $libro
-        ];
-
-        // Determinación de la vista en base al estado de autenticación del usuario
-        $view = Auth::check() ? 'libros.detalle-logged' : 'libros.detalle';
-        return view($view, ['book' => $book]);
-    } catch (\Exception $e) {
-        // Manejo de errores
-        return back()->withErrors('Error al recuperar los detalles del libro: ' . $e->getMessage());
     }
-}
 
 
 
@@ -171,9 +171,9 @@ class LibroController extends Controller
     }
 
     private function getUserPuntuacion($externalId)
-{
-    return Puntuacion::where('external_id', $externalId)->where('user_id', Auth::id())->first()->puntuacion ?? 'No has puntuado este libro';
-}
+    {
+        return Puntuacion::where('external_id', $externalId)->where('user_id', Auth::id())->first()->puntuacion ?? 'No has puntuado este libro';
+    }
 
     private function formatoEstadoLibros($status)
     {

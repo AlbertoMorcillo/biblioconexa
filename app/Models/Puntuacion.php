@@ -22,4 +22,10 @@ class Puntuacion extends Model
     {
         return $this->belongsTo(Libro::class, 'external_id', 'external_id');
     }
+
+    public static function promedioPuntuacion($externalId)
+    {
+        $average = self::where('external_id', $externalId)->avg('puntuacion');
+        return number_format($average, 1);
+    }
 }

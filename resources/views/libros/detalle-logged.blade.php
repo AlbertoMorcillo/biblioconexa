@@ -54,6 +54,7 @@
                         <div class="header">
                             <span class="nombre">{{ $comentario->usuario->name }}</span>
                             <span class="fecha">{{ $comentario->created_at->format('d/m/Y') }}</span>
+                            <span class="puntuacion">Puntuación: {{ $comentario->puntuacion->puntuacion ?? 'No disponible' }}</span>
                             @if (Auth::id() === $comentario->user_id)
                                 <!-- Botón que activa el modal -->
                                 <button type="button" class="btn danger-button btn-sm extra-small-button"

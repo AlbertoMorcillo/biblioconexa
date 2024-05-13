@@ -45,15 +45,22 @@ class EstanteriaLibroController extends Controller
             'estado' => 'required|in:leyendo,leidos,quieroLeer,abandonado,sinEstado'
         ]);
     
+        // Obtiene el ID de la estantería basada en el estado y el usuario
         $estanteria = Estanteria::where('user_id', auth()->id())->firstOrCreate([
             'user_id' => auth()->id(),
             'nombre' => $validatedData['estado']
         ]);
     
-        EstanteriaLibro::updateOrCreate([
+        // Primero, intenta eliminar cualquier estado existente para este libro y usuario
+        EstanteriaLibro::where('external_id', $externalId)
+                       ->whereHas('estanteria', function ($query) {
+                           $query->where('user_id', auth()->id());
+                       })->delete();
+    
+        // Ahora, crea un nuevo registro con el estado actualizado
+        EstanteriaLibro::create([
             'external_id' => $externalId,
-            'estanteria_id' => $estanteria->id
-        ], [
+            'estanteria_id' => $estanteria->id,
             'estado' => $validatedData['estado']
         ]);
     

@@ -48,11 +48,11 @@ class LibroController extends Controller
             // Obtención de datos del libro de Open Library o cualquier otra fuente.
             $response = $client->request('GET', "https://openlibrary.org/works/$libro.json");
             $bookDetails = json_decode($response->getBody()->getContents(), true);
-    
+
             // Configuración de valores predeterminados
             $defaultCoverUrl = asset('images/libros/default_cover.jpg');
             $authors = 'Autor no disponible';
-    
+
             // Procesamiento de autores si están disponibles
             if (isset($bookDetails['authors']) && is_array($bookDetails['authors'])) {
                 $authorKeys = array_column($bookDetails['authors'], 'author');
@@ -64,7 +64,7 @@ class LibroController extends Controller
                 }
                 $authors = implode(', ', $authorNames);
             }
-    
+
             // Procesamiento de la descripción
             $description = 'Descripción no disponible';
             if (!empty($bookDetails['description'])) {
@@ -80,31 +80,31 @@ class LibroController extends Controller
                     }
                 }
             }
-    
+
             // Configuración de la portada del libro
             $coverUrl = isset($bookDetails['covers'][0]) ? "https://covers.openlibrary.org/b/id/{$bookDetails['covers'][0]}-L.jpg" : $defaultCoverUrl;
-    
+
             // Búsqueda del modelo Libro en la base de datos local y el estado actual del libro para el usuario
             $libroModel = Libro::where('external_id', $libro)->first();
-    
+
             // Cálculo de la puntuación media
             $rating = $libroModel ? number_format($libroModel->promedioPuntuacion(), 1) : 'No disponible';
-    
+
             // Obtención de comentarios
             $comentarios = Comentario::where('external_id', $libro)->get();
-    
+
             // Puntuación del usuario actual
             $userPuntuacion = null;
             if (Auth::check() && $libroModel) {
                 $userPuntuacion = $libroModel->puntuacionDeUsuario(auth()->id()) ? $libroModel->puntuacionDeUsuario(auth()->id())->puntuacion : 'No has puntuado este libro';
             }
-    
+
             // Estado del libro para el usuario actual
             $estado = EstanteriaLibro::join('estanterias', 'estanterias_libros.estanteria_id', '=', 'estanterias.id')
                 ->where('estanterias_libros.external_id', $libro)
                 ->where('estanterias.user_id', auth()->id())
                 ->first();
-    
+
             // Preparación de la respuesta a la vista
             $book = [
                 'title' => $bookDetails['title'] ?? 'Título no disponible',
@@ -114,10 +114,10 @@ class LibroController extends Controller
                 'rating' => $rating,
                 'comentarios' => $comentarios,
                 'userPuntuacion' => $userPuntuacion,
-                'estadoDelLibro' => $estado ? $estado->estado : 'Sin Estado',
+                'estadoDelLibro' => $estado ? $this->formatoEstadoLibros($estado->estado) : 'Sin Estado',
                 'external_id' => $libro
             ];
-    
+
             // Determinación de la vista en base al estado de autenticación del usuario
             $view = Auth::check() ? 'libros.detalle-logged' : 'libros.detalle';
             return view($view, ['book' => $book]);
@@ -126,7 +126,7 @@ class LibroController extends Controller
             return back()->withErrors('Error al recuperar los detalles del libro: ' . $e->getMessage());
         }
     }
-    
+
 
 
 
@@ -170,5 +170,21 @@ class LibroController extends Controller
     {
         $libro->delete();
         return redirect()->route('libros.index')->with('success', 'Libro eliminado exitosamente.');
+    }
+
+    private function formatoEstadoLibros($status)
+    {
+        switch ($status) {
+            case 'leyendo':
+                return 'Leyendo actualmente';
+            case 'leidos':
+                return 'Leído';
+            case 'quieroLeer':
+                return 'Quiero leerlo';
+            case 'abandonado':
+                return 'Abandonado';
+            default:
+                return 'Sin Estado';
+        }
     }
 }

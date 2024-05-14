@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Libro extends Model
 {
     use HasFactory;
@@ -63,4 +64,5 @@ class Libro extends Model
     {
         return $this->hasMany(EstanteriaLibro::class, 'external_id', 'external_id');
     }
+    
 }

@@ -1,16 +1,16 @@
 @if($books->isEmpty())
     <p>No hay libros en esta categoría.</p>
 @else
-    <div class="row">
+    <div class="row mt-4">
         @foreach($books as $book)
-            @if($book->libro)
+            @if(isset($book->titulo))
                 <div class="col-md-4 mb-3">
                     <div class="card h-100">
-                        <img src="{{ $book->libro->portada ?? asset('images/libros/default_cover.jpg') }}" class="card-img-top" alt="Portada de {{ $book->libro->titulo }}">
+                        <img src="{{ $book->portada }}" class="card-img-top" alt="Portada de {{ $book->titulo }}">
                         <div class="card-body">
-                            <h5 class="card-title">{{ $book->libro->titulo }}</h5>
-                            <p class="card-text">{{ Str::limit($book->libro->sinopsis, 100) }}</p>
-                            <a href="{{ route('libros.show', $book->libro->external_id) }}" class="btn btn-primary">Más detalles</a>
+                            <h5 class="card-title">{{ $book->titulo }}</h5>
+                            <p class="card-text">{{ Str::limit($book->sinopsis, 100) }}</p>
+                            <a href="{{ route('estanteriasLibros.show', $book->external_id) }}" class="btn btn-primary">Más detalles</a>
                         </div>
                     </div>
                 </div>

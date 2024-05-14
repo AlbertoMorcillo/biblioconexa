@@ -7,34 +7,75 @@ use App\Models\Libro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
 class EstanteriaLibroController extends Controller
 {
+    
     public function index()
     {
-        $userId = auth()->id(); // Obtiene el ID del usuario autenticado
+        Log::info('Entrando al método index de EstanteriaLibroController');
 
-        $libros = EstanteriaLibro::with('libro')
-            ->where('user_id', $userId)
+        $userId = auth()->id(); // Obtiene el ID del usuario autenticado
+        Log::info('ID del usuario autenticado', ['userId' => $userId]);
+
+        if (!$userId) {
+            Log::error('Usuario no autenticado');
+            return redirect()->route('login')->withErrors('Debes estar autenticado para ver tus libros.');
+        }
+
+        $libros = EstanteriaLibro::where('user_id', $userId)
             ->get()
             ->map(function ($estanteriaLibro) {
-                if (!$estanteriaLibro->libro) {
-                    $client = new Client();
+                Log::info('Procesando estanteriaLibro', ['estanteriaLibro' => $estanteriaLibro]);
+                
+                $client = new Client();
+                try {
+                    Log::info('Intentando obtener detalles del libro desde la API', ['external_id' => $estanteriaLibro->external_id]);
                     $response = $client->get("https://openlibrary.org/works/{$estanteriaLibro->external_id}.json");
                     $bookDetails = json_decode($response->getBody()->getContents(), true);
+                    Log::info('Respuesta de la API obtenida', ['response' => $bookDetails]);
 
-                    $libro = Libro::create([
-                        'external_id' => $estanteriaLibro->external_id,
-                        'titulo' => $bookDetails['title'] ?? 'Título no disponible',
-                        'sinopsis' => isset($bookDetails['description']) ? (is_array($bookDetails['description']) ? $bookDetails['description']['value'] : $bookDetails['description']) : 'Descripción no disponible',
-                        'portada' => isset($bookDetails['covers'][0]) ? "https://covers.openlibrary.org/b/id/{$bookDetails['covers'][0]}-L.jpg" : null,
-                    ]);
+                    if (is_null($bookDetails)) {
+                        throw new \Exception("No se pudieron obtener los detalles del libro desde la API.");
+                    }
 
-                    $estanteriaLibro->libro()->associate($libro);
+                    Log::info('Detalles del libro obtenidos de la API', ['bookDetails' => $bookDetails]);
+
+                    // Mapea los detalles del libro en el objeto $estanteriaLibro para pasarlo a la vista
+                    $estanteriaLibro->titulo = $bookDetails['title'] ?? 'Título no disponible';
+
+                    if (isset($bookDetails['description'])) {
+                        if (is_array($bookDetails['description'])) {
+                            $estanteriaLibro->sinopsis = $bookDetails['description']['value'];
+                        } elseif (is_string($bookDetails['description'])) {
+                            $estanteriaLibro->sinopsis = $bookDetails['description'];
+                        } else {
+                            $estanteriaLibro->sinopsis = 'Descripción no disponible';
+                        }
+                    } else {
+                        $estanteriaLibro->sinopsis = 'Descripción no disponible';
+                    }
+
+                    if (isset($bookDetails['covers']) && is_array($bookDetails['covers']) && !empty($bookDetails['covers'])) {
+                        $estanteriaLibro->portada = "https://covers.openlibrary.org/b/id/{$bookDetails['covers'][0]}-L.jpg";
+                    } else {
+                        $estanteriaLibro->portada = asset('images/libros/default_cover.jpg');
+                    }
+                } catch (\Exception $e) {
+                    Log::error('Error obteniendo detalles del libro de la API', ['error' => $e->getMessage(), 'estanteriaLibro' => $estanteriaLibro]);
+                    $estanteriaLibro->titulo = 'Título no disponible';
+                    $estanteriaLibro->sinopsis = 'Descripción no disponible';
+                    $estanteriaLibro->portada = asset('images/libros/default_cover.jpg');
                 }
+
+                Log::info('EstanteriaLibro después de obtener datos de la API', ['estanteriaLibro' => $estanteriaLibro]);
+
                 return $estanteriaLibro;
             })
             ->groupBy('estado'); // Agrupa los libros por estado
+
+        Log::info('Libros agrupados por estado', ['libros' => $libros]);
 
         return view('usuarioLogged.mis-libros', compact('libros'));
     }

@@ -37,12 +37,14 @@ Route::post('/comentarios', [ComentarioController::class, 'store'])->name('comen
 Route::delete('/comentarios/{comentario}', [ComentarioController::class, 'destroy'])->name('comentarios.destroy');
 Route::post('/puntuaciones/{externalId}', [PuntuacionController::class, 'store'])->name('puntuaciones.store');
 Route::post('/tarjetaPersonal', [App\Http\Controllers\TarjetaPersonalController::class, 'store'])->name('tarjetaPersonal.store');
+
 // Handling bookshelves and book statuses
 Route::middleware('auth')->group(function () {
     Route::get('/estanterias/{user}', [EstanteriaController::class, 'index'])->name('estanterias.index');
     Route::post('/estanterias-libros', [EstanteriaLibroController::class, 'store'])->name('estanteriasLibros.store');
     Route::put('/estanterias-libros/{externalId}', [EstanteriaLibroController::class, 'update'])->name('estanteriasLibros.update');
-    Route::get('/mis-libros', [EstanteriaLibroController::class, 'index'])->name('estanteriasLibros.index'); // Modificado para usar EstanteriaLibroController
+    Route::get('/mis-libros', [EstanteriaLibroController::class, 'index'])->name('estanteriasLibros.index'); // EstanteriaLibroController maneja la ruta '/mis-libros'
+    Route::get('/mis-libros/{externalId}', [EstanteriaLibroController::class, 'show'])->name('estanteriasLibros.show'); // Nueva ruta para mostrar detalles del libro
 });
 
 // Routes for registered users
@@ -50,7 +52,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/index-logged', function () {
         return view('usuarioLogged.index-logged');
     })->name('index-logged');
-    Route::get('/mis-libros', [UserController::class, 'misLibros'])->name('mis-libros');
+
+    // Ruta conflictiva comentada
+    // Route::get('/mis-libros', [UserController::class, 'misLibros'])->name('mis-libros');
+
     Route::resources([
         'users' => UserController::class,
         'autores' => AutorController::class,
@@ -62,7 +67,7 @@ Route::middleware('auth')->group(function () {
         'estanteriasLibros' => EstanteriaLibroController::class,
     ]);
     Route::resource('tarjetaPersonal', TarjetaPersonalController::class)
-    ->only(['index', 'edit', 'update', 'destroy']);
+        ->only(['index', 'edit', 'update', 'destroy']);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

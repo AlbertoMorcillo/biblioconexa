@@ -626,7 +626,7 @@ button:hover, .button:hover {
   
   .form-check-label {
     margin-right: 10px; 
-    color: rgb(0, 0, 0); 
+    color: rgb(255, 255, 255); 
   }
   
   /* Personalizar los radio buttons cuando están seleccionados */

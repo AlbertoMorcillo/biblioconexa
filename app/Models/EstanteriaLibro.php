@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +10,7 @@ class EstanteriaLibro extends Model
 
     protected $table = 'estanterias_libros';
 
-    protected $fillable = ['estanteria_id', 'external_id', 'estado'];
+    protected $fillable = ['estanteria_id', 'external_id', 'estado', 'user_id'];
 
     public function estanteria()
     {
@@ -22,4 +21,10 @@ class EstanteriaLibro extends Model
     {
         return $this->belongsTo(Libro::class, 'external_id');
     }
+
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
+

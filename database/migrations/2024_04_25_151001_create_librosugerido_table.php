@@ -12,13 +12,14 @@ class CreateLibrosugeridoTable extends Migration
             $table->id();
             $table->string('titulo', 255)->nullable();
             $table->string('autor', 255)->nullable();
-            $table->string('isbn', 13)->nullable()->index(); // Indexación de ISBN para búsquedas rápidas
+            $table->string('isbn', 13)->nullable()->index();
             $table->string('idioma', 50)->nullable();
             $table->text('recomendacion')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->dateTime('fechaSugerencia');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -27,3 +28,4 @@ class CreateLibrosugeridoTable extends Migration
         Schema::dropIfExists('librosugerido');
     }
 }
+?>

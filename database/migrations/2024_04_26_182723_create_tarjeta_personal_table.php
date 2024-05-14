@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -9,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('tarjeta_personal', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable(); // Usamos el ID del usuario
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->enum('genero', ['Hombre', 'Mujer', 'No binario', 'Privado']);
             $table->date('fecha_nacimiento');
             $table->string('nombre');
@@ -17,12 +18,10 @@ return new class extends Migration
             $table->string('segundo_apellido');
             $table->string('correo_electronico');
             $table->string('telefono');
-            $table->string('dni', 9); // Añade esta línea para el DNI
+            $table->string('dni', 9);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users') // Referencia al ID del usuario
-                  ->onDelete('set null') // Si se borra el usuario, la referencia se pone en null
-                  ->onUpdate('cascade'); // Si se actualiza el ID del usuario, se actualiza aquí también
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
         });
     }
 
@@ -31,3 +30,4 @@ return new class extends Migration
         Schema::dropIfExists('tarjeta_personal');
     }
 };
+?>

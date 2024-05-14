@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Autor;
 
 class Libro extends Model
 {
@@ -25,7 +24,6 @@ class Libro extends Model
         return $this->belongsToMany(Autor::class, 'libro_autores', 'libro_id', 'autor_id');
     }
 
-    // Asegúrate de que 'LibroID' sea cambiado a 'external_id' si así lo usas en la tabla comentarios
     public function comentarios()
     {
         return $this->hasMany(Comentario::class, 'external_id', 'external_id');
@@ -33,21 +31,19 @@ class Libro extends Model
 
     public function estanterias()
     {
-        return $this->belongsToMany(Estanteria::class, 'estanterias_libros', 'external_id', 'estanteria_id');
+        return $this->belongsToMany(Estanteria::class, 'estanterias_libros', 'external_id', 'estanteria_id')
+                    ->withPivot('user_id', 'estado');
     }
 
-    // Corrige la relación de puntuaciones para usar 'external_id'
     public function puntuaciones()
     {
         return $this->hasMany(Puntuacion::class, 'external_id', 'external_id');
     }
 
-    // Método para calcular el promedio de puntuaciones
     public function promedioPuntuacion()
     {
         return $this->puntuaciones()->avg('puntuacion');
     }
-
 
     public function puntuacionDeUsuario($userId)
     {
@@ -58,8 +54,13 @@ class Libro extends Model
 
     public function estadoParaUsuario($userId)
     {
-        return $this->hasMany(EstanteriaLibro::class, 'external_id', 'external_id')
+        return $this->hasOne(EstanteriaLibro::class, 'external_id', 'external_id')
             ->where('user_id', $userId)
             ->first();
+    }
+
+    public function estanteriaLibros()
+    {
+        return $this->hasMany(EstanteriaLibro::class, 'external_id', 'external_id');
     }
 }

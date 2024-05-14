@@ -9,9 +9,8 @@ class CreateEstanteriasTable extends Migration
     {
         Schema::create('estanterias', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // Clave foránea del usuario
-            $table->string('nombre', 255); // Nombre de la estantería, que puede ser personalizado
-
+            $table->unsignedBigInteger('user_id');
+            $table->string('nombre', 255);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -23,3 +22,4 @@ class CreateEstanteriasTable extends Migration
         Schema::dropIfExists('estanterias');
     }
 }
+?>

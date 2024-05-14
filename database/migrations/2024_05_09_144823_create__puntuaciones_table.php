@@ -11,7 +11,7 @@ class CreatePuntuacionesTable extends Migration
         Schema::create('puntuaciones', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('external_id');  // Cambiado a string para manejar IDs como texto
+            $table->string('external_id');
             $table->decimal('puntuacion', 2, 1);
             $table->timestamps();
 
@@ -25,3 +25,4 @@ class CreatePuntuacionesTable extends Migration
         Schema::dropIfExists('puntuaciones');
     }
 }
+?>

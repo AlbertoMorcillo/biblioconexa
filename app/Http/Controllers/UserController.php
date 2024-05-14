@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Libro;
 use App\Models\Estanteria;
+use App\Models\EstanteriaLibro;
 
 class UserController extends Controller
 {
@@ -76,19 +77,15 @@ class UserController extends Controller
 
     public function misLibros()
     {
-        $userId = auth()->id();  // Asegúrate que el usuario esté autenticado para hacer esta llamada
-    
-        $estanterias = Estanteria::with(['libros' => function ($query) {
-            $query->with('autores'); // Incluimos autores para evitar N+1 en la vista
-        }])->where('user_id', $userId)->get();
-    
-        $libros = [
-            'leidos' => $estanterias->where('estado', 'leidos')->flatMap->libros,
-            'leyendo' => $estanterias->where('estado', 'leyendo')->flatMap->libros,
-            'quieroleer' => $estanterias->where('estado', 'quieroLeer')->flatMap->libros,
-            'abandonado' => $estanterias->where('estado', 'abandonado')->flatMap->libros,
-        ];
-    
+        $userId = auth()->id(); // Obtén el ID del usuario autenticado
+
+        // Obtén los libros agrupados por estado
+        $libros = EstanteriaLibro::with('libro')
+            ->where('user_id', $userId)
+            ->get()
+            ->groupBy('estado');
+
+        // Pasa los libros a la vista
         return view('usuarioLogged.mis-libros', ['libros' => $libros]);
     }
     

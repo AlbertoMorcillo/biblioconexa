@@ -10,7 +10,7 @@ class CreateLibroTable extends Migration
     {
         Schema::create('libros', function (Blueprint $table) {
             $table->id();
-            $table->string('isbn', 13)->unique()->nullable(); // Asegúrate de que realmente quieres esto como nullable
+            $table->string('isbn', 13)->unique()->nullable();
             $table->string('titulo', 255);
             $table->text('sinopsis')->nullable();
             $table->decimal('puntuacion', 2, 1)->nullable();
@@ -28,3 +28,4 @@ class CreateLibroTable extends Migration
         Schema::dropIfExists('libros');
     }
 }
+?>

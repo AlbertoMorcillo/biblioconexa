@@ -1,33 +1,43 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\EstanteriaLibro; // Modelo en singular
+use App\Models\EstanteriaLibro;
 use App\Models\Estanteria;
 use App\Models\Libro;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use GuzzleHttp\Client;
 
 class EstanteriaLibroController extends Controller
 {
     public function index()
     {
-        // Asegúrate de que el usuario está autenticado
         $userId = auth()->id(); // Obtiene el ID del usuario autenticado
 
-        // Obtiene todos los libros en las estanterías del usuario con detalles del libro y la estantería
-        $libros = EstanteriaLibro::with(['libro', 'estanteria'])
-                    ->join('estanterias', 'estanterias_libros.estanteria_id', '=', 'estanterias.id')
-                    ->join('libros', 'estanterias_libros.external_id', '=', 'libros.external_id')
-                    ->where('estanterias.user_id', $userId)
-                    ->orderBy('estanterias_libros.estado')
-                    ->get();
+        $libros = EstanteriaLibro::with('libro')
+            ->where('user_id', $userId)
+            ->get()
+            ->map(function ($estanteriaLibro) {
+                if (!$estanteriaLibro->libro) {
+                    $client = new Client();
+                    $response = $client->get("https://openlibrary.org/works/{$estanteriaLibro->external_id}.json");
+                    $bookDetails = json_decode($response->getBody()->getContents(), true);
 
-        // Retorna la vista con los libros obtenidos
-        return view('estanteriasLibros.index', ['libros' => $libros]);
+                    $libro = Libro::create([
+                        'external_id' => $estanteriaLibro->external_id,
+                        'titulo' => $bookDetails['title'] ?? 'Título no disponible',
+                        'sinopsis' => isset($bookDetails['description']) ? (is_array($bookDetails['description']) ? $bookDetails['description']['value'] : $bookDetails['description']) : 'Descripción no disponible',
+                        'portada' => isset($bookDetails['covers'][0]) ? "https://covers.openlibrary.org/b/id/{$bookDetails['covers'][0]}-L.jpg" : null,
+                    ]);
+
+                    $estanteriaLibro->libro()->associate($libro);
+                }
+                return $estanteriaLibro;
+            })
+            ->groupBy('estado'); // Agrupa los libros por estado
+
+        return view('usuarioLogged.mis-libros', compact('libros'));
     }
-    
-    
 
     public function create()
     {
@@ -40,47 +50,45 @@ class EstanteriaLibroController extends Controller
     {
         $validatedData = $request->validate([
             'estanteria_id' => 'required|exists:estanterias,id',
-            'external_id' => 'required' 
+            'external_id' => 'required',
+            'estado' => 'in:leyendo,leidos,quieroLeer,abandonado,sinEstado'
         ]);
-    
+
         EstanteriaLibro::create([
             'estanteria_id' => $validatedData['estanteria_id'],
             'external_id' => $validatedData['external_id'],
-            'estado' => 'sinEstado' 
+            'estado' => $validatedData['estado'] ?? 'sinEstado',
+            'user_id' => auth()->id()
         ]);
-    
+
         return redirect()->route('estanteriasLibros.index')->with('success', 'Libro añadido a la estantería exitosamente.');
     }
-    
+
     public function update(Request $request, $externalId)
     {
         $validatedData = $request->validate([
             'estado' => 'required|in:leyendo,leidos,quieroLeer,abandonado,sinEstado'
         ]);
-    
-        // Obtiene el ID de la estantería basada en el estado y el usuario
-        $estanteria = Estanteria::where('user_id', auth()->id())->firstOrCreate([
-            'user_id' => auth()->id(),
+
+        $userId = auth()->id();
+        $estanteria = Estanteria::where('user_id', $userId)->firstOrCreate([
+            'user_id' => $userId,
             'nombre' => $validatedData['estado']
         ]);
-    
-        // Primero, intenta eliminar cualquier estado existente para este libro y usuario
+
         EstanteriaLibro::where('external_id', $externalId)
-                       ->whereHas('estanteria', function ($query) {
-                           $query->where('user_id', auth()->id());
-                       })->delete();
-    
-        // Ahora, crea un nuevo registro con el estado actualizado
+            ->where('user_id', $userId)
+            ->delete();
+
         EstanteriaLibro::create([
             'external_id' => $externalId,
             'estanteria_id' => $estanteria->id,
-            'estado' => $validatedData['estado']
+            'estado' => $validatedData['estado'],
+            'user_id' => $userId
         ]);
-    
+
         return redirect()->route('libros.show', $externalId)->with('success', 'Estado del libro actualizado con éxito.');
     }
-    
-    
 
     public function destroy(EstanteriaLibro $estanteriaLibro)
     {

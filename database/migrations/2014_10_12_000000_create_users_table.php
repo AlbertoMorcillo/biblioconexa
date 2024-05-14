@@ -8,17 +8,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();  // Clave primaria autoincremental
-            $table->string('dni', 9)->unique();  // DNI como campo único
+            $table->id();
+            $table->string('dni', 9)->unique();
             $table->string('name');
-            $table->string('surname')->nullable();  // Apellido, opcional
+            $table->string('surname')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('phone')->nullable();  // Teléfono, opcional
-            $table->date('birthdate')->nullable();  // Fecha de nacimiento, opcional
+            $table->string('phone')->nullable();
+            $table->date('birthdate')->nullable();
             $table->rememberToken();
-            $table->tinyInteger('isAdmin')->default(0);  // Campo para determinar si el usuario es administrador
+            $table->tinyInteger('isAdmin')->default(0);
             $table->timestamps();
         });
     }
@@ -28,4 +28,4 @@ return new class extends Migration
         Schema::dropIfExists('users');
     }
 };
-
+?>

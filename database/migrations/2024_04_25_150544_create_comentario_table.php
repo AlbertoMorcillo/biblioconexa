@@ -11,12 +11,11 @@ class CreateComentarioTable extends Migration
         Schema::create('comentarios', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('external_id');  // Cambiado para almacenar el ID externo de Open Library
+            $table->string('external_id');
             $table->text('texto');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            // No hay necesidad de una clave foránea hacia la tabla 'libro'
         });
     }
 
@@ -25,3 +24,4 @@ class CreateComentarioTable extends Migration
         Schema::dropIfExists('comentarios');
     }
 }
+?>

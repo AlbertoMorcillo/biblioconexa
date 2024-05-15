@@ -852,3 +852,73 @@ input[type="password"] {
 .submit-rating-button.visible {
     visibility: visible;
 }
+
+/* Estilos para la tabla de mis-libros */
+/* Table styles */
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    background-color: transparent;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    background-color: #f8f9fa;
+}
+
+.table tbody + tbody {
+    border-top: 2px solid #dee2e6;
+}
+
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+.table-bordered th, .table-bordered td {
+    border: 1px solid #dee2e6;
+}
+
+.table-bordered thead th, .table-bordered thead td {
+    border-bottom-width: 2px;
+}
+
+/* Cover image styles */
+.cover-img {
+    width: 50px;
+    height: auto;
+}
+
+
+/* Table responsive styles */
+.table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Add some padding to the table container */
+.table-responsive {
+    padding: 1rem;
+    background-color: #fff; /* White background for the table container */
+    border-radius: 0.5rem; /* Rounded corners for the table container */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.table-responsive {
+    margin-top: 20px;
+}
+
+.cover-img {
+    width: 100px;
+    height: auto;
+}

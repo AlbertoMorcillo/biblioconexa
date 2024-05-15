@@ -920,5 +920,6 @@ input[type="password"] {
 
 .cover-img {
     width: 100px;
-    height: auto;
+    height: 150px;
+    object-fit: cover;
 }

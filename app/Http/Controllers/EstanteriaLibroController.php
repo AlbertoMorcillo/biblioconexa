@@ -13,39 +13,54 @@ use App\Models\Puntuacion;
 
 class EstanteriaLibroController extends Controller
 {
-    
+    private function formatoEstadoLibros($status)
+    {
+        switch ($status) {
+            case 'leyendo':
+                return 'Leyendo actualmente';
+            case 'leidos':
+                return 'Leído';
+            case 'quieroLeer':
+                return 'Quiero leerlo';
+            case 'abandonado':
+                return 'Abandonado';
+            default:
+                return 'Sin Estado';
+        }
+    }
+
     public function index()
     {
         Log::info('Entrando al método index de EstanteriaLibroController');
-    
+
         $userId = auth()->id();
         Log::info('ID del usuario autenticado', ['userId' => $userId]);
-    
+
         if (!$userId) {
             Log::error('Usuario no autenticado');
             return redirect()->route('login')->withErrors('Debes estar autenticado para ver tus libros.');
         }
-    
+
         $libros = EstanteriaLibro::where('user_id', $userId)
             ->get()
             ->map(function ($estanteriaLibro) {
                 Log::info('Procesando estanteriaLibro', ['estanteriaLibro' => $estanteriaLibro]);
-    
+
                 $client = new Client();
                 try {
                     Log::info('Intentando obtener detalles del libro desde la API', ['external_id' => $estanteriaLibro->external_id]);
                     $response = $client->get("https://openlibrary.org/works/{$estanteriaLibro->external_id}.json");
                     $bookDetails = json_decode($response->getBody()->getContents(), true);
                     Log::info('Respuesta de la API obtenida', ['response' => $bookDetails]);
-    
+
                     if (is_null($bookDetails)) {
                         throw new \Exception("No se pudieron obtener los detalles del libro desde la API.");
                     }
-    
+
                     Log::info('Detalles del libro obtenidos de la API', ['bookDetails' => $bookDetails]);
-    
+
                     $estanteriaLibro->titulo = $bookDetails['title'] ?? 'Título no disponible';
-    
+
                     if (isset($bookDetails['authors']) && is_array($bookDetails['authors'])) {
                         $authorKeys = array_column($bookDetails['authors'], 'author');
                         $authorNames = [];
@@ -58,7 +73,7 @@ class EstanteriaLibroController extends Controller
                     } else {
                         $estanteriaLibro->author = 'Autor no disponible';
                     }
-    
+
                     if (isset($bookDetails['description'])) {
                         if (is_array($bookDetails['description'])) {
                             $estanteriaLibro->sinopsis = $bookDetails['description']['value'];
@@ -70,23 +85,26 @@ class EstanteriaLibroController extends Controller
                     } else {
                         $estanteriaLibro->sinopsis = 'Descripción no disponible';
                     }
-    
+
                     if (isset($bookDetails['covers']) && is_array($bookDetails['covers']) && !empty($bookDetails['covers'])) {
                         $estanteriaLibro->portada = "https://covers.openlibrary.org/b/id/{$bookDetails['covers'][0]}-L.jpg";
                     } else {
                         $estanteriaLibro->portada = asset('images/libros/default_cover.jpg');
                     }
-    
-                    // Agregar campos adicionales
-                    $estanteriaLibro->avg_rating = $bookDetails['average_rating'] ?? 'N/A';
+
+                    // Calcular la puntuación media a partir de las puntuaciones almacenadas
+                    $estanteriaLibro->avg_rating = Puntuacion::promedioPuntuacion($estanteriaLibro->external_id) ?? 'N/A';
+
                     $estanteriaLibro->user_rating = Puntuacion::where('external_id', $estanteriaLibro->external_id)
                         ->where('user_id', Auth::id())
                         ->value('puntuacion') ?? 'No has puntuado este libro';
+
                     $estanteriaLibro->review = Comentario::where('external_id', $estanteriaLibro->external_id)
                         ->where('user_id', Auth::id())
                         ->value('texto') ?? 'No has escrito una reseña';
+
                     $estanteriaLibro->date_added = $estanteriaLibro->created_at->format('Y-m-d');
-    
+
                 } catch (\Exception $e) {
                     Log::error('Error obteniendo detalles del libro de la API', ['error' => $e->getMessage(), 'estanteriaLibro' => $estanteriaLibro]);
                     $estanteriaLibro->titulo = 'Título no disponible';
@@ -97,18 +115,17 @@ class EstanteriaLibroController extends Controller
                     $estanteriaLibro->review = 'No has escrito una reseña';
                     $estanteriaLibro->date_added = 'N/A';
                 }
-    
+
                 Log::info('EstanteriaLibro después de obtener datos de la API', ['estanteriaLibro' => $estanteriaLibro]);
-    
+                $estanteriaLibro->estado = $this->formatoEstadoLibros($estanteriaLibro->estado);
                 return $estanteriaLibro;
             })
             ->groupBy('estado');
-    
+
         Log::info('Libros agrupados por estado', ['libros' => $libros]);
-    
+
         return view('usuarioLogged.mis-libros', compact('libros'));
     }
-    
 
 
     public function create()

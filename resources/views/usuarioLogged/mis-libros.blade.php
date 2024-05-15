@@ -33,19 +33,19 @@
 
             <div class="tab-content p-3" aria-label="Sección de tus estanterias">
                 <div class="tab-pane active" id="leidos">
-                    @include('profile.partials.books-grid', ['books' => $libros['leidos'] ?? collect()])
+                    @include('profile.partials.books-grid', ['books' => $libros['Leído'] ?? collect()])
                 </div>
                 
                 <div class="tab-pane" id="leyendo">
-                    @include('profile.partials.books-grid', ['books' => $libros['leyendo'] ?? collect()])
+                    @include('profile.partials.books-grid', ['books' => $libros['Leyendo actualmente'] ?? collect()])
                 </div>
                 
                 <div class="tab-pane" id="quieroleer">
-                    @include('profile.partials.books-grid', ['books' => $libros['quieroLeer'] ?? collect()])
+                    @include('profile.partials.books-grid', ['books' => $libros['Quiero leerlo'] ?? collect()])
                 </div>
                 
                 <div class="tab-pane" id="abandonado">
-                    @include('profile.partials.books-grid', ['books' => $libros['abandonado'] ?? collect()])
+                    @include('profile.partials.books-grid', ['books' => $libros['Abandonado'] ?? collect()])
                 </div>
             </div>
         </div>

@@ -10,7 +10,7 @@
                     <th>Autor</th>
                     <th>Puntuación Media</th>
                     <th>Tu puntuación</th>
-                    <th>Estanteria</th>
+                    <th>Estantería</th>
                     <th>Review</th>
                     <th>Fecha</th>
                 </tr>

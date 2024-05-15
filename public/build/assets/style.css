@@ -897,24 +897,16 @@ input[type="password"] {
     height: auto;
 }
 
-
 /* Table responsive styles */
 .table-responsive {
     display: block;
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-}
-
-/* Add some padding to the table container */
-.table-responsive {
     padding: 1rem;
     background-color: #fff; /* White background for the table container */
     border-radius: 0.5rem; /* Rounded corners for the table container */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-}
-
-.table-responsive {
     margin-top: 20px;
 }
 
@@ -925,27 +917,27 @@ input[type="password"] {
 }
 
 /* Estilos para la tabla de mis-libros */
-
-.sortable {
-    color: #007bff;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-}
-
-.sortable:hover {
-    color: #0056b3;
-    text-decoration: underline;
-}
-
-.sortable i {
-    margin-left: 5px;
-}
 th.sortable {
     cursor: pointer;
     position: relative;
     white-space: nowrap; /* Para evitar el desbordamiento */
     padding-right: 20px; /* Espacio para la flecha */
+}
+
+th.sortable a {
+    display: flex;
+    align-items: center;
+    color: #007bff;
+    text-decoration: none;
+}
+
+th.sortable a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+th.sortable a i {
+    margin-left: 5px;
 }
 
 th.sortable::after {

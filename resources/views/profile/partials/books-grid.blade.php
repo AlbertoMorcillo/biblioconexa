@@ -6,32 +6,32 @@
             <thead>
                 <tr>
                     <th>Cover</th>
-                    <th>
-                        <a href="{{ route('estanteriasLibros.index', ['sortBy' => 'titulo', 'sortOrder' => ($sortBy === 'titulo' && $sortOrder === 'asc') ? 'desc' : 'asc']) }}" class="sortable">
+                    <th class="sortable" data-sort="titulo">
+                        <a href="{{ route('estanteriasLibros.index', ['sortBy' => 'titulo', 'sortOrder' => $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
                             Título
                             @if($sortBy === 'titulo')
                                 <i class="fas fa-sort-{{ $sortOrder === 'asc' ? 'up' : 'down' }}"></i>
                             @endif
                         </a>
                     </th>
-                    <th>
-                        <a href="{{ route('estanteriasLibros.index', ['sortBy' => 'author', 'sortOrder' => ($sortBy === 'author' && $sortOrder === 'asc') ? 'desc' : 'asc']) }}" class="sortable">
+                    <th class="sortable" data-sort="author">
+                        <a href="{{ route('estanteriasLibros.index', ['sortBy' => 'author', 'sortOrder' => $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
                             Autor
                             @if($sortBy === 'author')
                                 <i class="fas fa-sort-{{ $sortOrder === 'asc' ? 'up' : 'down' }}"></i>
                             @endif
                         </a>
                     </th>
-                    <th>
-                        <a href="{{ route('estanteriasLibros.index', ['sortBy' => 'avg_rating', 'sortOrder' => ($sortBy === 'avg_rating' && $sortOrder === 'asc') ? 'desc' : 'asc']) }}" class="sortable">
+                    <th class="sortable" data-sort="avg_rating">
+                        <a href="{{ route('estanteriasLibros.index', ['sortBy' => 'avg_rating', 'sortOrder' => $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
                             Puntuación Media
                             @if($sortBy === 'avg_rating')
                                 <i class="fas fa-sort-{{ $sortOrder === 'asc' ? 'up' : 'down' }}"></i>
                             @endif
                         </a>
                     </th>
-                    <th>
-                        <a href="{{ route('estanteriasLibros.index', ['sortBy' => 'user_rating', 'sortOrder' => ($sortBy === 'user_rating' && $sortOrder === 'asc') ? 'desc' : 'asc']) }}" class="sortable">
+                    <th class="sortable" data-sort="user_rating">
+                        <a href="{{ route('estanteriasLibros.index', ['sortBy' => 'user_rating', 'sortOrder' => $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
                             Tu puntuación
                             @if($sortBy === 'user_rating')
                                 <i class="fas fa-sort-{{ $sortOrder === 'asc' ? 'up' : 'down' }}"></i>
@@ -39,16 +39,16 @@
                         </a>
                     </th>
                     <th>Estantería</th>
-                    <th>
-                        <a href="{{ route('estanteriasLibros.index', ['sortBy' => 'review', 'sortOrder' => ($sortBy === 'review' && $sortOrder === 'asc') ? 'desc' : 'asc']) }}" class="sortable">
+                    <th class="sortable" data-sort="review">
+                        <a href="{{ route('estanteriasLibros.index', ['sortBy' => 'review', 'sortOrder' => $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
                             Review
                             @if($sortBy === 'review')
                                 <i class="fas fa-sort-{{ $sortOrder === 'asc' ? 'up' : 'down' }}"></i>
                             @endif
                         </a>
                     </th>
-                    <th>
-                        <a href="{{ route('estanteriasLibros.index', ['sortBy' => 'date_added', 'sortOrder' => ($sortBy === 'date_added' && $sortOrder === 'asc') ? 'desc' : 'asc']) }}" class="sortable">
+                    <th class="sortable" data-sort="date_added">
+                        <a href="{{ route('estanteriasLibros.index', ['sortBy' => 'date_added', 'sortOrder' => $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
                             Fecha
                             @if($sortBy === 'date_added')
                                 <i class="fas fa-sort-{{ $sortOrder === 'asc' ? 'up' : 'down' }}"></i>

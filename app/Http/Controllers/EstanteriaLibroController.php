@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Comentario;
 use App\Models\Puntuacion;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cache;
 
 class EstanteriaLibroController extends Controller
 {
@@ -47,32 +48,52 @@ class EstanteriaLibroController extends Controller
 
         $perPage = 10;
 
+        $client = new Client(); // Inicializa el cliente HTTP una vez aquí
+
         $libros = EstanteriaLibro::where('user_id', $userId)
             ->get()
-            ->map(function ($estanteriaLibro) {
+            ->map(function ($estanteriaLibro) use ($client) {
                 Log::info('Procesando estanteriaLibro', ['estanteriaLibro' => $estanteriaLibro]);
 
-                $client = new Client();
-                try {
-                    Log::info('Intentando obtener detalles del libro desde la API', ['external_id' => $estanteriaLibro->external_id]);
-                    $response = $client->get("https://openlibrary.org/works/{$estanteriaLibro->external_id}.json");
-                    $bookDetails = json_decode($response->getBody()->getContents(), true);
-                    Log::info('Respuesta de la API obtenida', ['response' => $bookDetails]);
+                // Utilizar la caché para almacenar las respuestas de la API
+                $bookDetails = Cache::remember("book_details_{$estanteriaLibro->external_id}", 3600, function () use ($estanteriaLibro, $client) {
+                    try {
+                        Log::info('Intentando obtener detalles del libro desde la API', ['external_id' => $estanteriaLibro->external_id]);
+                        $response = $client->get("https://openlibrary.org/works/{$estanteriaLibro->external_id}.json");
+                        $bookDetails = json_decode($response->getBody()->getContents(), true);
+                        Log::info('Respuesta de la API obtenida', ['response' => $bookDetails]);
 
-                    if (is_null($bookDetails)) {
-                        throw new \Exception("No se pudieron obtener los detalles del libro desde la API.");
+                        if (is_null($bookDetails)) {
+                            throw new \Exception("No se pudieron obtener los detalles del libro desde la API.");
+                        }
+
+                        return $bookDetails;
+                    } catch (\Exception $e) {
+                        Log::error('Error obteniendo detalles del libro de la API', ['error' => $e->getMessage(), 'estanteriaLibro' => $estanteriaLibro]);
+                        return null;
                     }
+                });
 
-                    Log::info('Detalles del libro obtenidos de la API', ['bookDetails' => $bookDetails]);
-
+                if (is_null($bookDetails)) {
+                    $estanteriaLibro->titulo = 'Título no disponible';
+                    $estanteriaLibro->author = 'Autor no disponible';
+                    $estanteriaLibro->sinopsis = 'Descripción no disponible';
+                    $estanteriaLibro->portada = asset('images/libros/default_cover.jpg');
+                    $estanteriaLibro->avg_rating = 'N/A';
+                    $estanteriaLibro->user_rating = 'No has puntuado este libro';
+                    $estanteriaLibro->review = 'No has escrito una reseña';
+                    $estanteriaLibro->date_added = 'N/A';
+                } else {
                     $estanteriaLibro->titulo = $bookDetails['title'] ?? 'Título no disponible';
 
                     if (isset($bookDetails['authors']) && is_array($bookDetails['authors'])) {
                         $authorKeys = array_column($bookDetails['authors'], 'author');
                         $authorNames = [];
                         foreach ($authorKeys as $key) {
-                            $authorResponse = $client->get("https://openlibrary.org{$key['key']}.json");
-                            $authorDetails = json_decode($authorResponse->getBody()->getContents(), true);
+                            $authorDetails = Cache::remember("author_details_{$key['key']}", 3600, function () use ($client, $key) {
+                                $authorResponse = $client->get("https://openlibrary.org{$key['key']}.json");
+                                return json_decode($authorResponse->getBody()->getContents(), true);
+                            });
                             $authorNames[] = $authorDetails['name'] ?? 'Nombre no disponible';
                         }
                         $estanteriaLibro->author = implode(', ', $authorNames);
@@ -110,16 +131,6 @@ class EstanteriaLibroController extends Controller
                         ->value('texto') ?? 'No has escrito una reseña';
 
                     $estanteriaLibro->date_added = $estanteriaLibro->created_at->format('Y-m-d');
-
-                } catch (\Exception $e) {
-                    Log::error('Error obteniendo detalles del libro de la API', ['error' => $e->getMessage(), 'estanteriaLibro' => $estanteriaLibro]);
-                    $estanteriaLibro->titulo = 'Título no disponible';
-                    $estanteriaLibro->sinopsis = 'Descripción no disponible';
-                    $estanteriaLibro->portada = asset('images/libros/default_cover.jpg');
-                    $estanteriaLibro->avg_rating = 'N/A';
-                    $estanteriaLibro->user_rating = 'No has puntuado este libro';
-                    $estanteriaLibro->review = 'No has escrito una reseña';
-                    $estanteriaLibro->date_added = 'N/A';
                 }
 
                 Log::info('EstanteriaLibro después de obtener datos de la API', ['estanteriaLibro' => $estanteriaLibro]);
@@ -149,8 +160,6 @@ class EstanteriaLibroController extends Controller
 
         return view('usuarioLogged.mis-libros', compact('libros', 'sortBy', 'sortOrder'));
     }
-    
-
 
     public function create()
     {

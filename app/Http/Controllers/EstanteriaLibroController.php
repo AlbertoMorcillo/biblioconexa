@@ -10,6 +10,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 use App\Models\Comentario;
 use App\Models\Puntuacion;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EstanteriaLibroController extends Controller
 {
@@ -29,7 +30,7 @@ class EstanteriaLibroController extends Controller
         }
     }
 
-    public function index()
+    public function index(Request $request)
     {
         Log::info('Entrando al método index de EstanteriaLibroController');
 
@@ -40,6 +41,11 @@ class EstanteriaLibroController extends Controller
             Log::error('Usuario no autenticado');
             return redirect()->route('login')->withErrors('Debes estar autenticado para ver tus libros.');
         }
+
+        $sortBy = $request->get('sortBy', 'titulo');
+        $sortOrder = $request->get('sortOrder', 'asc');
+
+        $perPage = 10;
 
         $libros = EstanteriaLibro::where('user_id', $userId)
             ->get()
@@ -122,10 +128,28 @@ class EstanteriaLibroController extends Controller
             })
             ->groupBy('estado');
 
-        Log::info('Libros agrupados por estado', ['libros' => $libros]);
+        // Aplicar ordenamiento a cada grupo de libros
+        $libros = $libros->map(function ($estadoLibros) use ($sortBy, $sortOrder) {
+            return $estadoLibros->sortBy(function ($libro) use ($sortBy) {
+                return $libro->{$sortBy};
+            }, SORT_REGULAR, $sortOrder === 'desc');
+        });
 
-        return view('usuarioLogged.mis-libros', compact('libros'));
+        // Convertimos las colecciones agrupadas en paginadores
+        $libros = $libros->map(function ($estadoLibros) use ($request, $perPage) {
+            $currentPage = LengthAwarePaginator::resolveCurrentPage();
+            $items = $estadoLibros->slice(($currentPage - 1) * $perPage, $perPage)->all();
+            return new LengthAwarePaginator($items, $estadoLibros->count(), $perPage, $currentPage, [
+                'path' => $request->url(),
+                'query' => $request->query()
+            ]);
+        });
+
+        Log::info('Libros agrupados por estado con paginación', ['libros' => $libros]);
+
+        return view('usuarioLogged.mis-libros', compact('libros', 'sortBy', 'sortOrder'));
     }
+    
 
 
     public function create()

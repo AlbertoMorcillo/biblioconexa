@@ -544,7 +544,7 @@ button:hover, .button:hover {
 }
 
 .search-button:hover {
-    background-color: #16384c; 
+    background-color: #f0f0f0; 
     border-radius: 0.25rem;
 }
 .search-bar {
@@ -979,4 +979,13 @@ th.sortable:hover::after {
 .submit-button-container .btn {
     display: inline-block; /* Asegura que el botón respete el centrado del contenedor */
     margin-left: 30px;
+}
+
+.fa.fa-search {
+    color: #204051; /* Cambia esto al color que desees */
+}
+
+.fa.fa-search:hover {
+    color: #0000FF; /* Cambia esto al color que desees */
+    background-color: #f0f0f0;
 }

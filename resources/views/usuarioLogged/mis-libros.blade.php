@@ -18,7 +18,10 @@
         <div class="col-md-12">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#leidos" data-toggle="tab" aria-label="Si aprietas veras los libros leídos">Leídos</a>
+                    <a class="nav-link active" href="#todos" data-toggle="tab" aria-label="Si aprietas veras todos los libros">Todos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#leidos" data-toggle="tab" aria-label="Si aprietas veras los libros leídos">Leídos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#leyendo" data-toggle="tab" aria-label="Si aprietas veras los libros que estas leyendo">Leyendo</a>
@@ -32,20 +35,23 @@
             </ul>
 
             <div class="tab-content p-3" aria-label="Sección de tus estanterias">
-                <div class="tab-pane active" id="leidos">
-                    @include('profile.partials.books-grid', ['books' => $libros['Leído'] ?? collect()])
+                <div class="tab-pane active" id="todos">
+                    @include('profile.partials.books-grid', ['books' => $librosAgrupados['Todos'] ?? collect()])
+                </div>
+                <div class="tab-pane" id="leidos">
+                    @include('profile.partials.books-grid', ['books' => $librosAgrupados['Leído'] ?? collect()])
                 </div>
                 
                 <div class="tab-pane" id="leyendo">
-                    @include('profile.partials.books-grid', ['books' => $libros['Leyendo actualmente'] ?? collect()])
+                    @include('profile.partials.books-grid', ['books' => $librosAgrupados['Leyendo actualmente'] ?? collect()])
                 </div>
                 
                 <div class="tab-pane" id="quieroleer">
-                    @include('profile.partials.books-grid', ['books' => $libros['Quiero leerlo'] ?? collect()])
+                    @include('profile.partials.books-grid', ['books' => $librosAgrupados['Quiero leerlo'] ?? collect()])
                 </div>
                 
                 <div class="tab-pane" id="abandonado">
-                    @include('profile.partials.books-grid', ['books' => $libros['Abandonado'] ?? collect()])
+                    @include('profile.partials.books-grid', ['books' => $librosAgrupados['Abandonado'] ?? collect()])
                 </div>
             </div>
         </div>

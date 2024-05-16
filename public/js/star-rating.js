@@ -2,7 +2,6 @@ let stars = document.querySelectorAll('.star-rating label');
 let ratingInputs = document.querySelectorAll('.star-rating .radio-btn'); // Captura todos los inputs
 let submitButton = document.querySelector('.submit-rating-button');
 
-
 submitButton.style.visibility = 'hidden';  // Inicialmente oculto
 
 stars.forEach((star, index) => {
@@ -29,3 +28,8 @@ function removeHighlight(index) {
 function saveRating(index) {
     ratingInputs[index].checked = true;  // Asegura que el input correcto está seleccionado
 }
+
+// Desmarcar las estrellas cuando se recarga la página
+document.addEventListener('DOMContentLoaded', function () {
+    ratingInputs.forEach(input => input.checked = false);
+});

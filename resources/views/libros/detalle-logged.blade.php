@@ -110,29 +110,29 @@
     </div>
 
     <!-- Modal estanterias -->
-<div class="modal fade" id="estadoLibroModal" tabindex="-1" aria-labelledby="estadoLibroModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="estadoLibroModalLabel">Actualizar Estado del Libro</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form action="{{ route('estanteriasLibros.update', ['estanteriasLibro' => $book['external_id']]) }}" method="post">                @csrf
-            @method('PUT')
-            <div class="mb-3">
-              <label for="estado" class="form-label">Elige un estado:</label>
-              <select class="form-select" name="estado" required>
-                <option value="leyendo">Leyendo</option>
-                <option value="leidos">Leídos</option>
-                <option value="quieroLeer">Quiero leer</option>
-                <option value="abandonado">Abandonado</option>
-              </select>
+    <div class="modal fade" id="estadoLibroModal" tabindex="-1" aria-labelledby="estadoLibroModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="estadoLibroModalLabel">Actualizar Estado del Libro</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <button type="submit" class="btn button">Actualizar Estado</button>
-          </form>
+            <div class="modal-body">
+                <form action="{{ route('estanteriasLibros.update', ['estanteriasLibro' => $book['external_id']]) }}" method="post">                @csrf
+                @method('PUT')
+                <div class="mb-3">
+                  <label for="estado" class="form-label">Elige un estado:</label>
+                  <select class="form-select" name="estado" required>
+                    <option value="leyendo">Leyendo</option>
+                    <option value="leidos">Leídos</option>
+                    <option value="quieroLeer">Quiero leer</option>
+                    <option value="abandonado">Abandonado</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn button">Actualizar Estado</button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 @endsection

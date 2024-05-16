@@ -816,7 +816,7 @@ input[type="password"] {
 
 .star-rating {
     direction: rtl;
-    /* float: left; */
+    margin-right: 20px;
 }
 
 .star-rating input[type="radio"] {
@@ -968,4 +968,15 @@ th.sortable.desc::after {
 
 th.sortable:hover::after {
     opacity: 0.5; /* Mostrar una indicación de que se puede ordenar al pasar el mouse */
+}
+
+.submit-button-container {
+    display: flex;
+    justify-content: center; /* Centra el botón horizontalmente */
+    margin-top: 1rem; /* Añadir un margen superior si es necesario */
+}
+
+.submit-button-container .btn {
+    display: inline-block; /* Asegura que el botón respete el centrado del contenedor */
+    margin-left: 30px;
 }

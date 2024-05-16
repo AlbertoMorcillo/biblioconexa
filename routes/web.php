@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     PuntuacionController,
@@ -84,6 +85,20 @@ Route::middleware('auth')->group(function () {
         Route::patch('/noticias/{noticia}', [NoticiaController::class, 'update'])->name('noticias.update');
         Route::delete('/noticias/{noticia}', [NoticiaController::class, 'destroy'])->name('noticias.destroy');
     });
+});
+
+// Routes for administrators
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin', function () {
+        return view('admin.index');
+    })->name('admin.index');
+
+    Route::view('/admin/usuarios', 'admin.usuarios')->name('admin.usuarios');
+    Route::view('/admin/libros', 'admin.libros')->name('admin.libros');
+    Route::view('/admin/categorias', 'admin.categorias')->name('admin.categorias');
+    Route::view('/admin/autores', 'admin.autores')->name('admin.autores');
+    Route::view('/admin/noticias', 'admin.noticias')->name('admin.noticias');
+    Route::view('/admin/eventos', 'admin.eventos')->name('admin.eventos');
 });
 
 // Authentication routes

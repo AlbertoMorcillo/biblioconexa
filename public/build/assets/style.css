@@ -1,36 +1,61 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap");
 
 /* Establece reglas generales para el body */
 html {
-    font-size: 1rem; 
-    box-sizing: border-box; 
+    font-size: 1rem;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Merriweather', serif;
-    color: #333333; 
-    background-color: #F5F5DC;
+    font-family: "Merriweather", serif;
+    color: #333333;
+    background-color: #f5f5dc;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
 /* Estilos para la tipografía Lato */
-.lato-thin { font-weight: 100; }
-.lato-light { font-weight: 300; }
-.lato-regular { font-weight: 400; }
-.lato-bold { font-weight: 700; }
-.lato-black { font-weight: 900; }
-.lato-thin-italic { font-weight: 100; font-style: italic; }
-.lato-light-italic { font-weight: 300; font-style: italic; }
-.lato-regular-italic { font-weight: 400; font-style: italic; }
-.lato-bold-italic { font-weight: 700; font-style: italic; }
-.lato-black-italic { font-weight: 900; font-style: italic; }
+.lato-thin {
+    font-weight: 100;
+}
+.lato-light {
+    font-weight: 300;
+}
+.lato-regular {
+    font-weight: 400;
+}
+.lato-bold {
+    font-weight: 700;
+}
+.lato-black {
+    font-weight: 900;
+}
+.lato-thin-italic {
+    font-weight: 100;
+    font-style: italic;
+}
+.lato-light-italic {
+    font-weight: 300;
+    font-style: italic;
+}
+.lato-regular-italic {
+    font-weight: 400;
+    font-style: italic;
+}
+.lato-bold-italic {
+    font-weight: 700;
+    font-style: italic;
+}
+.lato-black-italic {
+    font-weight: 900;
+    font-style: italic;
+}
 
 .content {
-    flex: 1 0 auto; 
+    flex: 1 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,9 +63,14 @@ body {
     padding: 2rem;
 }
 /* Especifica las reglas para los encabezados, por ejemplo */
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Lato', sans-serif; 
-    color: #204051; 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Lato", sans-serif;
+    color: #204051;
     font-weight: bolder;
 }
 
@@ -50,11 +80,11 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     width: 100%;
     justify-content: space-between;
-    background-color: #607D8B; 
+    background-color: #607d8b;
     padding: 0;
-  }
-  
-  .banner-image img {
+}
+
+.banner-image img {
     max-width: 20.625rem;
     max-height: 17.3125rem;
     padding: 0;
@@ -65,15 +95,15 @@ h1, h2, h3, h4, h5, h6 {
         max-height: 8.5rem;
     }
 }
-  
+
 .logo {
-    color: #0A2331;
-    font-family: 'Nunito', sans-serif;
+    color: #0a2331;
+    font-family: "Nunito", sans-serif;
     font-size: 4rem; /* Ajusta este valor según tus necesidades */
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1rem;
-    padding-left: 9.93rem; 
+    padding-left: 9.93rem;
 }
 
 @media (max-width: 900px) {
@@ -83,36 +113,34 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .banner-logo {
-    background-color: #607D8B!important;
+    background-color: #607d8b !important;
     border-radius: 0 !important;
 }
-
 
 /* Estilo del header */
 header {
     background-color: #204051;
-    height: 8.875rem; 
-    padding: 0.625rem 0; 
+    height: 8.875rem;
+    padding: 0.625rem 0;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
 }
 
 header .nav-link:hover {
     color: #000;
     background-color: #fffcfc;
     padding: 0.5rem;
-    border-radius: 0.25rem; 
+    border-radius: 0.25rem;
 }
 
 /* Estilo para el footer */
 
 footer {
-    background-color: #607D8B;
+    background-color: #607d8b;
     min-height: 15.25rem;
-    padding: 0.625rem 0; 
+    padding: 0.625rem 0;
     text-align: center;
     display: flex;
     align-items: center;
@@ -122,65 +150,65 @@ footer {
     margin-top: 1rem;
 }
 
-
-  footer .contenedor-logo-contacto {
+footer .contenedor-logo-contacto {
     display: flex;
     align-items: center;
+}
 
-  }
-  
-  /* Estilos para la imagen del logo */
-  footer .contenedor-logo-contacto .rounded-image {
-    margin-right: 1rem; 
-  }
-  
-  /* Estilos para la información de contacto */
-  footer .informacion-contacto {
+/* Estilos para la imagen del logo */
+footer .contenedor-logo-contacto .rounded-image {
+    margin-right: 1rem;
+}
+
+/* Estilos para la información de contacto */
+footer .informacion-contacto {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; 
-  }
-  
-  /* Contenedor para las secciones de enlaces, alineado a la derecha */
-  footer .secciones-enlaces {
-    display: flex;
-    justify-content: flex-end; 
-    padding-left: 19rem;
-  }
-  
-  /* Estilos para secciones de enlaces individuales */
+    align-items: flex-start;
+}
 
-  footer .nav-link {
-    color: #000000; 
-    padding: .5rem;
+/* Contenedor para las secciones de enlaces, alineado a la derecha */
+footer .secciones-enlaces {
+    display: flex;
+    justify-content: flex-end;
+    padding-left: 19rem;
+}
+
+/* Estilos para secciones de enlaces individuales */
+
+footer .nav-link {
+    color: #000000;
+    padding: 0.5rem;
     text-decoration: none;
 }
-  /* Asegúrate de que no haya margen en los elementos dentro del footer */
-  footer .row, footer .col {
+/* Asegúrate de que no haya margen en los elementos dentro del footer */
+footer .row,
+footer .col {
     margin-right: 0;
-  }
-  
+}
 
-footer p, footer a, footer ul {
+footer p,
+footer a,
+footer ul {
     font-weight: 100;
     color: #000000;
 }
 
 /* Para los títulos de las secciones dentro del footer */
 footer h5 {
-    color: #000000; 
-    font-weight:bolder; 
+    color: #000000;
+    font-weight: bolder;
     text-decoration: underline;
 }
 
 /* Para el texto en el footer que no son enlaces */
 footer p {
-    color: #000000; 
-    font-size: 0.8em; 
+    color: #000000;
+    font-size: 0.8em;
     text-align: center;
 }
 .navbar {
-    width: 100%; 
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -195,22 +223,20 @@ footer p {
 }
 
 .nav-link:hover {
-    color: #F5F5DC; /* Un color claro sobre el fondo oscuro para más contraste */
-    background-color: #16384c; 
+    color: #f5f5dc; /* Un color claro sobre el fondo oscuro para más contraste */
+    background-color: #16384c;
     padding: 0.5rem;
     border-radius: 0.25rem;
 }
 
-
-
-
 /* Estilo principal para los botones */
-.button, .secondary-button {
-    background-color: #228B22; 
-    color: rgb(0, 0, 0); 
+.button,
+.secondary-button {
+    background-color: #228b22;
+    color: rgb(0, 0, 0);
     border: none;
-    padding: 0.625rem 1.25rem; 
-    font-family: 'Lato', sans-serif;
+    padding: 0.625rem 1.25rem;
+    font-family: "Lato", sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     cursor: pointer;
@@ -221,12 +247,13 @@ footer p {
 
 /* Sobreescribe el color de fondo para botones secundarios */
 .secondary-button {
-    background-color: #607D8B;
+    background-color: #607d8b;
 }
 
 /* Efectos hover para botones */
-.button:hover, .secondary-button:hover {
-    opacity: 0.8; 
+.button:hover,
+.secondary-button:hover {
+    opacity: 0.8;
 }
 
 .button:hover {
@@ -234,16 +261,16 @@ footer p {
 }
 
 .secondary-button:hover {
-    background-color: #c0edff; 
+    background-color: #c0edff;
 }
 
 /* Estilo para botones de acción como 'Eliminar' */
 .danger-button {
-    background-color: #8B2222; 
-    color: white; 
+    background-color: #8b2222;
+    color: white;
     border: none;
-    padding: 0.625rem 1.25rem; 
-    font-family: 'Lato', sans-serif;
+    padding: 0.625rem 1.25rem;
+    font-family: "Lato", sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     cursor: pointer;
@@ -253,18 +280,17 @@ footer p {
 }
 
 .danger-button:hover {
-    background-color: #ff7e7e; 
-    color:#000;
+    background-color: #ff7e7e;
+    color: #000;
 }
 .extra-small-button {
     padding: 5px 10px;
     font-size: 12px;
 }
 
-
 /* Modal background */
 .modal-background {
-    background-color: #204051; /* Color de fondo para los modales */ 
+    background-color: #204051; /* Color de fondo para los modales */
 }
 
 .modal-background h1,
@@ -274,18 +300,17 @@ footer p {
 
 /* Cards de actividades */
 .activity-card {
-    background-color: #D1D1D1; 
-
+    background-color: #d1d1d1;
 }
 
 /* Cards de novedades y libros específicos */
 .book-card {
-    background-color: #A9D8B8; 
+    background-color: #a9d8b8;
 }
 
 /* Cards de noticias */
 .news-card {
-    background-color: #7EC8E3; 
+    background-color: #7ec8e3;
 }
 
 .noticia-descripcion {
@@ -297,18 +322,19 @@ a:hover,
 button:hover,
 .secondary-button:hover,
 .danger-button:hover {
-    opacity: 0.8; 
+    opacity: 0.8;
 }
 
 /* Hover*/
-button:hover, .button:hover {
-    background-color: #3ac43a; 
+button:hover,
+.button:hover {
+    background-color: #3ac43a;
     font-weight: bolder;
 }
 
 /* Efectos hover para botones secundarios */
 .secondary-button:hover {
-    background-color: #77a5b7; 
+    background-color: #77a5b7;
     font-weight: bolder;
 }
 
@@ -327,12 +353,12 @@ button:hover, .button:hover {
 
 .header .search-and-buttons {
     display: flex;
-    gap: 1rem; 
+    gap: 1rem;
     align-items: center;
 }
 
 .header .search-and-buttons .form-control {
-    margin-right: 0.5rem; 
+    margin-right: 0.5rem;
 }
 
 /* Estilos para el contenido principal */
@@ -341,7 +367,7 @@ button:hover, .button:hover {
     color: #204051;
     display: flex;
     justify-content: center;
-    margin-top:3.5rem;
+    margin-top: 3.5rem;
     margin-bottom: 3.5rem;
     font-weight: bolder;
 }
@@ -362,20 +388,19 @@ button:hover, .button:hover {
 .card {
     width: 332px;
     height: 613px;
-    margin-right:3.5rem ;
+    margin-right: 3.5rem;
     margin-bottom: 3.5rem;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     overflow: hidden;
     gap: 86px;
-    transition: transform 0.3s ease; 
-    background-color: #A9D8B8;
+    transition: transform 0.3s ease;
+    background-color: #a9d8b8;
 }
 
 .card:hover {
-    transform: scale(1.1); 
+    transform: scale(1.1);
 }
-
 
 .card-img-top {
     width: 100%;
@@ -387,7 +412,7 @@ button:hover, .button:hover {
 }
 
 .card-body {
-    padding: 1rem; 
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -395,13 +420,13 @@ button:hover, .button:hover {
 
 .card-text {
     margin: 0.5rem 0;
-    line-height: 1.5; 
-    font-size: 1rem; 
+    line-height: 1.5;
+    font-size: 1rem;
     text-align: center;
 }
 
 .btn-group {
-    align-self: center; 
+    align-self: center;
 }
 
 .card-title {
@@ -411,15 +436,14 @@ button:hover, .button:hover {
     font-size: 1.5rem; /* Ajusta el tamaño del texto del título */
     font-weight: bolder; /* Añade negrita al título */
     color: #204051;
-
 }
-  .link-libros {
-    text-decoration: none; 
+.link-libros {
+    text-decoration: none;
     color: inherit;
 }
 
 .link-libros:hover {
-    opacity: 1; 
+    opacity: 1;
 }
 
 .botonDirigir {
@@ -431,14 +455,14 @@ button:hover, .button:hover {
 
 /* Estilos para las tarjetas de actividades */
 .card-actividad {
-    width: 314px; 
-    height: 413px; 
+    width: 314px;
+    height: 413px;
     margin-right: 3.5rem;
     margin-bottom: 3.5rem; /* Espacio debajo de cada tarjeta */
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    background-color: #D1D1D1; /* Color de fondo de la tarjeta */
+    background-color: #d1d1d1; /* Color de fondo de la tarjeta */
 }
 
 .card-actividad-img-top {
@@ -455,37 +479,39 @@ button:hover, .button:hover {
     flex-direction: column;
 }
 
-.titulo-actividad, .horario-actividad, .sala-actividad {
+.titulo-actividad,
+.horario-actividad,
+.sala-actividad {
     text-align: center; /* Centra el texto */
 }
 
 .titulo-actividad {
-    font-size: 1.5rem; 
-    margin-bottom: 0.25rem; 
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
 }
 
-.horario-actividad, .sala-actividad {
-    font-size: 1rem; 
-    color: #333; 
+.horario-actividad,
+.sala-actividad {
+    font-size: 1rem;
+    color: #333;
 }
 
 /* Estilos adicionales para la sección de actividades */
 .seccion-actividades {
-    padding: 2rem; 
+    padding: 2rem;
     background-color: #f5f5dc;
 }
 
-
 /* Estilos para la sección de novedades */
 .card-noticias {
-    width: 314px; 
-    height: 413px; 
+    width: 314px;
+    height: 413px;
     margin-right: 3.5rem;
     margin-bottom: 3.5rem; /* Espacio debajo de cada tarjeta */
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    background-color: #7EC8E3; /* Color de fondo de la tarjeta */
+    background-color: #7ec8e3; /* Color de fondo de la tarjeta */
 }
 
 /*Estilos para login y registro*/
@@ -497,31 +523,35 @@ button:hover, .button:hover {
 /*Estilos logos redes sociales*/
 
 .google-logo {
-    width: 20px; 
-    height: 20px; 
+    width: 20px;
+    height: 20px;
     margin-right: 10px; /* Espaciado entre el logo y el texto */
 }
 .btn-google {
-    background-color: #ffffff; 
-    color: #5f6368; 
-    border: 1px solid #dadce0; 
+    background-color: #ffffff;
+    color: #5f6368;
+    border: 1px solid #dadce0;
     display: inline-flex; /* Alinea el contenido del botón en línea */
-    align-items: center; 
-    justify-content: center; 
+    align-items: center;
+    justify-content: center;
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
     transition: background-color 0.2s, box-shadow 0.2s; /* Transiciones suaves para efectos hover */
-    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302), 0 2px 6px 2px rgba(60,64,67,0.149); /* Sombra sutil para darle profundidad */
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
+        0 2px 6px 2px rgba(60, 64, 67, 0.149); /* Sombra sutil para darle profundidad */
 }
 
 .btn-google:hover {
-    background-color: #bbcce9; 
-    box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302), 0 2px 6px 2px rgba(60,64,67,0.149);
+    background-color: #bbcce9;
+    box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.302),
+        0 2px 6px 2px rgba(60, 64, 67, 0.149);
 }
 
-
 /* Estilos para el formulario de registro */
-.error-text, .email-error, .password-error, .passwordRepetida-error{
+.error-text,
+.email-error,
+.password-error,
+.passwordRepetida-error {
     color: red;
     font-size: 0.8em;
     font-weight: bolder;
@@ -530,10 +560,9 @@ button:hover, .button:hover {
 /* Estilos para el catálogo */
 .catalog-section {
     width: 100%;
-    max-width: 600px; 
+    max-width: 600px;
     text-align: center;
 }
-
 
 .search-button {
     background: none;
@@ -544,7 +573,7 @@ button:hover, .button:hover {
 }
 
 .search-button:hover {
-    background-color: #f0f0f0; 
+    background-color: #f0f0f0;
     border-radius: 0.25rem;
 }
 .search-bar {
@@ -559,21 +588,21 @@ button:hover, .button:hover {
     flex-grow: 1;
     border: none;
     background: transparent;
-    margin-right: 0.5rem; 
+    margin-right: 0.5rem;
     outline: none;
 }
 
 .search-instructions {
-    font-size: 0.8rem; 
-    color: #32363a; 
+    font-size: 0.8rem;
+    color: #32363a;
     text-align: center;
-    margin-top: 0.5rem; 
+    margin-top: 0.5rem;
 }
 
 /* Estilos para la paginación */
 
 .pagination-custom .page-link {
-    background-color: #34568B;
+    background-color: #34568b;
     color: white;
 }
 
@@ -612,7 +641,6 @@ button:hover, .button:hover {
     border-radius: 1.5rem;
 }
 
-
 .modal-title {
     color: #ffffff;
 }
@@ -620,26 +648,26 @@ button:hover, .button:hover {
     color: #ffffff;
 }
 .form-check-input {
-    background-color: #ffdd57; 
-    border-color: #ffdd57; 
-  }
-  
-  .form-check-label {
-    margin-right: 10px; 
-    color: rgb(255, 255, 255); 
-  }
-  
-  /* Personalizar los radio buttons cuando están seleccionados */
-  .form-check-input:checked {
-    background-color: #000000; 
-    border-color: #ffc107; 
-    color:#000000;
-  }
+    background-color: #ffdd57;
+    border-color: #ffdd57;
+}
+
+.form-check-label {
+    margin-right: 10px;
+    color: rgb(255, 255, 255);
+}
+
+/* Personalizar los radio buttons cuando están seleccionados */
+.form-check-input:checked {
+    background-color: #000000;
+    border-color: #ffc107;
+    color: #000000;
+}
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-  width: 100%; /* O el ancho que prefieras */
-  box-sizing: border-box; /* Asegúrate de que padding y border no afecten el ancho */
+    width: 100%; /* O el ancho que prefieras */
+    box-sizing: border-box; /* Asegúrate de que padding y border no afecten el ancho */
 }
 
 /*Estilos para el perfil*/
@@ -660,7 +688,7 @@ input[type="password"] {
     padding: 1rem; /* Espaciado interior */
     margin-bottom: 1rem; /* Separación entre opiniones */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    font-family: 'Lato', sans-serif; /* Fuente Lato para el texto */
+    font-family: "Lato", sans-serif; /* Fuente Lato para el texto */
 }
 
 .user-opinion strong {
@@ -677,7 +705,7 @@ input[type="password"] {
 /* Estilos para la puntuación, si tienes un elemento específico para ello */
 .user-opinion .puntuacion {
     display: inline-block; /* Si quieres mostrar la puntuación en línea */
-    background-color: #228B22; /* Fondo verde para destacar la puntuación */
+    background-color: #228b22; /* Fondo verde para destacar la puntuación */
     color: #fff; /* Texto en blanco para contraste */
     padding: 0.25rem 0.5rem; /* Espaciado interno */
     border-radius: 0.25rem; /* Bordes redondeados */
@@ -699,8 +727,12 @@ input[type="password"] {
 }
 
 @keyframes fadeEffect {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .book-card {
@@ -734,7 +766,7 @@ input[type="password"] {
 }
 
 .nav-tabs .nav-link.active:hover {
-    color: #286BA9; /* Un color azul para los enlaces activos */
+    color: #286ba9; /* Un color azul para los enlaces activos */
     border-color: #e2e8f0 #e2e8f0 #fff; /* Un borde gris claro en la parte superior e izquierda, y blanco en la parte inferior */
     font-weight: bolder;
 }
@@ -752,7 +784,8 @@ input[type="password"] {
     margin: 0 5px; /* Espacio entre botones */
 }
 
-.pagination a, .pagination span {
+.pagination a,
+.pagination span {
     color: #ffffff; /* Color del texto */
     padding: 8px 16px;
     text-decoration: none;
@@ -763,18 +796,20 @@ input[type="password"] {
 }
 
 .pagination a:hover {
-    background-color: #4A90E2; /* Color de fondo al pasar el ratón */
+    background-color: #4a90e2; /* Color de fondo al pasar el ratón */
     color: rgb(0, 0, 0); /* Color de texto al pasar el ratón */
     font-weight: bolder;
 }
 
 .pagination .active span {
-    background-color: #4A90E2; /* Fondo del botón de la página actual */
+    background-color: #4a90e2; /* Fondo del botón de la página actual */
     color: white; /* Texto del botón de la página actual */
-    border-color: #4A90E2;
+    border-color: #4a90e2;
 }
 
-.pagination .disabled span, .pagination .disabled a, .pagination .disabled a:hover {
+.pagination .disabled span,
+.pagination .disabled a,
+.pagination .disabled a:hover {
     color: #000000; /* Color de texto deshabilitado */
     background-color: #f8f9fa; /* Fondo de botón deshabilitado */
     cursor: not-allowed;
@@ -810,7 +845,7 @@ input[type="password"] {
 /* Estilos para estrellas */
 
 .rating-area {
-    float:left;
+    float: left;
     /* width:300px; */
 }
 
@@ -863,7 +898,8 @@ input[type="password"] {
     border-collapse: collapse;
 }
 
-.table th, .table td {
+.table th,
+.table td {
     padding: 0.75rem;
     vertical-align: top;
     border-top: 1px solid #dee2e6;
@@ -884,11 +920,13 @@ input[type="password"] {
     border: 1px solid #dee2e6;
 }
 
-.table-bordered th, .table-bordered td {
+.table-bordered th,
+.table-bordered td {
     border: 1px solid #dee2e6;
 }
 
-.table-bordered thead th, .table-bordered thead td {
+.table-bordered thead th,
+.table-bordered thead td {
     border-bottom-width: 2px;
 }
 
@@ -933,7 +971,7 @@ th.sortable a {
 }
 
 th.sortable a:hover {
-    color: #0000FF; /* Cambiar el color al pasar el mouse */
+    color: #0000ff; /* Cambiar el color al pasar el mouse */
     text-decoration: none; /* Eliminar el subrayado al pasar el mouse */
 }
 
@@ -942,7 +980,7 @@ th.sortable a i {
 }
 
 th.sortable::after {
-    content: '';
+    content: "";
     position: absolute;
     right: 8px;
     top: 50%;
@@ -986,6 +1024,34 @@ th.sortable:hover::after {
 }
 
 .fa.fa-search:hover {
-    color: #0000FF; /* Cambia esto al color que desees */
+    color: #0000ff; /* Cambia esto al color que desees */
     background-color: #f0f0f0;
+}
+
+/* Estilos para la rueda de carga */
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 50px;
+    padding: 8px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #204051;
+    --_m: conic-gradient(#0000 10%, #000), linear-gradient(#000 0 0) content-box;
+    -webkit-mask: var(--_m);
+    mask: var(--_m);
+    -webkit-mask-composite: source-out;
+    mask-composite: subtract;
+    animation: l4 1s infinite linear;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+    z-index: 9999; /* Asegúrate de que esté sobre otros elementos */
+}
+
+@keyframes l4 {
+    to {
+        transform: translate(-50%, -50%) rotate(1turn);
+    }
 }

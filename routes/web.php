@@ -87,7 +87,7 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-// Routes for administrators
+// rutas para el administrador
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', function () {
         return view('admin.index');
@@ -98,11 +98,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::view('/admin/categorias', 'admin.categorias')->name('admin.categorias');
     Route::view('/admin/autores', 'admin.autores')->name('admin.autores');
     Route::view('/admin/noticias', 'admin.noticias')->name('admin.noticias');
-    Route::view('/admin/eventos', 'admin.eventos')->name('admin.eventos');
+    Route::view('/admin/actividades', 'admin.actividades')->name('admin.actividades');
     Route::view('/admin/librosSugeridos', 'admin.librosSugeridos')->name('admin.librosSugeridos');
     Route::view('/admin/estanterias', 'admin.estanterias')->name('admin.estanterias');
     Route::view('/admin/comentarios', 'admin.comentarios')->name('admin.comentarios');
-    
+    Route::view('/admin/tarjetaPersonal', 'admin.tarjetaPersonal')->name('admin.tarjetaPersonal');
+    Route::view('/admin/mis-libros', 'admin.misLibros')->name('admin.misLibros');
+    Route::view('/admin/sobreNosotros', 'admin.sobreNosotros')->name('admin.sobreNosotros');
+    Route::view('/admin/horarioCalendario', 'admin.horarioCalendario')->name('admin.horarioCalendario');
+    Route::view('/admin/catalogo', 'admin.catalogo')->name('admin.catalogo');
+
 });
 
 // Authentication routes

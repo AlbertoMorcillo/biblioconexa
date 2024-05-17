@@ -23,8 +23,9 @@
 </head>
 <body>
 
-  <!-- Spinner de carga -->
-  <div id="loader" class="loader"></div>
+  <div id="loading-overlay" class="loading-overlay" style="display: none;">
+    <div class="loader"></div>
+</div>
 
 @include('partials.header') <!-- Incluyo el header desde otro archivo Blade -->
 

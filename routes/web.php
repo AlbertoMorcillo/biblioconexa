@@ -99,6 +99,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::view('/admin/autores', 'admin.autores')->name('admin.autores');
     Route::view('/admin/noticias', 'admin.noticias')->name('admin.noticias');
     Route::view('/admin/eventos', 'admin.eventos')->name('admin.eventos');
+    Route::view('/admin/librosSugeridos', 'admin.librosSugeridos')->name('admin.librosSugeridos');
+    Route::view('/admin/estanterias', 'admin.estanterias')->name('admin.estanterias');
+    Route::view('/admin/comentarios', 'admin.comentarios')->name('admin.comentarios');
+    
 });
 
 // Authentication routes

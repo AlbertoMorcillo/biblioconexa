@@ -25,7 +25,7 @@
                 </ul>
             </li>
             <a href="{{ route('admin.catalogo') }}" class="nav-link">Catálogo</a>
-            <a href="{{ route('admin.misLibros') }}" class="nav-link">Mis libros</a>
+            <a href="{{ route('admin.mis-libros') }}" class="nav-link">Mis libros</a>
         </ul>
 
         <form class="form-inline" role="search" action="{{ route('search-books') }}" method="GET">

@@ -100,7 +100,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::view('/admin/estanterias', 'admin.estanterias')->name('admin.estanterias');
     Route::view('/admin/comentarios', 'admin.comentarios')->name('admin.comentarios');
     Route::view('/admin/tarjetaPersonal', 'admin.tarjetaPersonal')->name('admin.tarjetaPersonal');
-    Route::view('/admin/mis-libros', 'admin.misLibros')->name('admin.misLibros');
+    Route::view('/admin/mis-libros', 'admin.mis-libros')->name('admin.mis-libros');
     Route::view('/admin/sobreNosotros', 'admin.sobreNosotros')->name('admin.sobreNosotros');
     Route::view('/admin/horarioCalendario', 'admin.horarioCalendario')->name('admin.horarioCalendario');
     Route::view('/admin/catalogo', 'admin.catalogo')->name('admin.catalogo');

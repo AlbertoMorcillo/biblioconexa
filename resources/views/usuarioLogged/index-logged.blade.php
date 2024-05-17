@@ -12,8 +12,6 @@
 
 @section('content')
 
-
-
     <div class="banner">
         <div class="banner-text">
             <h1 class="logo" aria-label="Nombre de la Biblioteca">BibloConexa</h1>

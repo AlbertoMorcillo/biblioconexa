@@ -52,7 +52,6 @@
             <h5>Tu gestión</h5>
             <ul class="nav flex-column">
               <li class="nav-item mb-2"><a href="/mis-libros" class="nav-link p-0">Mis libros</a></li>
-              <li class="nav-item mb-2"><a href="/mis-prestamos" class="nav-link p-0">Mis préstamos</a></li>
             </ul>
           </div>
         </div>

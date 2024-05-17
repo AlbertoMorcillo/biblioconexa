@@ -30,7 +30,6 @@
             </li>
             <a href="/catalogo-logged" class="nav-link">Catálogo</a>
             <a href="/mis-libros" class="nav-link">Mis libros</a>
-            <a href="/mis-prestamos" class="nav-link">Mis préstamos</a>
         </ul>
 
         <form class="form-inline" role="search" action="{{ route('search-books') }}" method="GET">

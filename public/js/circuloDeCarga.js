@@ -29,6 +29,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // También asegurarse de ocultar el loader si el usuario navega con el historial
-    window.addEventListener('popstate', hideLoader);
-    window.addEventListener('hashchange', hideLoader);
+    window.addEventListener('popstate', hideLoader); //popstate es el evento que se dispara cuando se navega hacia adelante o hacia atrás en la historia del navegador
+    window.addEventListener('hashchange', hideLoader); //hashchange es el evento que se dispara cuando cambia el hash de la URL
 });

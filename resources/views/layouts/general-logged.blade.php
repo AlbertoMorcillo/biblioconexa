@@ -24,7 +24,7 @@
 <body>
 
 <!-- Spinner de carga -->
-<div id="loader" class="loader" style="display: none;"></div>
+<div id="loader" class="loader"></div>
 
 @include('partials.header-logged') <!-- Incluyo el header desde otro archivo Blade -->
 

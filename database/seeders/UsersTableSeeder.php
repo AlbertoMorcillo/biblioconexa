@@ -38,7 +38,7 @@ class UsersTableSeeder extends Seeder
                 'surname' => 'Caskey',
                 'email' => 'elinor@admin.com',
                 'email_verified_at' => now(),
-                'password' => Hash::make('p@ssw0rd'),
+                'password' => Hash::make('P@ssw0rd'),
                 'phone' => '123456789',
                 'birthdate' => '1990-01-01',
                 'remember_token' => Str::random(10),

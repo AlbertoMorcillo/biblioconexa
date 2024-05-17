@@ -1,0 +1,18 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.banner,
+.seccion-titulo,
+.botonDirigir {
+    text-align: center;
+}
+
+.row {
+    justify-content: center;
+}
+
+.card-body {
+    text-align: center;
+}

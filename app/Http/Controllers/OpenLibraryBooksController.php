@@ -19,10 +19,10 @@ class OpenLibraryBooksController extends Controller
         $maxResults = 6; // Número de resultados por página
         $offset = ($page - 1) * $maxResults; // Cálculo del desplazamiento para la paginación
         $searchField = $this->determineSearchField($searchType);
-    
+
         $cacheKey = "search_{$searchField}_{$searchTerm}_page_{$page}";
         $client = new Client();
-    
+
         try {
             $books = Cache::remember($cacheKey, 3600, function () use ($client, $searchField, $searchTerm, $page, $maxResults, $offset) {
                 $response = $client->request('GET', 'https://openlibrary.org/search.json', [
@@ -35,14 +35,14 @@ class OpenLibraryBooksController extends Controller
                 ]);
                 return json_decode($response->getBody()->getContents(), true);
             });
-    
+
             if (isset($books['error'])) {
                 Log::error('Open Library API Error:', [$books['error']]);
                 throw new \Exception("Open Library API returned an error: " . $books['error']['message']);
             }
-    
+
             $covers = $this->fetchCovers($books['docs'], $client);
-    
+
             $totalItems = $books['numFound'];
             $paginator = new LengthAwarePaginator(
                 $books['docs'],
@@ -54,8 +54,16 @@ class OpenLibraryBooksController extends Controller
                     'query' => $request->query() // Para mantener los parámetros de búsqueda en la paginación
                 ]
             );
-    
-            if (Auth::check()) {
+
+            if (Auth::check() && Auth::user()->isAdmin) {
+                // Si el usuario es administrador, devuelve la vista para administradores
+                return view('catalogo.search-results-admin', [
+                    'books' => $paginator,
+                    'covers' => $covers,
+                    'searchTerm' => $searchTerm,
+                    'searchType' => $searchType
+                ]);
+            } elseif (Auth::check()) {
                 // Si el usuario está autenticado, devuelve la vista para usuarios logueados
                 return view('catalogo.search-results-logged', [
                     'books' => $paginator,
@@ -72,13 +80,12 @@ class OpenLibraryBooksController extends Controller
                     'searchType' => $searchType
                 ]);
             }
-    
+
         } catch (\Exception $e) {
             Log::error('Search exception:', ['message' => $e->getMessage()]);
             return back()->withErrors(['msg' => 'Error al buscar libros: ' . $e->getMessage()]);
         }
     }
-
 
     private function determineSearchField($searchType)
     {
@@ -107,5 +114,5 @@ class OpenLibraryBooksController extends Controller
             }
         }
         return $covers;
-    }    
+    }
 }

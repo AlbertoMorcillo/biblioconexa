@@ -117,8 +117,14 @@ class LibroController extends Controller
                 'external_id' => $libro
             ];
     
-            // Determinación de la vista en base al estado de autenticación del usuario
-            $view = Auth::check() ? 'libros.detalle-logged' : 'libros.detalle';
+            // Determinación de la vista en base al estado de autenticación del usuario y si es admin
+            if (Auth::check() && Auth::user()->isAdmin) {
+                $view = 'libros.detalle-admin';
+            } elseif (Auth::check()) {
+                $view = 'libros.detalle-logged';
+            } else {
+                $view = 'libros.detalle';
+            }
             return view($view, ['book' => $book]);
         } catch (\Exception $e) {
             // Manejo de errores
@@ -127,23 +133,16 @@ class LibroController extends Controller
         }
     }
     
-
-
-
     private function cleanDescription($description)
     {
-
         // Elimina enlaces en formato Markdown
         $description = preg_replace('/\[(.*?)\]\(.*?\)/', '$1', $description);
         // Elimina enlaces directos en formato HTML
         $description = preg_replace('/\bhttps?:\/\/\S+/i', '', $description);
-        //Intenta limpiar referencias residuales
+        // Intenta limpiar referencias residuales
         $description = preg_replace('/\[\w+\]\[\d+\]/', '', $description);
-
         return $description;
     }
-
-
 
     public function edit(Libro $libro)
     {

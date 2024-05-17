@@ -55,14 +55,12 @@
                             <span class="nombre">{{ $comentario->usuario->name }}</span>
                             <span class="fecha">{{ $comentario->created_at->format('d/m/Y') }}</span>
                             <span class="puntuacion">Puntuación: {{ $comentario->puntuacion->puntuacion ?? 'No disponible' }}</span>
-                            @if (Auth::id() === $comentario->user_id)
-                                <!-- Botón que activa el modal -->
-                                <button type="button" class="btn danger-button btn-sm extra-small-button"
-                                    data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal"
-                                    data-comentario-id="{{ $comentario->id }}">
-                                    Eliminar
-                                </button>
-                            @endif
+                            <!-- Botón que activa el modal para eliminar comentarios -->
+                            <button type="button" class="btn danger-button btn-sm extra-small-button"
+                                data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal"
+                                data-comentario-id="{{ $comentario->id }}">
+                                Eliminar
+                            </button>
                         </div>
                         <div class="contenido">
                             {{ $comentario->texto }}
@@ -118,19 +116,20 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('estanteriasLibros.update', ['estanteriasLibro' => $book['external_id']]) }}" method="post">                @csrf
-                @method('PUT')
-                <div class="mb-3">
-                  <label for="estado" class="form-label">Elige un estado:</label>
-                  <select class="form-select" name="estado" required>
-                    <option value="leyendo">Leyendo</option>
-                    <option value="leidos">Leídos</option>
-                    <option value="quieroLeer">Quiero leer</option>
-                    <option value="abandonado">Abandonado</option>
-                  </select>
-                </div>
-                <button type="submit" class="btn button">Actualizar Estado</button>
-              </form>
+                <form action="{{ route('estanteriasLibros.update', ['estanteriasLibro' => $book['external_id']]) }}" method="post">
+                    @csrf
+                    @method('PUT')
+                    <div class="mb-3">
+                      <label for="estado" class="form-label">Elige un estado:</label>
+                      <select class="form-select" name="estado" required>
+                        <option value="leyendo">Leyendo</option>
+                        <option value="leidos">Leídos</option>
+                        <option value="quieroLeer">Quiero leer</option>
+                        <option value="abandonado">Abandonado</option>
+                      </select>
+                    </div>
+                    <button type="submit" class="btn button">Actualizar Estado</button>
+                  </form>
             </div>
           </div>
         </div>

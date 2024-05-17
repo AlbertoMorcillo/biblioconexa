@@ -24,33 +24,33 @@
         <div class="col-md-3 seccion-enlace" aria-label="Sección de enlaces de noticias y actividades">
           <h5>Noticias y actividades</h5>
           <ul class="nav flex-column">
-            <li class="nav-item mb-2"><a href="{{ route('admin.noticias') }}" class="nav-link p-0">Noticias</a></li>
-            <li class="nav-item mb-2"><a href="{{ route('admin.actividades') }}" class="nav-link p-0">Actividades</a></li>
+            <li class="nav-item mb-2"><a href="/noticias" class="nav-link p-0">Noticias</a></li>
+            <li class="nav-item mb-2"><a href="/actividades" class="nav-link p-0">Actividades</a></li>
           </ul>
         </div>
         <div class="col-md-3 seccion-enlace" aria-label="Sección de enlaces de información sobre la biblioteca">
           <h5>Sobre la biblioteca</h5>
           <ul class="nav flex-column">
-            <li class="nav-item mb-2"><a href="{{ route('admin.sobreNosotros') }}" class="nav-link p-0">Sobre nosotros</a></li>
-            <li class="nav-item mb-2"><a href="{{ route('admin.horarioCalendario') }}" class="nav-link p-0">Horario/Calendario</a></li>
+            <li class="nav-item mb-2"><a href="/sobreNosotros" class="nav-link p-0">Sobre nosotros</a></li>
+            <li class="nav-item mb-2"><a href="/horarioCalendario" class="nav-link p-0">Horario/Calendario</a></li>
           </ul>
         </div>
         <div class="col-md-3 seccion-enlace" aria-label="Sección de enlaces de nuestro catálogo">
           <h5>Catálogo</h5>
           <ul class="nav flex-column">
-            <li class="nav-item mb-2"><a href="{{ route('admin.catalogo') }}" class="nav-link p-0">Nuestro catálogo</a></li>
+            <li class="nav-item mb-2"><a href="/catalogo" class="nav-link p-0">Nuestro catálogo</a></li>
           </ul>
         </div>
         <div class="col-md-3 seccion-enlace" aria-label="Sección de enlaces de nuestros servicios">
           <h5>Servicios</h5>
           <ul class="nav flex-column">
-            <li class="nav-item mb-2"><a href="{{ route('admin.tarjetaPersonal') }}" class="nav-link p-0">Tarjeta personal</a></li>
+            <li class="nav-item mb-2"><a href="/tarjetaPersonal" class="nav-link p-0">Tarjeta personal</a></li>
           </ul>
         </div>
         <div class="col-md-3 seccion-enlace" aria-label="Sección de enlaces sobre la gestion de tus libros y prestamos ">
           <h5>Tu gestión</h5>
           <ul class="nav flex-column">
-            <li class="nav-item mb-2"><a href="{{ route('admin.misLibros') }}" class="nav-link p-0">Mis libros</a></li>
+            <li class="nav-item mb-2"><a href="/mis-libros" class="nav-link p-0">Mis libros</a></li>
           </ul>
         </div>
       </div>

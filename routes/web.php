@@ -37,15 +37,15 @@ Route::get('/libros/{libro}', [LibroController::class, 'show'])->name('libros.sh
 Route::post('/comentarios', [ComentarioController::class, 'store'])->name('comentarios.store');
 Route::delete('/comentarios/{comentario}', [ComentarioController::class, 'destroy'])->name('comentarios.destroy');
 Route::post('/puntuaciones/{externalId}', [PuntuacionController::class, 'store'])->name('puntuaciones.store');
-Route::post('/tarjetaPersonal', [App\Http\Controllers\TarjetaPersonalController::class, 'store'])->name('tarjetaPersonal.store');
+Route::post('/tarjetaPersonal', [TarjetaPersonalController::class, 'store'])->name('tarjetaPersonal.store');
 
 // Handling bookshelves and book statuses
 Route::middleware('auth')->group(function () {
     Route::get('/estanterias/{user}', [EstanteriaController::class, 'index'])->name('estanterias.index');
     Route::post('/estanterias-libros', [EstanteriaLibroController::class, 'store'])->name('estanteriasLibros.store');
     Route::put('/estanterias-libros/{externalId}', [EstanteriaLibroController::class, 'update'])->name('estanteriasLibros.update');
-    Route::get('/mis-libros', [EstanteriaLibroController::class, 'index'])->name('estanteriasLibros.index'); // EstanteriaLibroController maneja la ruta '/mis-libros'
-    Route::get('/mis-libros/{externalId}', [EstanteriaLibroController::class, 'show'])->name('estanteriasLibros.show'); // Nueva ruta para mostrar detalles del libro
+    Route::get('/mis-libros', [EstanteriaLibroController::class, 'index'])->name('estanteriasLibros.index');
+    Route::get('/mis-libros/{externalId}', [EstanteriaLibroController::class, 'show'])->name('estanteriasLibros.show');
 });
 
 // Routes for registered users
@@ -53,9 +53,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/index-logged', function () {
         return view('usuarioLogged.index-logged');
     })->name('index-logged');
-
-    // Ruta conflictiva comentada
-    // Route::get('/mis-libros', [UserController::class, 'misLibros'])->name('mis-libros');
 
     Route::resources([
         'users' => UserController::class,
@@ -87,7 +84,7 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-// rutas para el administrador
+// Routes for administrators
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', function () {
         return view('admin.index');
@@ -107,7 +104,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::view('/admin/sobreNosotros', 'admin.sobreNosotros')->name('admin.sobreNosotros');
     Route::view('/admin/horarioCalendario', 'admin.horarioCalendario')->name('admin.horarioCalendario');
     Route::view('/admin/catalogo', 'admin.catalogo')->name('admin.catalogo');
-
 });
 
 // Authentication routes

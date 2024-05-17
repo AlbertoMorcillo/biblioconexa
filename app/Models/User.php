@@ -25,15 +25,17 @@ class User extends Authenticatable
         'birthdate', 
         'isAdmin'
     ];
+
     protected $hidden = [
         'password', 
         'remember_token'
     ];
+
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'birthdate' => 'date',
-        'isAdmin' => 'boolean', // Asegúrate de manejar isAdmin como booleano
+        'isAdmin' => 'boolean',
     ];
 
     // Relaciones
@@ -57,9 +59,14 @@ class User extends Authenticatable
         return $this->hasMany(Evento::class, 'user_id');
     }
 
-    public function tarjetasPersonales()
+    public function tarjetaPersonal()
     {
         return $this->hasOne(TarjetaPersonal::class, 'user_id');
     }
-}
 
+    // Método para verificar si el usuario es administrador
+    public function isAdmin()
+    {
+        return $this->isAdmin;
+    }
+}

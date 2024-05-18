@@ -11,7 +11,7 @@ class NoticiaController extends Controller
 {
     public function index()
     {
-        $noticias = Noticia::all();
+        $noticias = Noticia::paginate(6);
         return view('admin.noticias.index', compact('noticias'));
     }
 
@@ -24,20 +24,25 @@ class NoticiaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'titulo' => 'required|string|max:255',
-            'descripcion' => 'required|string',
-            'fecha' => 'required|date',
-            'publicado' => 'boolean',
-            'imagen' => 'nullable|image|max:2048'
+            'titulo' => 'required|string|min:5|max:255',
+            'descripcion' => 'required|string|min:20',
+            'fecha' => 'required|date|after_or_equal:today',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'hora' => 'nullable|date_format:H:i',
         ]);
     
         $noticia = new Noticia();
         $noticia->titulo = $request->input('titulo');
         $noticia->descripcion = $request->input('descripcion');
         $noticia->fecha = $request->input('fecha');
-        $noticia->publicado = $request->input('publicado', false);
         $noticia->user_id = Auth::id();
         $noticia->UsuarioDNI = Auth::user()->dni;
+    
+        if ($request->has('hora') && $request->input('fecha') > now()->toDateString()) {
+            $noticia->fecha = $request->input('fecha') . ' ' . $request->input('hora') . ':00';
+        } else {
+            $noticia->fecha = $request->input('fecha') . ' 00:00:00';
+        }
     
         if ($request->hasFile('imagen')) {
             $noticia->imagen = $request->file('imagen')->store('noticias', 'public');
@@ -47,6 +52,9 @@ class NoticiaController extends Controller
     
         return redirect()->route('admin.noticias.index')->with('success', 'Noticia creada exitosamente.');
     }
+    
+    
+    
     public function edit(Noticia $noticia)
     {
         return view('admin.noticias.edit', compact('noticia'));
@@ -58,14 +66,19 @@ class NoticiaController extends Controller
             'titulo' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'fecha' => 'required|date',
-            'publicado' => 'boolean',
-            'imagen' => 'nullable|image|max:2048'
+            'imagen' => 'nullable|image|max:2048',
+            'hora' => 'nullable|date_format:H:i',
         ]);
 
         $noticia->titulo = $request->input('titulo');
         $noticia->descripcion = $request->input('descripcion');
         $noticia->fecha = $request->input('fecha');
-        $noticia->publicado = $request->input('publicado', false);
+
+        if ($request->input('hora')) {
+            $noticia->fecha = $request->input('fecha') . ' ' . $request->input('hora') . ':00';
+        } else {
+            $noticia->fecha = $request->input('fecha') . ' 00:00:00';
+        }
 
         if ($request->hasFile('imagen')) {
             if ($noticia->imagen) {

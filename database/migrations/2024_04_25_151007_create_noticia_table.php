@@ -13,20 +13,18 @@ class CreateNoticiaTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('titulo', 255);
             $table->text('descripcion');
-            $table->date('fecha');
-            $table->boolean('publicado')->default(false);
+            $table->datetime('fecha');
             $table->string('imagen')->nullable();
             $table->string('UsuarioDNI', 9);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->index('fecha');
-            $table->index('publicado');
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('noticia');
+        Schema::dropIfExists('noticias');
     }
 }

@@ -26,6 +26,7 @@ return [
     'date' => 'El campo :attribute no es una fecha válida.',
     'before' => 'El campo :attribute debe ser una fecha anterior a :date.',
     'after' => 'El campo :attribute debe ser una fecha posterior a :date.',
+    'after_or_equal' => 'El campo :attribute debe ser una fecha posterior o igual a hoy.',
     'between' => [
         'numeric' => 'El campo :attribute debe estar entre :min y :max.',
         'file' => 'El archivo :attribute debe pesar entre :min y :max kilobytes.',
@@ -38,5 +39,9 @@ return [
         'email' => 'correo electrónico',
         'password' => 'contraseña',
         'password_confirmation' => 'confirmación de la contraseña',
+        'titulo' => 'título',
+        'descripcion' => 'descripción',
+        'fecha' => 'fecha',
+        'imagen' => 'imagen',
     ],
 ];

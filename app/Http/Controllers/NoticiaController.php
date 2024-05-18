@@ -59,7 +59,7 @@ class NoticiaController extends Controller
     {
         return view('admin.noticias.edit', compact('noticia'));
     }
-
+    
     public function update(Request $request, Noticia $noticia)
     {
         $request->validate([
@@ -69,29 +69,29 @@ class NoticiaController extends Controller
             'imagen' => 'nullable|image|max:2048',
             'hora' => 'nullable|date_format:H:i',
         ]);
-
+    
         $noticia->titulo = $request->input('titulo');
         $noticia->descripcion = $request->input('descripcion');
         $noticia->fecha = $request->input('fecha');
-
+    
         if ($request->input('hora')) {
             $noticia->fecha = $request->input('fecha') . ' ' . $request->input('hora') . ':00';
         } else {
             $noticia->fecha = $request->input('fecha') . ' 00:00:00';
         }
-
+    
         if ($request->hasFile('imagen')) {
             if ($noticia->imagen) {
                 Storage::disk('public')->delete($noticia->imagen);
             }
             $noticia->imagen = $request->file('imagen')->store('noticias', 'public');
         }
-
+    
         $noticia->save();
-
+    
         return redirect()->route('admin.noticias.index')->with('success', 'Noticia actualizada exitosamente.');
     }
-
+    
     public function destroy(Noticia $noticia)
     {
         if ($noticia->imagen) {

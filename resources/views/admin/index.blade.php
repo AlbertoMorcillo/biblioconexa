@@ -36,7 +36,7 @@
             </div>
             <div class="col">
                 <div class="card shadow-sm">
-                    <a href="{{ route('admin.noticias') }}" class="link-libros" aria-label="Gestión de noticias">
+                    <a href="{{ route('admin.noticias.index') }}" class="link-libros" aria-label="Gestión de noticias">
                         <img class="card-img-top" src="{{ asset('images/admin/noticias.jpg') }}" alt="Imagen de la portada del libro" width="100%" height="225" />
                         <div class="card-body">
                             <h5 class="card-title titulo-libro" aria-label="Gestión de noticias">Noticias</h5>
@@ -56,15 +56,15 @@
             </div>
         </div>
         <div class="col">
-                <div class="card shadow-sm">
-                    <a href="{{ route('admin.comentarios') }}" class="link-libros" aria-label="Gestión de comentarios">
-                        <img class="card-img-top" src="{{ asset('images/admin/comentarios.webp') }}" alt="Imagen de la portada del libro" width="100%" height="225" />
-                        <div class="card-body">
-                            <h5 class="card-title titulo-libro" aria-label="Gestión de comentarios">Comentarios</h5>
-                        </div>
-                    </a>
-                </div>
+            <div class="card shadow-sm">
+                <a href="{{ route('admin.comentarios') }}" class="link-libros" aria-label="Gestión de comentarios">
+                    <img class="card-img-top" src="{{ asset('images/admin/comentarios.webp') }}" alt="Imagen de la portada del libro" width="100%" height="225" />
+                    <div class="card-body">
+                        <h5 class="card-title titulo-libro" aria-label="Gestión de comentarios">Comentarios</h5>
+                    </div>
+                </a>
             </div>
+        </div>
     </section>
 </div>
 @endsection

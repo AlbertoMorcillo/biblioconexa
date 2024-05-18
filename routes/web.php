@@ -94,7 +94,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::view('/admin/libros', 'admin.libros')->name('admin.libros');
     Route::view('/admin/categorias', 'admin.categorias')->name('admin.categorias');
     Route::view('/admin/autores', 'admin.autores')->name('admin.autores');
-    Route::view('/admin/noticias', 'admin.noticias')->name('admin.noticias');
     Route::view('/admin/actividades', 'admin.actividades')->name('admin.actividades');
     Route::view('/admin/librosSugeridos', 'admin.librosSugeridos')->name('admin.librosSugeridos');
     Route::view('/admin/estanterias', 'admin.estanterias')->name('admin.estanterias');
@@ -104,7 +103,19 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::view('/admin/sobreNosotros', 'admin.sobreNosotros')->name('admin.sobreNosotros');
     Route::view('/admin/horarioCalendario', 'admin.horarioCalendario')->name('admin.horarioCalendario');
     Route::view('/admin/catalogo', 'admin.catalogo')->name('admin.catalogo');
+    
+    // Define resource route for noticias
+    Route::resource('admin/noticias', NoticiaController::class)->names([
+        'index' => 'admin.noticias.index',
+        'create' => 'admin.noticias.create',
+        'store' => 'admin.noticias.store',
+        'edit' => 'admin.noticias.edit',
+        'update' => 'admin.noticias.update',
+        'destroy' => 'admin.noticias.destroy'
+    ]);
 });
+
+
 
 // Authentication routes
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');

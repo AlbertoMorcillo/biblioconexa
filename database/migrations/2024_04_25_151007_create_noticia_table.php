@@ -8,7 +8,7 @@ class CreateNoticiaTable extends Migration
 {
     public function up()
     {
-        Schema::create('noticia', function (Blueprint $table) {
+        Schema::create('noticias', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('titulo', 255);
@@ -30,4 +30,3 @@ class CreateNoticiaTable extends Migration
         Schema::dropIfExists('noticia');
     }
 }
-?>

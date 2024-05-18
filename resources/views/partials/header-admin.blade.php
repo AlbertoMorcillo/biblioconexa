@@ -14,7 +14,7 @@
                 </ul>
             </li>
             <a href="{{ route('admin.actividades') }}" class="nav-link">Actividades</a>
-            <a href="{{ route('admin.noticias') }}" class="nav-link">Noticias</a>
+            <a href="{{ route('admin.noticias.index') }}" class="nav-link">Noticias</a>
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" id="bibliotecaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Sobre la biblioteca

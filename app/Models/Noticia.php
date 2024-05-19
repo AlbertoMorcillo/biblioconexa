@@ -10,20 +10,17 @@ class Noticia extends Model
 {
     use HasFactory;
 
-    // Lista de propiedades que se pueden asignar masivamente
     protected $fillable = [
         'titulo',
         'descripcion',
         'fecha',
-        'publicado',
         'imagen',
-        'user_id' // Asegúrate de que user_id es asignable masivamente si es que se usará en formularios
+        'user_id',
+        'UsuarioDNI'
     ];
 
-    // Casts para convertir los tipos de datos de las propiedades
     protected $casts = [
-        'fecha' => 'date',
-        'publicado' => 'boolean'
+        'fecha' => 'datetime',
     ];
 
     /**

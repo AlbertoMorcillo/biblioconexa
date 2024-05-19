@@ -17,7 +17,7 @@
         </div>
     @endif
 
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-0">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-0 mt-4">
         @foreach ($noticias as $noticia)
             <div class="col mb-4">
                 <div class="card shadow-sm bg-blue h-100">
@@ -29,7 +29,7 @@
                             <p class="card-text mb-1"><small class="text-muted">{{ $noticia->fecha->format('d/m/Y H:i') }}</small></p>
                         </div>
                     </a>
-                    <div class="card-footer d-flex flex-column align-items-center">
+                    <div class="card-footer d-flex flex-column align-items-center bg-blue">
                         <a href="{{ route('admin.noticias.edit', $noticia->id) }}" class="btn secondary-button mb-2">Editar</a>
                         <!-- Botón que activa el modal -->
                         <button type="button" class="btn danger-button mb-2" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $noticia->id }}">Eliminar</button>

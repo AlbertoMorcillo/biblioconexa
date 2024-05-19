@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
+    HomeController,
     PuntuacionController,
     OpenLibraryBooksController,
     GoogleBooksController,
@@ -21,23 +22,24 @@ use App\Http\Controllers\{
 };
 
 // Routes for non-registered users
-Route::get('/', function () {
-    return view('usuarioNoRegistrado.index');
-})->name('home');
-
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::view('/noticias', 'usuarioNoRegistrado.noticias')->name('noticias.index');
 Route::view('/actividades', 'usuarioNoRegistrado.actividades')->name('actividades');
 Route::view('/catalogo', 'usuarioNoRegistrado.catalogo')->name('catalogo');
 Route::view('/sobreNosotros', 'usuarioNoRegistrado.sobreNosotros')->name('sobreNosotros');
 Route::view('/horarioCalendario', 'usuarioNoRegistrado.horarioCalendario')->name('horarioCalendario');
-
 Route::get('/search', [OpenLibraryBooksController::class, 'search'])->name('search-books');
-
 Route::get('/libros/{libro}', [LibroController::class, 'show'])->name('libros.show');
 Route::post('/comentarios', [ComentarioController::class, 'store'])->name('comentarios.store');
 Route::delete('/comentarios/{comentario}', [ComentarioController::class, 'destroy'])->name('comentarios.destroy');
 Route::post('/puntuaciones/{externalId}', [PuntuacionController::class, 'store'])->name('puntuaciones.store');
+
+// Ruta para la tarjeta personal (accesible tanto para usuarios no autenticados como autenticados)
+Route::view('/tarjetaPersonal', 'usuarioNoRegistrado.tarjetaPersonal')->name('tarjetaPersonal');
 Route::post('/tarjetaPersonal', [TarjetaPersonalController::class, 'store'])->name('tarjetaPersonal.store');
+
+// Ruta para mostrar el detalle de una noticia
+Route::get('/noticias/{noticia}', [NoticiaController::class, 'show'])->name('noticias.show');
 
 // Handling bookshelves and book statuses
 Route::middleware('auth')->group(function () {
@@ -50,9 +52,7 @@ Route::middleware('auth')->group(function () {
 
 // Routes for registered users
 Route::middleware('auth')->group(function () {
-    Route::get('/index-logged', function () {
-        return view('usuarioLogged.index-logged');
-    })->name('index-logged');
+    Route::get('/index-logged', [HomeController::class, 'indexLogged'])->name('index-logged');
 
     Route::resources([
         'users' => UserController::class,
@@ -64,17 +64,21 @@ Route::middleware('auth')->group(function () {
         'comentarios' => ComentarioController::class,
         'estanteriasLibros' => EstanteriaLibroController::class,
     ]);
+
     Route::resource('tarjetaPersonal', TarjetaPersonalController::class)
-        ->only(['index', 'edit', 'update', 'destroy']);
+        ->only(['edit', 'update', 'destroy']);
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::view('/tarjetaPersonal-logged', 'usuarioLogged.tarjetaPersonal-logged')->name('tarjetaPersonal-logged');
     Route::view('/actividades-logged', 'usuarioLogged.actividades-logged')->name('actividades-logged');
     Route::view('/noticias-logged', 'usuarioLogged.noticias-logged')->name('noticias-logged');
     Route::view('/catalogo-logged', 'usuarioLogged.catalogo-logged')->name('catalogo-logged');
     Route::view('/sobreNosotros-logged', 'usuarioLogged.sobreNosotros-logged')->name('sobreNosotros-logged');
     Route::view('/horarioCalendario-logged', 'usuarioLogged.horarioCalendario-logged')->name('horarioCalendario-logged');
+
     Route::middleware('can:manage-news')->group(function () {
         Route::get('/noticias/create', [NoticiaController::class, 'create'])->name('noticias.create');
         Route::post('/noticias', [NoticiaController::class, 'store'])->name('noticias.store');
@@ -86,9 +90,7 @@ Route::middleware('auth')->group(function () {
 
 // Routes for administrators
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin', function () {
-        return view('admin.index');
-    })->name('admin.index');
+    Route::get('/admin', [HomeController::class, 'adminIndex'])->name('admin.index');
 
     Route::view('/admin/usuarios', 'admin.usuarios')->name('admin.usuarios');
     Route::view('/admin/libros', 'admin.libros')->name('admin.libros');
@@ -114,8 +116,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
         'destroy' => 'admin.noticias.destroy'
     ]);
 });
-
-
 
 // Authentication routes
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');

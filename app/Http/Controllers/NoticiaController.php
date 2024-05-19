@@ -52,9 +52,18 @@ class NoticiaController extends Controller
     
         return redirect()->route('admin.noticias.index')->with('success', 'Noticia creada exitosamente.');
     }
-    
-    
-    
+
+    public function show(Noticia $noticia)
+    {
+        if (Auth::check() && Auth::user()->isAdmin) {
+            return view('noticias.detalle-admin', compact('noticia'));
+        } elseif (Auth::check()) {
+            return view('noticias.detalle-logged', compact('noticia'));
+        } else {
+            return view('noticias.detalle', compact('noticia'));
+        }
+    }
+
     public function edit(Noticia $noticia)
     {
         return view('admin.noticias.edit', compact('noticia'));

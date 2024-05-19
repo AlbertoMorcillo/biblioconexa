@@ -12,14 +12,11 @@ class TarjetaPersonalController extends Controller
     {
         $tarjetas = TarjetaPersonal::all();
 
-    // Comprueba si el usuario está autenticado
-    if (auth()->check()) {
-        // Muestra la vista para usuarios registrados
-        return view('usuarioLogged.tarjetaPersonal-logged', ['tarjetas' => $tarjetas]);
-    } else {
-        // Muestra la vista para usuarios no registrados
-        return view('usuarioNoRegistrado.tarjetaPersonal', ['tarjetas' => $tarjetas]);
-    }
+        if (auth()->check()) {
+            return view('usuarioLogged.tarjetaPersonal-logged', ['tarjetas' => $tarjetas]);
+        } else {
+            return view('usuarioNoRegistrado.tarjetaPersonal', ['tarjetas' => $tarjetas]);
+        }
     }
 
     public function create()
@@ -37,24 +34,23 @@ class TarjetaPersonalController extends Controller
             'telefono' => 'required|string|max:15',
             'genero' => 'required|in:Hombre,Mujer,No binario,Privado',
             'fecha_nacimiento' => 'required|date',
-            'dni' => 'required|string|max:9' 
+            'dni' => 'required|string|max:9'
         ]);
 
         $tarjeta = new TarjetaPersonal($request->all());
+
         if (auth()->check()) {
             $tarjeta->user_id = auth()->id();
         } else {
-            // Si no hay un usuario autenticado, busca un usuario con el mismo DNI
             $user = User::where('dni', $request->dni)->first();
             if ($user) {
-                // Si existe tal usuario, asigna su ID
                 $tarjeta->user_id = $user->id;
             }
         }
-    
+
         $tarjeta->save();
 
-        return redirect()->route('tarjetaPersonal.index')->with('success', 'Tarjeta personal creada con éxito.');
+        return redirect()->route('tarjetaPersonal')->with('success', 'Tarjeta personal creada con éxito.');
     }
 
     public function show(TarjetaPersonal $tarjetaPersonal)

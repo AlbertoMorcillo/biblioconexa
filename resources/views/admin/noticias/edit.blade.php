@@ -28,7 +28,7 @@
             <textarea name="descripcion" id="descripcion" class="form-control" rows="5" required>{{ old('descripcion', $noticia->descripcion) }}</textarea>
         </div>
         <div class="mb-3">
-            <label for="fecha" class="form-label">Fecha</label>
+            <label for="fecha" class="form-label">Fecha de publicación</label>
             <input type="date" name="fecha" id="fecha" class="form-control" value="{{ old('fecha', $noticia->fecha->format('Y-m-d')) }}" required>
         </div>
         <div id="horaContainer" style="display: {{ old('fecha', $noticia->fecha->format('Y-m-d')) > date('Y-m-d') ? 'block' : 'none' }};">

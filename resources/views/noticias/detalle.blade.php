@@ -6,11 +6,7 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-4">
-            @if ($noticia->imagen)
-                <img src="{{ asset('storage/' . $noticia->imagen) }}" class="img-fluid" alt="Imagen de la noticia: {{ $noticia->titulo }}">
-            @else
-                <img src="{{ asset('images/noticias/default.jpg') }}" class="img-fluid" alt="Imagen predeterminada para la noticia">
-            @endif
+            <img class="card-actividad-img-top" src="{{ $noticia->imagen ? asset('storage/' . $noticia->imagen) : asset('images/admin/noticias.jpg') }}" alt="Imagen de la noticia" />
         </div>
         <div class="col-md-8">
             <h1>{{ $noticia->titulo }}</h1>

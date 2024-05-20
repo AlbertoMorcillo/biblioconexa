@@ -31,7 +31,7 @@
             <textarea name="descripcion" id="descripcion" class="form-control" rows="5" required>{{ old('descripcion') }}</textarea>
         </div>
         <div class="mb-3">
-            <label for="fecha" class="form-label">Fecha</label>
+            <label for="fecha" class="form-label">Fecha de publicación</label>
             <input type="date" name="fecha" id="fecha" class="form-control" value="{{ old('fecha') }}" required>
         </div>
         <div id="horaContainer">

@@ -6,7 +6,7 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-4">
-            <img class="card-actividad-img-top" src="{{ $noticia->imagen ? asset('storage/' . $noticia->imagen) : asset('images/admin/noticias.jpg') }}" alt="Imagen de la noticia" />
+            <img src="{{ $imagenPath }}" class="img-fluid" alt="Imagen de la noticia: {{ $noticia->titulo }}">
         </div>
         <div class="col-md-8">
             <h1 class="break-word">{{ $noticia->titulo }}</h1>

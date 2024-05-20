@@ -9,11 +9,7 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-4">
-            @if ($noticia->imagen)
-                <img src="{{ asset('storage/' . $noticia->imagen) }}" class="img-fluid" alt="Imagen de la noticia: {{ $noticia->titulo }}">
-            @else
-                <img src="{{ asset('images/noticias/default.jpg') }}" class="img-fluid" alt="Imagen predeterminada para la noticia">
-            @endif
+            <img src="{{ $imagenPath }}" class="img-fluid" alt="Imagen de la noticia: {{ $noticia->titulo }}">
         </div>
         <div class="col-md-8">
             <h1 class="break-word">{{ $noticia->titulo }}</h1>

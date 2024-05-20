@@ -27,7 +27,7 @@ class NoticiaController extends Controller
             'titulo' => 'required|string|min:5|max:255',
             'descripcion' => 'required|string|min:20',
             'fecha' => 'required|date|after_or_equal:today',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'hora' => 'nullable|date_format:H:i',
         ]);
 
@@ -63,15 +63,16 @@ class NoticiaController extends Controller
 
     public function show(Noticia $noticia)
     {
+        $imagenPath = $noticia->imagen ? asset('storage/' . $noticia->imagen) : asset('images/admin/noticias.jpg');
+
         if (Auth::check() && Auth::user()->isAdmin) {
-            return view('noticias.detalle-admin', compact('noticia'));
+            return view('noticias.detalle-admin', compact('noticia', 'imagenPath'));
         } elseif (Auth::check()) {
-            return view('noticias.detalle-logged', compact('noticia'));
+            return view('noticias.detalle-logged', compact('noticia', 'imagenPath'));
         } else {
-            return view('noticias.detalle', compact('noticia'));
+            return view('noticias.detalle', compact('noticia', 'imagenPath'));
         }
     }
-    
 
     public function edit(Noticia $noticia)
     {
@@ -84,7 +85,7 @@ class NoticiaController extends Controller
             'titulo' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'fecha' => 'required|date',
-            'imagen' => 'nullable|image|max:2048',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'hora' => 'nullable|date_format:H:i',
         ]);
 

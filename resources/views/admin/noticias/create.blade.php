@@ -46,9 +46,10 @@
         </div>
         <div class="mb-3">
             <label for="imagen" class="form-label">Imagen</label>
-            <input type="file" name="imagen" id="imagen" class="form-control">
+            <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*">
         </div>
         <button type="submit" class="btn button">Crear Noticia</button>
+        
     </form>
 </div>
 @endsection

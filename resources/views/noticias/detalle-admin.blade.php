@@ -16,9 +16,9 @@
             @endif
         </div>
         <div class="col-md-8">
-            <h1>{{ $noticia->titulo }}</h1>
-            <p><strong>Fecha:</strong> {{ $noticia->fecha->format('d/m/Y H:i') }}</p>
-            <p><strong>Descripción:</strong> {{ $noticia->descripcion }}</p>
+            <h1 class="break-word">{{ $noticia->titulo }}</h1>
+            <p class="break-word"><strong>Fecha:</strong> {{ $noticia->fecha->format('d/m/Y H:i') }}</p>
+            <p class="break-word"><strong>Descripción:</strong> {{ $noticia->descripcion }}</p>
             <p><strong>Publicado por:</strong> {{ $noticia->user->name ?? 'No disponible' }}</p>
         </div>
     </div>

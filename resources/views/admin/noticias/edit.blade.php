@@ -42,6 +42,7 @@
             <input type="file" name="imagen" id="imagen" class="form-control">
         </div>
         <button type="submit" class="btn button">Actualizar Noticia</button>
+        
     </form>
 </div>
 @endsection

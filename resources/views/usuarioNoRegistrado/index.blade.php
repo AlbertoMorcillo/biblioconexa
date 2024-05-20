@@ -43,6 +43,7 @@
                         <img class="card-actividad-img-top" src="{{ $noticia->imagen ? asset('storage/' . $noticia->imagen) : asset('images/admin/noticias.jpg') }}" alt="Imagen de la noticia" />
                         <div class="card-actividad-body">
                             <h5 class="titulo-actividad" aria-label="Titulo de la noticia">{{ $noticia->titulo }}</h5>
+                            <p class="card-text">{{ Str::limit($noticia->descripcion, 20) }}</p>
                             <p class="horario-actividad" aria-label="Horario de la Noticia">{{ $noticia->fecha->format('H:i') }}</p>
                             <p class="sala-actividad" aria-label="Fecha de la noticia">{{ $noticia->fecha->format('d/m/Y') }}</p>
                         </div>

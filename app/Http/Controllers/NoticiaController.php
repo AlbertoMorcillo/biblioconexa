@@ -30,26 +30,34 @@ class NoticiaController extends Controller
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'hora' => 'nullable|date_format:H:i',
         ]);
-    
+
+        $fecha = $request->input('fecha');
+        $hora = $request->input('hora');
+
+        if ($hora && $fecha > now()->toDateString()) {
+            // Fecha futura con hora específica
+            $fecha = "$fecha $hora:00";
+        } elseif ($fecha == now()->toDateString()) {
+            // Fecha actual, usar hora actual
+            $fecha = now()->format('Y-m-d H:i:s');
+        } else {
+            // Fecha futura sin hora específica
+            $fecha = "$fecha 00:00:00";
+        }
+
         $noticia = new Noticia();
         $noticia->titulo = $request->input('titulo');
         $noticia->descripcion = $request->input('descripcion');
-        $noticia->fecha = $request->input('fecha');
+        $noticia->fecha = $fecha;
         $noticia->user_id = Auth::id();
         $noticia->UsuarioDNI = Auth::user()->dni;
-    
-        if ($request->has('hora') && $request->input('fecha') > now()->toDateString()) {
-            $noticia->fecha = $request->input('fecha') . ' ' . $request->input('hora') . ':00';
-        } else {
-            $noticia->fecha = $request->input('fecha') . ' 00:00:00';
-        }
-    
+
         if ($request->hasFile('imagen')) {
             $noticia->imagen = $request->file('imagen')->store('noticias', 'public');
         }
-    
+
         $noticia->save();
-    
+
         return redirect()->route('admin.noticias.index')->with('success', 'Noticia creada exitosamente.');
     }
 
@@ -78,29 +86,34 @@ class NoticiaController extends Controller
             'imagen' => 'nullable|image|max:2048',
             'hora' => 'nullable|date_format:H:i',
         ]);
-    
+
+        $fecha = $request->input('fecha');
+        $hora = $request->input('hora');
+
+        if ($hora && $fecha > now()->toDateString()) {
+            $fecha = "$fecha $hora:00";
+        } elseif ($fecha == now()->toDateString()) {
+            $fecha = now()->format('Y-m-d H:i:s');
+        } else {
+            $fecha = "$fecha 00:00:00";
+        }
+
         $noticia->titulo = $request->input('titulo');
         $noticia->descripcion = $request->input('descripcion');
-        $noticia->fecha = $request->input('fecha');
-    
-        if ($request->input('hora')) {
-            $noticia->fecha = $request->input('fecha') . ' ' . $request->input('hora') . ':00';
-        } else {
-            $noticia->fecha = $request->input('fecha') . ' 00:00:00';
-        }
-    
+        $noticia->fecha = $fecha;
+
         if ($request->hasFile('imagen')) {
             if ($noticia->imagen) {
                 Storage::disk('public')->delete($noticia->imagen);
             }
             $noticia->imagen = $request->file('imagen')->store('noticias', 'public');
         }
-    
+
         $noticia->save();
-    
+
         return redirect()->route('admin.noticias.index')->with('success', 'Noticia actualizada exitosamente.');
     }
-    
+
     public function destroy(Noticia $noticia)
     {
         if ($noticia->imagen) {

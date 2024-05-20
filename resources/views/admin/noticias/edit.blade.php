@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container mt-4">
-    <h1 class="seccion-titulo text-center">Editar Noticia</h1>
+    <h1 class="seccion-titulo text-center">Editar noticia</h1>
 
     @if ($errors->any())
         <div class="alert alert-danger">

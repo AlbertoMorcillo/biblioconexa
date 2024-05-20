@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="container mt-4">
-    <h1 class="seccion-titulo text-center">Crear Nueva Noticia</h1>
+    <h1 class="seccion-titulo text-center">Crear nueva noticia</h1>
 
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -34,7 +34,7 @@
             <label for="fecha" class="form-label">Fecha</label>
             <input type="date" name="fecha" id="fecha" class="form-control" value="{{ old('fecha') }}" required>
         </div>
-        <div id="horaContainer" style="display: none;">
+        <div id="horaContainer">
             <div class="mb-3">
                 <label for="hora" class="form-label">Hora de Publicación</label>
                 <input type="time" name="hora" id="hora" class="form-control" value="{{ old('hora') }}">

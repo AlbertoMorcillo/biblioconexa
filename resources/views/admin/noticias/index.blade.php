@@ -21,7 +21,7 @@
         @foreach ($noticias as $noticia)
             <div class="col mb-4">
                 <div class="card shadow-sm bg-blue h-100">
-                    <a href="#" class="link-libros" aria-label="Información de la noticia que si aprietas te lleva a la noticia específica.">
+                    <a href="{{ route('noticias.show', $noticia->id) }}" class="link-libros" aria-label="Información de la noticia que si aprietas te lleva a la noticia específica.">
                         <img class="card-img-top-noticias" src="{{ $noticia->imagen ? asset('storage/' . $noticia->imagen) : asset('images/admin/noticias.jpg') }}" alt="Imagen de la noticia" width="100%" height="225" />
                         <div class="card-body">
                             <h5 class="card-title titulo-libro" aria-label="Título de la noticia">{{ $noticia->titulo }}</h5>
@@ -38,6 +38,8 @@
             </div>
         @endforeach
     </div>
+    
+    
 
     <!-- Paginación -->
     @if ($noticias->lastPage() > 1)

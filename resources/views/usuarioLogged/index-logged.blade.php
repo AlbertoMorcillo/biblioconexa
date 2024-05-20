@@ -53,6 +53,8 @@
             </div>
         @endforeach
     </div>
+    
+    
     <div class="botonDirigir">
         <button type="button" class="btn button" id="verNoticiasBoton" aria-label="Botón que te dirije a ver más noticias">Ver más noticias</button>
     </div>

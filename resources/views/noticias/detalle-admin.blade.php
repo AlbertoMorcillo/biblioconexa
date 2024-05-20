@@ -17,7 +17,6 @@
             <p><strong>Fecha:</strong> {{ $noticia->fecha->format('d/m/Y H:i') }}</p>
             <p><strong>Descripción:</strong> {{ $noticia->descripcion }}</p>
             <p><strong>Publicado por:</strong> {{ $noticia->user->name ?? 'No disponible' }}</p>
-            <!-- Aquí puedes agregar más opciones para administradores, como botones de edición o eliminación -->
         </div>
     </div>
 </div>

@@ -5,7 +5,6 @@ use App\Http\Controllers\{
     HomeController,
     PuntuacionController,
     OpenLibraryBooksController,
-    GoogleBooksController,
     ProfileController,
     TarjetaPersonalController,
     Auth\AuthenticatedSessionController,
@@ -105,16 +104,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::view('/admin/sobreNosotros', 'admin.sobreNosotros')->name('admin.sobreNosotros');
     Route::view('/admin/horarioCalendario', 'admin.horarioCalendario')->name('admin.horarioCalendario');
     Route::view('/admin/catalogo', 'admin.catalogo')->name('admin.catalogo');
-    
-    // Define resource route for noticias
-    Route::resource('admin/noticias', NoticiaController::class)->names([
-        'index' => 'admin.noticias.index',
-        'create' => 'admin.noticias.create',
-        'store' => 'admin.noticias.store',
-        'edit' => 'admin.noticias.edit',
-        'update' => 'admin.noticias.update',
-        'destroy' => 'admin.noticias.destroy'
-    ]);
+
+    Route::get('/admin/noticias', [NoticiaController::class, 'index'])->name('admin.noticias.index');
+    Route::get('/admin/noticias/create', [NoticiaController::class, 'create'])->name('admin.noticias.create');
+    Route::post('/admin/noticias', [NoticiaController::class, 'store'])->name('admin.noticias.store');
+    Route::get('/admin/noticias/{noticia}/edit', [NoticiaController::class, 'edit'])->name('admin.noticias.edit');
+    Route::patch('/admin/noticias/{noticia}', [NoticiaController::class, 'update'])->name('admin.noticias.update');
+    Route::delete('/admin/noticias/{noticia}', [NoticiaController::class, 'destroy'])->name('admin.noticias.destroy');
 });
 
 // Authentication routes

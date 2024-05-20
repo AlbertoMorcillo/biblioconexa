@@ -71,6 +71,7 @@ class NoticiaController extends Controller
             return view('noticias.detalle', compact('noticia'));
         }
     }
+    
 
     public function edit(Noticia $noticia)
     {

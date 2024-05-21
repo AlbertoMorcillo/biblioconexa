@@ -76,7 +76,24 @@ class NoticiaController extends Controller
 
     public function noticias(Request $request)
     {
-        $noticias = Noticia::paginate(6);
+        $query = Noticia::query();
+
+        if ($request->filled('search')) {
+            $query->where('titulo', 'like', '%' . $request->search . '%')
+                  ->orWhere('descripcion', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('sort')) {
+            if ($request->sort == 'oldest') {
+                $query->orderBy('fecha', 'asc');
+            } else {
+                $query->orderBy('fecha', 'desc');
+            }
+        } else {
+            $query->orderBy('fecha', 'desc');
+        }
+
+        $noticias = $query->paginate(6);
 
         if ($request->expectsJson()) {
             return response()->json([
@@ -91,9 +108,27 @@ class NoticiaController extends Controller
         return view('usuarioNoRegistrado.noticias', compact('noticias'));
     }
 
-    public function noticiasLogged()
+    public function noticiasLogged(Request $request)
     {
-        $noticias = Noticia::paginate(6);
+        $query = Noticia::query();
+
+        if ($request->filled('search')) {
+            $query->where('titulo', 'like', '%' . $request->search . '%')
+                  ->orWhere('descripcion', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('sort')) {
+            if ($request->sort == 'oldest') {
+                $query->orderBy('fecha', 'asc');
+            } else {
+                $query->orderBy('fecha', 'desc');
+            }
+        } else {
+            $query->orderBy('fecha', 'desc');
+        }
+
+        $noticias = $query->paginate(6);
+
         return view('usuarioLogged.noticias-logged', compact('noticias'));
     }
 

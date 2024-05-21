@@ -22,7 +22,7 @@ use App\Http\Controllers\{
 
 // Routes for non-registered users
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::view('/noticias', 'usuarioNoRegistrado.noticias')->name('noticias.index');
+Route::get('/noticias', [NoticiaController::class, 'noticias'])->name('noticias.index');
 Route::view('/actividades', 'usuarioNoRegistrado.actividades')->name('actividades');
 Route::view('/catalogo', 'usuarioNoRegistrado.catalogo')->name('catalogo');
 Route::view('/sobreNosotros', 'usuarioNoRegistrado.sobreNosotros')->name('sobreNosotros');
@@ -32,8 +32,6 @@ Route::get('/libros/{libro}', [LibroController::class, 'show'])->name('libros.sh
 Route::post('/comentarios', [ComentarioController::class, 'store'])->name('comentarios.store');
 Route::delete('/comentarios/{comentario}', [ComentarioController::class, 'destroy'])->name('comentarios.destroy');
 Route::post('/puntuaciones/{externalId}', [PuntuacionController::class, 'store'])->name('puntuaciones.store');
-Route::get('/noticias', [NoticiaController::class, 'noticias'])->name('noticias');
-
 
 // Ruta para la tarjeta personal (accesible tanto para usuarios no autenticados como autenticados)
 Route::view('/tarjetaPersonal', 'usuarioNoRegistrado.tarjetaPersonal')->name('tarjetaPersonal');

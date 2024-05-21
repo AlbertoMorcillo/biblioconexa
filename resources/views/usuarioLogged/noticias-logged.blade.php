@@ -20,7 +20,7 @@
                     <label for="search">Buscar:</label>
                     <input type="text" name="search" id="search" class="form-control" value="{{ request('search') }}" placeholder="Buscar noticias">
                 </div>
-                <button type="submit" class="btn btn-primary mt-2">Aplicar filtros</button>
+                <button type="submit" class="btn button mt-4">Aplicar filtros</button>
             </form>
         </div>
 

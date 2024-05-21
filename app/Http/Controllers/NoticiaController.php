@@ -54,6 +54,8 @@ class NoticiaController extends Controller
 
         if ($request->hasFile('imagen')) {
             $noticia->imagen = $request->file('imagen')->store('noticias', 'public');
+        } else {
+            $noticia->imagen = 'images/admin/noticias.jpg';  // Imagen predeterminada
         }
 
         $noticia->save();
@@ -105,7 +107,7 @@ class NoticiaController extends Controller
         $noticia->fecha = $fecha;
 
         if ($request->hasFile('imagen')) {
-            if ($noticia->imagen) {
+            if ($noticia->imagen && $noticia->imagen !== 'images/admin/noticias.jpg') {
                 Storage::disk('public')->delete($noticia->imagen);
             }
             $noticia->imagen = $request->file('imagen')->store('noticias', 'public');
@@ -118,7 +120,7 @@ class NoticiaController extends Controller
 
     public function destroy(Noticia $noticia)
     {
-        if ($noticia->imagen) {
+        if ($noticia->imagen && $noticia->imagen !== 'images/admin/noticias.jpg') {
             Storage::disk('public')->delete($noticia->imagen);
         }
 

@@ -92,8 +92,17 @@ class UserController extends Controller
         return redirect()->route('admin.usuarios.index')->with('success', 'Usuario actualizado con éxito.');
     }
 
-    public function destroy(User $user)
+    public function destroy(Request $request, User $user)
     {
+        // Verificar la contraseña del administrador
+        $request->validate([
+            'admin_password' => 'required',
+        ]);
+    
+        if (!Hash::check($request->admin_password, Auth::user()->password)) {
+            return redirect()->route('admin.usuarios.index')->with('error', 'Contraseña de administrador incorrecta.');
+        }
+    
         $user->delete();
         return redirect()->route('admin.usuarios.index')->with('success', 'Usuario eliminado con éxito.');
     }

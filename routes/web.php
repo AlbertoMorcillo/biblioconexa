@@ -33,7 +33,7 @@ Route::post('/comentarios', [ComentarioController::class, 'store'])->name('comen
 Route::delete('/comentarios/{comentario}', [ComentarioController::class, 'destroy'])->name('comentarios.destroy');
 Route::post('/puntuaciones/{externalId}', [PuntuacionController::class, 'store'])->name('puntuaciones.store');
 Route::get('/noticias', [NoticiaController::class, 'noticias'])->name('noticias');
-Route::get('/noticias-logged', [NoticiaController::class, 'noticiasLogged'])->name('noticias-logged');
+
 
 // Ruta para la tarjeta personal (accesible tanto para usuarios no autenticados como autenticados)
 Route::view('/tarjetaPersonal', 'usuarioNoRegistrado.tarjetaPersonal')->name('tarjetaPersonal');
@@ -75,7 +75,7 @@ Route::middleware('auth')->group(function () {
 
     Route::view('/tarjetaPersonal-logged', 'usuarioLogged.tarjetaPersonal-logged')->name('tarjetaPersonal-logged');
     Route::view('/actividades-logged', 'usuarioLogged.actividades-logged')->name('actividades-logged');
-    Route::view('/noticias-logged', 'usuarioLogged.noticias-logged')->name('noticias-logged');
+    Route::get('/noticias-logged', [NoticiaController::class, 'noticiasLogged'])->name('noticias-logged');
     Route::view('/catalogo-logged', 'usuarioLogged.catalogo-logged')->name('catalogo-logged');
     Route::view('/sobreNosotros-logged', 'usuarioLogged.sobreNosotros-logged')->name('sobreNosotros-logged');
     Route::view('/horarioCalendario-logged', 'usuarioLogged.horarioCalendario-logged')->name('horarioCalendario-logged');

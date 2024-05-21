@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => {
             console.error('Error:', error);
-            // Redirigir a noticias en caso de error
             window.location.href = '/noticias';
         });
     });

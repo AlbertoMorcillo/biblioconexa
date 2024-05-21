@@ -76,6 +76,8 @@ class NoticiaController extends Controller
 
     public function noticias(Request $request)
     {
+        $noticias = Noticia::paginate(6);
+
         if ($request->expectsJson()) {
             return response()->json([
                 'authenticated' => Auth::check()
@@ -83,15 +85,16 @@ class NoticiaController extends Controller
         }
 
         if (Auth::check()) {
-            return redirect()->route('noticias-logged');
+            return view('usuarioLogged.noticias-logged', compact('noticias'));
         }
 
-        return view('usuarioNoRegistrado.noticias');
+        return view('usuarioNoRegistrado.noticias', compact('noticias'));
     }
 
     public function noticiasLogged()
     {
-        return view('usuarioLogged.noticias-logged');
+        $noticias = Noticia::paginate(6);
+        return view('usuarioLogged.noticias-logged', compact('noticias'));
     }
 
     public function edit(Noticia $noticia)

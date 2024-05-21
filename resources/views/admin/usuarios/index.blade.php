@@ -18,6 +18,11 @@
             {{ session('success') }}
         </div>
     @endif
+    @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+    @endif
     <a href="{{ route('admin.usuarios.create') }}" class="btn button mb-3">Crear Usuario</a>
     <table class="table table-bordered">
         <thead>

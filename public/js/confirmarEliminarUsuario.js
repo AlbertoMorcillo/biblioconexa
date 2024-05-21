@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Evento para cerrar el modal cuando se presiona el botón de "Cancelar"
     document.querySelectorAll('.modal .secondary-button').forEach(button => {
         button.addEventListener('click', function () {
-            $(deleteUserModal).modal('hide');
+            $('#deleteUserModal').modal('hide');
         });
     });
 });

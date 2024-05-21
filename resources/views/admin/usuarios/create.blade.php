@@ -5,6 +5,17 @@
 @section('content')
 <div class="container mt-4">
     <h1 class="text-center">Crear Usuario</h1>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('admin.usuarios.store') }}" method="POST">
         @csrf
         <div class="form-group">

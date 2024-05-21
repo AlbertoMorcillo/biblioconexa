@@ -94,16 +94,19 @@ class UserController extends Controller
 
     public function destroy(Request $request, User $user)
     {
-        // Verificar la contraseña del administrador
+        // Validar la contraseña del administrador
         $request->validate([
             'admin_password' => 'required',
         ]);
-    
+
+        // Verificar la contraseña del administrador
         if (!Hash::check($request->admin_password, Auth::user()->password)) {
             return redirect()->route('admin.usuarios.index')->with('error', 'Contraseña de administrador incorrecta.');
         }
-    
+
+        // Eliminar el usuario
         $user->delete();
+
         return redirect()->route('admin.usuarios.index')->with('success', 'Usuario eliminado con éxito.');
     }
 

@@ -26,7 +26,7 @@
         <div class="row justify-content-center row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <div class="col">
                 <div class="card shadow-sm">
-                    <a href="{{ route('admin.usuarios') }}" class="link-libros" aria-label="Gestión de usuarios">
+                    <a href="{{ route('admin.usuarios.index') }}" class="link-libros" aria-label="Gestión de usuarios">
                         <img class="card-img-top" src="{{ asset('images/admin/usuarios.jpg') }}" alt="Imagen de la portada del libro" width="100%" height="225" />
                         <div class="card-body">
                             <h5 class="card-title titulo-libro" aria-label="Gestión de usuarios">Usuarios</h5>

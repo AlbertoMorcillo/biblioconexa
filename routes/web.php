@@ -91,7 +91,13 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [HomeController::class, 'adminIndex'])->name('admin.index');
 
-    Route::view('/admin/usuarios', 'admin.usuarios')->name('admin.usuarios');
+    Route::get('/admin/usuarios', [UserController::class, 'index'])->name('admin.usuarios.index');
+    Route::get('/admin/usuarios/create', [UserController::class, 'create'])->name('admin.usuarios.create');
+    Route::post('/admin/usuarios', [UserController::class, 'store'])->name('admin.usuarios.store');
+    Route::get('/admin/usuarios/{user}/edit', [UserController::class, 'edit'])->name('admin.usuarios.edit');
+    Route::put('/admin/usuarios/{user}', [UserController::class, 'update'])->name('admin.usuarios.update');
+    Route::delete('/admin/usuarios/{user}', [UserController::class, 'destroy'])->name('admin.usuarios.destroy');
+
     Route::view('/admin/libros', 'admin.libros')->name('admin.libros');
     Route::view('/admin/categorias', 'admin.categorias')->name('admin.categorias');
     Route::view('/admin/autores', 'admin.autores')->name('admin.autores');

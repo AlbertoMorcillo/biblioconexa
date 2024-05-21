@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Libro;
 use App\Models\Estanteria;
 use App\Models\EstanteriaLibro;
@@ -12,67 +15,87 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
-        return view('users.index', compact('users'));
+        $users = User::paginate(10); // Paginamos los usuarios para una mejor visualización
+        return view('admin.usuarios.index', compact('users'));
     }
 
     public function create()
     {
-        return view('users.create');
+        return view('admin.usuarios.create');
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'dni' => 'required|string|max:9|unique:users,dni',
-            'name' => 'required|string|max:255',
-            'surname' => 'nullable|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required|string|min:8',
-            'phone' => 'nullable|string|max:255',
-            'birthdate' => 'required|date',
-            'isAdmin' => 'sometimes|boolean'
+        $validator = Validator::make($request->all(), [
+            'dni' => 'required|unique:users|max:9',
+            'name' => 'required|max:255',
+            'surname' => 'nullable|max:255',
+            'email' => 'required|email|unique:users|max:255',
+            'password' => 'required|min:8|confirmed',
+            'phone' => 'nullable|max:255',
+            'birthdate' => 'nullable|date',
+            'isAdmin' => 'required|boolean',
         ]);
 
-        $validated['password'] = bcrypt($validated['password']);
-        User::create($validated);
-        return redirect()->route('users.index')->with('success', 'Usuario creado con éxito.');
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        User::create([
+            'dni' => $request->dni,
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'phone' => $request->phone,
+            'birthdate' => $request->birthdate,
+            'isAdmin' => $request->isAdmin,
+        ]);
+
+        return redirect()->route('admin.usuarios.index')->with('success', 'Usuario creado con éxito.');
     }
 
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        return view('admin.usuarios.show', compact('user'));
     }
 
     public function edit(User $user)
     {
-        return view('users.edit', compact('user'));
+        return view('admin.usuarios.edit', compact('user'));
     }
 
     public function update(Request $request, User $user)
     {
-        $validated = $request->validate([
-            'dni' => 'required|string|max:9|unique:users,dni,' . $user->id,
-            'name' => 'required|string|max:255',
-            'surname' => 'nullable|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'phone' => 'nullable|string|max:255',
-            'birthdate' => 'required|date',
-            'isAdmin' => 'sometimes|boolean'
+        $validator = Validator::make($request->all(), [
+            'dni' => 'required|max:9|unique:users,dni,' . $user->id,
+            'name' => 'required|max:255',
+            'surname' => 'nullable|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:8|confirmed',
+            'phone' => 'nullable|max:255',
+            'birthdate' => 'nullable|date',
+            'isAdmin' => 'required|boolean',
         ]);
 
-        if ($request->filled('password')) {
-            $validated['password'] = bcrypt($request->password);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $user->update($validated);
-        return redirect()->route('users.index')->with('success', 'Usuario actualizado con éxito.');
+        $data = $request->only(['dni', 'name', 'surname', 'email', 'phone', 'birthdate', 'isAdmin']);
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $user->update($data);
+
+        return redirect()->route('admin.usuarios.index')->with('success', 'Usuario actualizado con éxito.');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('users.index')->with('success', 'Usuario eliminado con éxito.');
+        return redirect()->route('admin.usuarios.index')->with('success', 'Usuario eliminado con éxito.');
     }
 
     public function misLibros()
@@ -88,5 +111,4 @@ class UserController extends Controller
         // Pasa los libros a la vista
         return view('usuarioLogged.mis-libros', ['libros' => $libros]);
     }
-    
 }

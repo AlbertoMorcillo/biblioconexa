@@ -32,6 +32,8 @@ Route::get('/libros/{libro}', [LibroController::class, 'show'])->name('libros.sh
 Route::post('/comentarios', [ComentarioController::class, 'store'])->name('comentarios.store');
 Route::delete('/comentarios/{comentario}', [ComentarioController::class, 'destroy'])->name('comentarios.destroy');
 Route::post('/puntuaciones/{externalId}', [PuntuacionController::class, 'store'])->name('puntuaciones.store');
+Route::get('/noticias', [NoticiaController::class, 'noticias'])->name('noticias');
+Route::get('/noticias-logged', [NoticiaController::class, 'noticiasLogged'])->name('noticias-logged');
 
 // Ruta para la tarjeta personal (accesible tanto para usuarios no autenticados como autenticados)
 Route::view('/tarjetaPersonal', 'usuarioNoRegistrado.tarjetaPersonal')->name('tarjetaPersonal');

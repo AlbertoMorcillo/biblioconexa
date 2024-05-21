@@ -7,6 +7,7 @@
 @endsection
 
 @section('extra-js')
+<script defer src="{{ asset('js/redireccionarANoticias.js') }}"></script>
 @endsection
 
 @section('content')
@@ -19,6 +20,8 @@
         <img src="{{ asset('images/corpo/Tsundoku-cuando-en-las-estanterias-se-acumulan-docenas-de-libros-sin-leer.jpg') }}" alt="Imagen principal al lado del logo">
     </div>
 </div>
+
+<!-- Final de sección de novedades de libros -->
 <!-- Sección de actividades -->
 <section class="seccion-actividades" aria-label="Sección de actividades">
     <h1 class="seccion-titulo" tabindex="0">Actividades y eventos</h1>
@@ -34,8 +37,7 @@
 <!-- Sección de noticias -->
 <section class="seccion-actividades" aria-label="Sección de noticias">
     <h1 class="seccion-titulo" tabindex="0">Noticias</h1>
-
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-0 mt-4 justify-content-md-around">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-0 mt-4">
         @foreach ($noticias as $noticia)
             <div class="col mb-4 mt-4">
                 <div class="card shadow-sm bg-blue h-100">
@@ -51,6 +53,7 @@
             </div>
         @endforeach
     </div>
+    
     
     <div class="botonDirigir">
         <button type="button" class="btn button" id="verNoticiasBoton" aria-label="Botón que te dirije a ver más noticias">Ver más noticias</button>

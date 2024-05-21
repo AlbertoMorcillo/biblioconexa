@@ -6,6 +6,7 @@ use App\Models\Noticia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class NoticiaController extends Controller
 {
@@ -35,13 +36,10 @@ class NoticiaController extends Controller
         $hora = $request->input('hora');
 
         if ($hora && $fecha > now()->toDateString()) {
-            // Fecha futura con hora específica
             $fecha = "$fecha $hora:00";
         } elseif ($fecha == now()->toDateString()) {
-            // Fecha actual, usar hora actual
             $fecha = now()->format('Y-m-d H:i:s');
         } else {
-            // Fecha futura sin hora específica
             $fecha = "$fecha 00:00:00";
         }
 
@@ -55,7 +53,7 @@ class NoticiaController extends Controller
         if ($request->hasFile('imagen')) {
             $noticia->imagen = $request->file('imagen')->store('noticias', 'public');
         } else {
-            $noticia->imagen = 'images/admin/noticias.jpg';  // Imagen predeterminada
+            $noticia->imagen = 'images/admin/noticias.jpg';
         }
 
         $noticia->save();
@@ -76,11 +74,31 @@ class NoticiaController extends Controller
         }
     }
 
+    public function noticias(Request $request)
+    {
+        if ($request->expectsJson()) {
+            return response()->json([
+                'authenticated' => Auth::check()
+            ]);
+        }
+
+        if (Auth::check()) {
+            return redirect()->route('noticias-logged');
+        }
+
+        return view('usuarioNoRegistrado.noticias');
+    }
+
+    public function noticiasLogged()
+    {
+        return view('usuarioLogged.noticias-logged');
+    }
+
     public function edit(Noticia $noticia)
     {
         return view('admin.noticias.edit', compact('noticia'));
     }
-    
+
     public function update(Request $request, Noticia $noticia)
     {
         $request->validate([

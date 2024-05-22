@@ -17,14 +17,26 @@ document.addEventListener('DOMContentLoaded', function () {
     phoneInput.addEventListener('input', validatePhone);
   }
   
-    function validateDNI() {
-      const dniRegex = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
-      if (!dniRegex.test(dniInput.value)) {
-        showError(dniInput, 'DNI no válido. Debe tener 8 números seguidos de una letra.');
-      } else {
-        clearError(dniInput);
-      }
+  function validarDNI(dni) {
+    // Calcular el dígito de control
+    const numero = parseInt(dni.slice(0, -1), 10);
+    const residuo = numero % 23;
+  
+    // Obtener la letra correspondiente al residuo
+    const letra = 'TRWAGMYFPDXBNJZSQVHLCKET'[residuo];
+  
+    // Validar la letra de control
+    return dni.slice(-1).toUpperCase() === letra;
+  }
+  
+  function validateDNI() {
+    const dniRegex = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
+    if (!dniRegex.test(dniInput.value) || !validarDNI(dniInput.value)) {
+      showError(dniInput, 'DNI no válido. Debe tener 8 números seguidos de una letra.');
+    } else {
+      clearError(dniInput);
     }
+  }
   
     function validateName() {
       const nameRegex = /^[a-zA-Z\s]*$/; 

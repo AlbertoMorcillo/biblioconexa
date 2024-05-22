@@ -27,15 +27,22 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'dni' => 'required|unique:users|max:9',
+            'dni' => ['required', 'max:9', 'unique:users', 'regex:/^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i'],
             'name' => ['required', 'max:255', 'regex:/^[\pL\s\-]+$/u'], // Solo letras y espacios
             'surname' => ['nullable', 'max:255', 'regex:/^[\pL\s\-]+$/u'], // Solo letras y espacios
-            'email' => 'required|email|unique:users|max:255',
-            'password' => 'required|min:8|confirmed',
-            'phone' => 'nullable|numeric|max:255', // Solo números
-            'birthdate' => 'nullable|date',
-            'isAdmin' => 'required|boolean',
+            'email' => ['required', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'min:8', 'confirmed'],
+            'phone' => ['nullable', 'numeric', 'digits_between:7,15'], // Solo números y longitud específica
+            'birthdate' => ['nullable', 'date'],
+            'isAdmin' => ['required', 'boolean'],
         ]);
+
+        // Validación personalizada para el DNI
+        $validator->after(function ($validator) use ($request) {
+            if (!$this->validarDNI($request->dni)) {
+                $validator->errors()->add('dni', 'DNI no válido. La letra de control no coincide.');
+            }
+        });
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -68,15 +75,22 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validator = Validator::make($request->all(), [
-            'dni' => 'required|max:9|unique:users,dni,' . $user->id,
+            'dni' => ['required', 'max:9', 'unique:users,dni,' . $user->id, 'regex:/^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i'],
             'name' => ['required', 'max:255', 'regex:/^[\pL\s\-]+$/u'], // Solo letras y espacios
             'surname' => ['nullable', 'max:255', 'regex:/^[\pL\s\-]+$/u'], // Solo letras y espacios
-            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|min:8|confirmed',
-            'phone' => 'nullable|numeric|max:255', // Solo números
-            'birthdate' => 'nullable|date',
-            'isAdmin' => 'required|boolean',
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'password' => ['nullable', 'min:8', 'confirmed'],
+            'phone' => ['nullable', 'numeric', 'digits_between:7,15'], // Solo números y longitud específica
+            'birthdate' => ['nullable', 'date'],
+            'isAdmin' => ['required', 'boolean'],
         ]);
+
+        // Validación personalizada para el DNI
+        $validator->after(function ($validator) use ($request) {
+            if (!$this->validarDNI($request->dni)) {
+                $validator->errors()->add('dni', 'DNI no válido. La letra de control no coincide.');
+            }
+        });
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -122,5 +136,13 @@ class UserController extends Controller
 
         // Pasa los libros a la vista
         return view('usuarioLogged.mis-libros', ['libros' => $libros]);
+    }
+
+    private function validarDNI($dni)
+    {
+        $numero = substr($dni, 0, -1);
+        $letra = substr($dni, -1);
+        $letras = 'TRWAGMYFPDXBNJZSQVHLCKET';
+        return $letras[$numero % 23] === strtoupper($letra);
     }
 }

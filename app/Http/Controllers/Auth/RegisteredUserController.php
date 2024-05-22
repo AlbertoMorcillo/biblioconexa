@@ -30,10 +30,17 @@ class RegisteredUserController extends Controller
         // Asegúrate de añadir la regla unique para el dni y que el email sea en minúsculas
         $validator = Validator::make($request->all(), [
             'dni' => ['required', 'regex:/^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i', 'unique:users'],
-            'name' => ['required', 'string', 'max:255', 'alpha'],
+            'name' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-]+$/u'], // Solo letras y espacios
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
+        // Validación personalizada para el DNI
+        $validator->after(function ($validator) use ($request) {
+            if (!$this->validarDNI($request->dni)) {
+                $validator->errors()->add('dni', 'DNI no válido. La letra de control no coincide.');
+            }
+        });
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -52,5 +59,12 @@ class RegisteredUserController extends Controller
 
         return redirect(RouteServiceProvider::HOME);
     }
-}
 
+    private function validarDNI($dni)
+    {
+        $numero = substr($dni, 0, -1);
+        $letra = substr($dni, -1);
+        $letras = 'TRWAGMYFPDXBNJZSQVHLCKET';
+        return $letras[$numero % 23] === strtoupper($letra);
+    }
+}

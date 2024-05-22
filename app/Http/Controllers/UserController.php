@@ -28,11 +28,11 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'dni' => 'required|unique:users|max:9',
-            'name' => 'required|max:255',
-            'surname' => 'nullable|max:255',
+            'name' => ['required', 'max:255', 'regex:/^[\pL\s\-]+$/u'], // Solo letras y espacios
+            'surname' => ['nullable', 'max:255', 'regex:/^[\pL\s\-]+$/u'], // Solo letras y espacios
             'email' => 'required|email|unique:users|max:255',
             'password' => 'required|min:8|confirmed',
-            'phone' => 'nullable|max:255',
+            'phone' => 'nullable|numeric|max:255', // Solo números
             'birthdate' => 'nullable|date',
             'isAdmin' => 'required|boolean',
         ]);
@@ -69,11 +69,11 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'dni' => 'required|max:9|unique:users,dni,' . $user->id,
-            'name' => 'required|max:255',
-            'surname' => 'nullable|max:255',
+            'name' => ['required', 'max:255', 'regex:/^[\pL\s\-]+$/u'], // Solo letras y espacios
+            'surname' => ['nullable', 'max:255', 'regex:/^[\pL\s\-]+$/u'], // Solo letras y espacios
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|min:8|confirmed',
-            'phone' => 'nullable|max:255',
+            'phone' => 'nullable|numeric|max:255', // Solo números
             'birthdate' => 'nullable|date',
             'isAdmin' => 'required|boolean',
         ]);

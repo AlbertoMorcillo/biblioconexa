@@ -30,7 +30,7 @@ class RegisteredUserController extends Controller
         // Asegúrate de añadir la regla unique para el dni y que el email sea en minúsculas
         $validator = Validator::make($request->all(), [
             'dni' => ['required', 'regex:/^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i', 'unique:users'],
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'alpha'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);

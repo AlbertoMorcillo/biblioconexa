@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Notifications\ResetPasswordNotification;
 
 class User extends Authenticatable
 {
@@ -68,5 +69,11 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return $this->isAdmin;
+    }
+
+    // Método para enviar la notificación de restablecimiento de contraseña
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token, $this));
     }
 }

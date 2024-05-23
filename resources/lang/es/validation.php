@@ -49,4 +49,6 @@ return [
         'fecha' => 'fecha',
         'imagen' => 'imagen',
     ],
+    'alpha' => 'El campo :attribute solo puede contener letras.',
+    'user_not_found' => 'No podemos encontrar un usuario con esa dirección de correo electrónico.',
 ];

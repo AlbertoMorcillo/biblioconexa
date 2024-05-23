@@ -1,4 +1,3 @@
-
 <div class="content">
     <section aria-label="Sección de cambio de datos del perfil">
         <h2 class="seccion-titulo">
@@ -7,6 +6,19 @@
         <p class="mb-4">
             {{ __("Actualiza la información de perfil y dirección de correo electrónico de tu cuenta.") }}
         </p>
+
+        @if (session('status') === 'profile-updated')
+            <div class="alert alert-success">
+                {{ __('La información del perfil ha sido actualizada con éxito.') }}
+            </div>
+        @endif
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                @foreach ($errors->all() as $error)
+                    <div>{{ $error }}</div>
+                @endforeach
+            </div>
+        @endif
 
         <!-- Formulario para actualizar la información del perfil -->
         <form method="post" action="{{ route('profile.update') }}" class="mt-4">
@@ -43,11 +55,6 @@
 
             <div class="d-flex justify-content-end gap-2">
                 <button type="submit" class="btn button">{{ __('Guardar') }}</button>
-                @if (session('status') === 'profile-updated')
-                    <div class="alert alert-success" role="alert">
-                        {{ __('Guardado.') }}
-                    </div>
-                @endif
             </div>
         </form>
     </section>

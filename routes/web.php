@@ -64,6 +64,7 @@ Route::middleware('auth')->group(function () {
         'estanteriasLibros' => EstanteriaLibroController::class,
     ]);
 
+    Route::put('/password/update', [ProfileController::class, 'updatePassword'])->name('password.update');
     Route::resource('tarjetaPersonal', TarjetaPersonalController::class)
         ->only(['edit', 'update', 'destroy']);
 

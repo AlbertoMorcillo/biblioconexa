@@ -27,6 +27,7 @@ return [
     'before' => 'El campo :attribute debe ser una fecha anterior a :date.',
     'after' => 'El campo :attribute debe ser una fecha posterior a :date.',
     'after_or_equal' => 'El campo :attribute debe ser una fecha posterior o igual a hoy.',
+    'current_password' => 'La contraseña actual es incorrecta.',
     'between' => [
         'numeric' => 'El campo :attribute debe estar entre :min y :max.',
         'file' => 'El archivo :attribute debe pesar entre :min y :max kilobytes.',
@@ -36,9 +37,13 @@ return [
     'attributes' => [
         'dni' => 'DNI',
         'name' => 'nombre',
+        'surname' => 'apellido',
         'email' => 'correo electrónico',
         'password' => 'contraseña',
         'password_confirmation' => 'confirmación de la contraseña',
+        'current_password' => 'contraseña actual',
+        'phone' => 'teléfono',
+        'birthdate' => 'fecha de nacimiento',
         'titulo' => 'título',
         'descripcion' => 'descripción',
         'fecha' => 'fecha',

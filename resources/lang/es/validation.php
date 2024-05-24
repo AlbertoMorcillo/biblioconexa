@@ -51,4 +51,6 @@ return [
     ],
     'alpha' => 'El campo :attribute solo puede contener letras.',
     'user_not_found' => 'No podemos encontrar un usuario con esa dirección de correo electrónico.',
+    'password_reset' => 'Tu contraseña ha sido restablecida.',
+    'password_reset_link_sent' => 'Hemos enviado por correo electrónico el enlace para restablecer la contraseña.',
 ];

@@ -118,6 +118,19 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/noticias/{noticia}/edit', [NoticiaController::class, 'edit'])->name('admin.noticias.edit');
     Route::patch('/admin/noticias/{noticia}', [NoticiaController::class, 'update'])->name('admin.noticias.update');
     Route::delete('/admin/noticias/{noticia}', [NoticiaController::class, 'destroy'])->name('admin.noticias.destroy');
+
+    //Rutas para eventos
+    Route::get('/admin/eventos', [EventoController::class, 'index'])->name('admin.eventos.index');
+    Route::get('/admin/eventos/create', [EventoController::class, 'create'])->name('admin.eventos.create');
+    Route::post('/admin/eventos', [EventoController::class, 'store'])->name('admin.eventos.store');
+    Route::get('/admin/eventos/{evento}/edit', [EventoController::class, 'edit'])->name('admin.eventos.edit');
+    Route::patch('/admin/eventos/{evento}', [EventoController::class, 'update'])->name('admin.eventos.update');
+    Route::delete('/admin/eventos/{evento}', [EventoController::class, 'destroy'])->name('admin.eventos.destroy');
+    Route::get('/admin/eventos/{evento}', [EventoController::class, 'show'])->name('admin.eventos.show');
+
+
+
+
 });
 
 // Authentication routes

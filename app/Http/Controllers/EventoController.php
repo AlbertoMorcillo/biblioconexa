@@ -4,74 +4,77 @@ namespace App\Http\Controllers;
 
 use App\Models\Evento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventoController extends Controller
 {
-    // Muestra todos los eventos
     public function index()
     {
-        $eventos = Evento::all();
-        return view('eventos.index', ['eventos' => $eventos]);
+        $eventos = Evento::paginate(6);
+        return view('admin.eventos.index', compact('eventos'));
     }
 
-    // Muestra el formulario para crear un nuevo evento
     public function create()
     {
-        return view('eventos.create');
+        $usuarioDNI = Auth::user()->dni;
+        return view('admin.eventos.create', compact('usuarioDNI'));
     }
 
-    // Almacena un nuevo evento en la base de datos
     public function store(Request $request)
     {
         $request->validate([
-            'titulo' => 'required|string|max:255',
-            'descripcion' => 'required',
-            'fecha' => 'required|date',
-            'hora' => 'required',
-            'sala' => 'string|nullable',
+            'titulo' => 'required|string|min:5|max:255',
+            'descripcion' => 'required|string|min:20',
+            'fecha' => 'required|date|after_or_equal:today',
+            'hora' => 'required|date_format:H:i',
+            'sala' => 'nullable|string|max:255',
             'UsuarioDNI' => 'required|string|max:9'
         ]);
 
-        $evento = new Evento($request->all());
+        $evento = new Evento();
+        $evento->titulo = $request->input('titulo');
+        $evento->descripcion = $request->input('descripcion');
+        $evento->fecha = $request->input('fecha');
+        $evento->hora = $request->input('hora');
+        $evento->sala = $request->input('sala');
+        $evento->UsuarioDNI = $request->input('UsuarioDNI');
+        $evento->user_id = Auth::id();
+
         $evento->save();
 
-        return redirect()->route('eventos.index')->with('success', 'Evento creado correctamente.');
+        return redirect()->route('admin.eventos.index')->with('success', 'Evento creado correctamente.');
     }
 
-    // Muestra un evento específico
     public function show(Evento $evento)
     {
-        return view('eventos.show', compact('evento'));
+        return view('admin.eventos.show', compact('evento'));
     }
 
-    // Muestra el formulario para editar un evento
     public function edit(Evento $evento)
     {
-        return view('eventos.edit', compact('evento'));
+        return view('admin.eventos.edit', compact('evento'));
     }
 
-    // Actualiza un evento en la base de datos
     public function update(Request $request, Evento $evento)
     {
         $request->validate([
             'titulo' => 'required|string|max:255',
-            'descripcion' => 'required',
+            'descripcion' => 'required|string',
             'fecha' => 'required|date',
-            'hora' => 'required',
-            'sala' => 'string|nullable',
+            'hora' => 'required|date_format:H:i',
+            'sala' => 'nullable|string|max:255',
             'UsuarioDNI' => 'required|string|max:9'
         ]);
 
         $evento->update($request->all());
 
-        return redirect()->route('eventos.index')->with('success', 'Evento actualizado correctamente.');
+        return redirect()->route('admin.eventos.index')->with('success', 'Evento actualizado correctamente.');
     }
 
-    // Elimina un evento
     public function destroy(Evento $evento)
     {
         $evento->delete();
 
-        return redirect()->route('eventos.index')->with('success', 'Evento eliminado correctamente.');
+        return redirect()->route('admin.eventos.index')->with('success', 'Evento eliminado correctamente.');
     }
 }

@@ -46,10 +46,10 @@
             </div>
             <div class="col">
                 <div class="card shadow-sm">
-                    <a href="{{ route('admin.actividades') }}" class="link-libros" aria-label="Gestión de actividades">
+                    <a href="{{ route('admin.eventos.index') }}" class="link-libros" aria-label="Gestión de Eventos">
                         <img class="card-img-top" src="{{ asset('images/admin/eventos.jpg') }}" alt="Imagen de la portada del libro" width="100%" height="225" />
                         <div class="card-body">
-                            <h5 class="card-title titulo-libro" aria-label="Gestión de actividades">Actividades</h5>
+                            <h5 class="card-title titulo-libro" aria-label="Gestión de Eventos">Eventos</h5>
                         </div>
                     </a>
                 </div>

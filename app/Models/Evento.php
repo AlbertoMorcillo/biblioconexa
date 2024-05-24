@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Evento extends Model
 {
@@ -18,18 +19,25 @@ class Evento extends Model
         'hora',
         'sala',
         'UsuarioDNI',
-        'user_id'  // Asegúrate de incluir el user_id si vas a vincular cada evento a un usuario específico.
+        'user_id'
     ];
 
     protected $casts = [
         'fecha' => 'date',
-        'hora' => 'time',
-        'publicado' => 'boolean'
+        'hora' => 'time'
     ];
 
-    // Relación con User
     public function usuario()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function scopeOrdenarPorFecha(Builder $query, $orden = 'most-recent')
+    {
+        if ($orden == 'most-recent') {
+            return $query->orderBy('fecha', 'desc');
+        } else {
+            return $query->orderBy('fecha', 'asc');
+        }
     }
 }

@@ -24,9 +24,10 @@ class Evento extends Model
 
     protected $casts = [
         'fecha' => 'date',
-        'hora' => 'time'
+        'publicado' => 'boolean'
     ];
 
+    // Relación con User
     public function usuario()
     {
         return $this->belongsTo(User::class, 'user_id');

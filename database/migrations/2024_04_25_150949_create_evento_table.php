@@ -16,6 +16,7 @@ class CreateEventoTable extends Migration
             $table->time('hora');
             $table->string('sala', 255)->nullable();
             $table->string('UsuarioDNI', 9);
+            $table->string('imagen')->nullable(); // Añadir esta línea
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
@@ -27,4 +28,5 @@ class CreateEventoTable extends Migration
         Schema::dropIfExists('evento');
     }
 }
+
 ?>

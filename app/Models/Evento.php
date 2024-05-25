@@ -19,7 +19,8 @@ class Evento extends Model
         'hora',
         'sala',
         'UsuarioDNI',
-        'user_id'
+        'user_id',
+        'imagen' // Añadir esta línea
     ];
 
     protected $casts = [

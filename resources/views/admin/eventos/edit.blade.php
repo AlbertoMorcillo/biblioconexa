@@ -16,7 +16,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.eventos.update', $evento->id) }}" method="POST">
+    <form action="{{ route('admin.eventos.update', $evento->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
         <div class="mb-3">
@@ -38,6 +38,14 @@
         <div class="mb-3">
             <label for="sala" class="form-label">Sala</label>
             <input type="text" name="sala" id="sala" class="form-control" value="{{ old('sala', $evento->sala) }}">
+        </div>
+        <div class="mb-3">
+            <label for="UsuarioDNI" class="form-label">DNI del Usuario</label>
+            <input type="text" name="UsuarioDNI" id="UsuarioDNI" class="form-control" value="{{ old('UsuarioDNI', $evento->UsuarioDNI) }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="imagen" class="form-label">Imagen</label>
+            <input type="file" name="imagen" id="imagen" class="form-control">
         </div>
         <button type="submit" class="btn button">Actualizar Evento</button>
     </form>

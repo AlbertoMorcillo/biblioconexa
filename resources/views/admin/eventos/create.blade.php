@@ -16,7 +16,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.eventos.store') }}" method="POST">
+    <form action="{{ route('admin.eventos.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label for="titulo" class="form-label">Título</label>
@@ -41,6 +41,10 @@
         <div class="mb-3">
             <label for="UsuarioDNI" class="form-label">DNI del Usuario</label>
             <input type="text" name="UsuarioDNI" id="UsuarioDNI" class="form-control" value="{{ $usuarioDNI }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="imagen" class="form-label">Imagen</label>
+            <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*">
         </div>
         <button type="submit" class="btn button">Crear Evento</button>
     </form>

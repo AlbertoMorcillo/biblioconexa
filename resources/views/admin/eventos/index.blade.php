@@ -22,6 +22,9 @@
             <div class="col mb-4 mt-4">
                 <div class="card shadow-sm bg-blue h-100">
                     <a href="{{ route('admin.eventos.show', $evento->id) }}" class="link-libros" aria-label="Información del evento que si aprietas te lleva al evento específico.">
+                        @if($evento->imagen)
+                            <img src="{{ asset('storage/' . $evento->imagen) }}" alt="{{ $evento->titulo }}" class="card-img-top">
+                        @endif
                         <div class="card-body">
                             <h5 class="titulo-actividad" aria-label="Titulo del evento">{{ Str::limit($evento->titulo,20) }}</h5>
                             <p class="card-text">{{ Str::limit($evento->descripcion, 50) }}</p>

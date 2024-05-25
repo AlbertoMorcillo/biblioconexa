@@ -44,6 +44,8 @@ class EventoController extends Controller
 
         if ($request->hasFile('imagen')) {
             $evento->imagen = $request->file('imagen')->store('eventos', 'public');
+        } else {
+            $evento->imagen = 'images/admin/eventos.jpg';
         }
 
         $evento->save();
@@ -53,7 +55,15 @@ class EventoController extends Controller
 
     public function show(Evento $evento)
     {
-        return view('admin.eventos.show', compact('evento'));
+        $imagenPath = $evento->imagen ? asset('storage/' . $evento->imagen) : asset('images/admin/eventos.jpg');
+
+        if (Auth::check() && Auth::user()->isAdmin) {
+            return view('eventos.detalle-admin', compact('evento', 'imagenPath'));
+        } elseif (Auth::check()) {
+            return view('eventos.detalle-logged', compact('evento', 'imagenPath'));
+        } else {
+            return view('eventos.detalle', compact('evento', 'imagenPath'));
+        }
     }
 
     public function edit(Evento $evento)
@@ -81,7 +91,7 @@ class EventoController extends Controller
         $evento->UsuarioDNI = $request->input('UsuarioDNI');
 
         if ($request->hasFile('imagen')) {
-            if ($evento->imagen) {
+            if ($evento->imagen && $evento->imagen !== 'images/admin/eventos.jpg') {
                 Storage::disk('public')->delete($evento->imagen);
             }
             $evento->imagen = $request->file('imagen')->store('eventos', 'public');
@@ -94,7 +104,7 @@ class EventoController extends Controller
 
     public function destroy(Evento $evento)
     {
-        if ($evento->imagen) {
+        if ($evento->imagen && $evento->imagen !== 'images/admin/eventos.jpg') {
             Storage::disk('public')->delete($evento->imagen);
         }
 

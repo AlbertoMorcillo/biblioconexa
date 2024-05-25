@@ -23,7 +23,7 @@ use App\Http\Controllers\{
 // Routes for non-registered users
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/noticias', [NoticiaController::class, 'noticias'])->name('noticias.index');
-Route::view('/actividades', 'usuarioNoRegistrado.actividades')->name('actividades');
+Route::get('/eventos', [EventoController::class, 'index'])->name('eventos.index');
 Route::view('/catalogo', 'usuarioNoRegistrado.catalogo')->name('catalogo');
 Route::view('/sobreNosotros', 'usuarioNoRegistrado.sobreNosotros')->name('sobreNosotros');
 Route::view('/horarioCalendario', 'usuarioNoRegistrado.horarioCalendario')->name('horarioCalendario');
@@ -39,6 +39,9 @@ Route::post('/tarjetaPersonal', [TarjetaPersonalController::class, 'store'])->na
 
 // Ruta para mostrar el detalle de una noticia
 Route::get('/noticias/{noticia}', [NoticiaController::class, 'show'])->name('noticias.show');
+
+// Ruta para mostrar el detalle de un evento
+Route::get('/eventos/{evento}', [EventoController::class, 'show'])->name('eventos.show');
 
 // Handling bookshelves and book statuses
 Route::middleware('auth')->group(function () {
@@ -119,7 +122,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::patch('/admin/noticias/{noticia}', [NoticiaController::class, 'update'])->name('admin.noticias.update');
     Route::delete('/admin/noticias/{noticia}', [NoticiaController::class, 'destroy'])->name('admin.noticias.destroy');
 
-    //Rutas para eventos
+    // Routes for eventos
     Route::get('/admin/eventos', [EventoController::class, 'index'])->name('admin.eventos.index');
     Route::get('/admin/eventos/create', [EventoController::class, 'create'])->name('admin.eventos.create');
     Route::post('/admin/eventos', [EventoController::class, 'store'])->name('admin.eventos.store');
@@ -127,10 +130,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::patch('/admin/eventos/{evento}', [EventoController::class, 'update'])->name('admin.eventos.update');
     Route::delete('/admin/eventos/{evento}', [EventoController::class, 'destroy'])->name('admin.eventos.destroy');
     Route::get('/admin/eventos/{evento}', [EventoController::class, 'show'])->name('admin.eventos.show');
-
-
-
-
 });
 
 // Authentication routes

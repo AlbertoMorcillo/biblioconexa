@@ -20,16 +20,16 @@ class Evento extends Model
         'sala',
         'UsuarioDNI',
         'user_id',
-        'imagen' // Añadir esta línea
+        'imagen'
     ];
 
     protected $casts = [
-        'fecha' => 'date',
+        'fecha' => 'datetime',
         'publicado' => 'boolean'
     ];
 
     // Relación con User
-    public function usuario()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }

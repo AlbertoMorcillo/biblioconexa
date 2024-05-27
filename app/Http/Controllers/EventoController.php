@@ -43,7 +43,7 @@ class EventoController extends Controller
         $evento->hora = $hora;
         $evento->sala = $request->input('sala');
         $evento->UsuarioDNI = $request->input('UsuarioDNI');
-        $evento->user_id = Auth::id();
+        $evento->user_id = Auth::id(); // Guardar el id del usuario actual
 
         if ($request->hasFile('imagen')) {
             $evento->imagen = $request->file('imagen')->store('eventos', 'public');

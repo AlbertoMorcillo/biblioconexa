@@ -21,7 +21,6 @@
     </div>
 </div>
 
-<!-- Final de sección de novedades de libros -->
 <!-- Sección de actividades -->
 <section class="seccion-actividades" aria-label="Sección de actividades">
     <h1 class="seccion-titulo" tabindex="0">Actividades y eventos</h1>
@@ -58,7 +57,7 @@
                     <a href="{{ route('noticias.show', $noticia->id) }}" class="link-libros" aria-label="Información de la noticia que si aprietas te lleva a la noticia específica.">
                         <img class="card-img-top-noticias" src="{{ $noticia->imagen ? asset('storage/' . $noticia->imagen) : asset('images/admin/noticias.jpg') }}" alt="Imagen de la noticia" width="100%" height="225" />
                         <div class="card-body">
-                            <h5 class="titulo-actividad" aria-label="Titulo de la noticia">{{ Str::limit($noticia->titulo,20) }}</h5>
+                            <h5 class="titulo-actividad" aria-label="Titulo de la noticia">{{ Str::limit($noticia->titulo, 20) }}</h5>
                             <p class="card-text">{{ Str::limit($noticia->descripcion, 50) }}</p>
                             <p class="card-text mb-1"><small class="text-muted">{{ $noticia->fecha->format('d/m/Y H:i') }}</small></p>
                         </div>

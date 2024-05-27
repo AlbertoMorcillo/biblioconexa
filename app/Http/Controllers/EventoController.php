@@ -33,11 +33,14 @@ class EventoController extends Controller
             'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048' // Imagen requerida
         ]);
 
+        $fecha = $request->input('fecha');
+        $hora = $request->input('hora');
+
         $evento = new Evento();
         $evento->titulo = $request->input('titulo');
         $evento->descripcion = $request->input('descripcion');
-        $evento->fecha = $request->input('fecha');
-        $evento->hora = $request->input('hora');
+        $evento->fecha = "$fecha $hora:00";
+        $evento->hora = $hora;
         $evento->sala = $request->input('sala');
         $evento->UsuarioDNI = $request->input('UsuarioDNI');
         $evento->user_id = Auth::id();
@@ -81,10 +84,13 @@ class EventoController extends Controller
             'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048' // Imagen requerida
         ]);
 
+        $fecha = $request->input('fecha');
+        $hora = $request->input('hora');
+
         $evento->titulo = $request->input('titulo');
         $evento->descripcion = $request->input('descripcion');
-        $evento->fecha = $request->input('fecha');
-        $evento->hora = $request->input('hora');
+        $evento->fecha = "$fecha $hora:00";
+        $evento->hora = $hora;
         $evento->sala = $request->input('sala');
         $evento->UsuarioDNI = $request->input('UsuarioDNI');
 

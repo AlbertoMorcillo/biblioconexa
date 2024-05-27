@@ -84,8 +84,8 @@
                     @csrf
                     @method('DELETE')
                 </form>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Eliminar</button>
+                <button type="button" class="btn secondary-button" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn danger-button" id="confirmDeleteButton">Eliminar</button>
             </div>
         </div>
     </div>

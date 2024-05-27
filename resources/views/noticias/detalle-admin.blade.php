@@ -18,7 +18,7 @@
             <p><strong>Publicado por:</strong> {{ $noticia->user->name ?? 'No disponible' }}</p>
         </div>
     </div>
-    <div class="">
+    <div class="mt-4">
         <a href="{{ route('admin.noticias.edit', $noticia->id) }}" class="btn secondary-button mb-2">Editar</a>
         <!-- Botón que activa el modal -->
         <button type="button" class="btn danger-button mb-2" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $noticia->id }}">Eliminar</button>

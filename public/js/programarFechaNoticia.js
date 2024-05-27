@@ -2,12 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const fechaInput = document.getElementById('fecha');
     const horaInputContainer = document.getElementById('horaContainer');
 
-    function getLocalDateString(date) {
-        const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-        return localDate.toISOString().split('T')[0];
-    }
-
-    fechaInput.addEventListener('change', function () {
+    function toggleHoraInput() {
         const selectedDate = new Date(fechaInput.value);
         const today = new Date();
 
@@ -20,7 +15,13 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             horaInputContainer.style.display = 'none';
         }
-    });
+    }
+
+    fechaInput.addEventListener('change', toggleHoraInput);
+
+    // Check initial state
+    toggleHoraInput();
+
 
     // Para mantener los campos visibles si la fecha seleccionada anteriormente es válida
     const initialSelectedDate = new Date(fechaInput.value);

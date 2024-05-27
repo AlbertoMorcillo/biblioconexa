@@ -30,7 +30,7 @@ class EventoController extends Controller
             'hora' => 'required|date_format:H:i',
             'sala' => 'nullable|string|max:255',
             'UsuarioDNI' => 'required|string|max:9',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048' // Imagen requerida
         ]);
 
         $evento = new Evento();
@@ -44,8 +44,6 @@ class EventoController extends Controller
 
         if ($request->hasFile('imagen')) {
             $evento->imagen = $request->file('imagen')->store('eventos', 'public');
-        } else {
-            $evento->imagen = 'images/admin/eventos.jpg';
         }
 
         $evento->save();
@@ -55,7 +53,7 @@ class EventoController extends Controller
 
     public function show(Evento $evento)
     {
-        $imagenPath = $evento->imagen ? asset('storage/' . $evento->imagen) : asset('images/admin/eventos.jpg');
+        $imagenPath = asset('storage/' . $evento->imagen);
 
         if (Auth::check() && Auth::user()->isAdmin) {
             return view('eventos.detalle-admin', compact('evento', 'imagenPath'));
@@ -80,7 +78,7 @@ class EventoController extends Controller
             'hora' => 'required|date_format:H:i',
             'sala' => 'nullable|string|max:255',
             'UsuarioDNI' => 'required|string|max:9',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048' // Imagen requerida
         ]);
 
         $evento->titulo = $request->input('titulo');
@@ -91,7 +89,7 @@ class EventoController extends Controller
         $evento->UsuarioDNI = $request->input('UsuarioDNI');
 
         if ($request->hasFile('imagen')) {
-            if ($evento->imagen && $evento->imagen !== 'images/admin/eventos.jpg') {
+            if ($evento->imagen) {
                 Storage::disk('public')->delete($evento->imagen);
             }
             $evento->imagen = $request->file('imagen')->store('eventos', 'public');
@@ -104,7 +102,7 @@ class EventoController extends Controller
 
     public function destroy(Evento $evento)
     {
-        if ($evento->imagen && $evento->imagen !== 'images/admin/eventos.jpg') {
+        if ($evento->imagen) {
             Storage::disk('public')->delete($evento->imagen);
         }
 

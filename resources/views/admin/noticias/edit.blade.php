@@ -2,6 +2,10 @@
 
 @section('title', 'Editar Noticia')
 
+@section('extra-js')
+<script defer src="{{ asset('js/programarFechaNoticia.js') }}"></script>
+@endsection
+
 @section('content')
 <div class="container mt-4">
     <h1 class="seccion-titulo text-center">Editar noticia</h1>

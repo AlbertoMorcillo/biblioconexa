@@ -34,7 +34,7 @@
             <label for="fecha" class="form-label">Fecha de publicación</label>
             <input type="date" name="fecha" id="fecha" class="form-control" value="{{ old('fecha') }}" required>
         </div>
-        <div id="horaContainer">
+        <div id="horaContainer" style="display: none;">
             <div class="mb-3">
                 <label for="hora" class="form-label">Hora de Publicación</label>
                 <input type="time" name="hora" id="hora" class="form-control" value="{{ old('hora') }}">
@@ -46,10 +46,9 @@
         </div>
         <div class="mb-3">
             <label for="imagen" class="form-label">Imagen</label>
-            <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*">
+            <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*" required>
         </div>
         <button type="submit" class="btn button">Crear Noticia</button>
-        
     </form>
 </div>
 @endsection

@@ -10,6 +10,7 @@ use App\Http\Controllers\{
     Auth\AuthenticatedSessionController,
     LibroController,
     ComentarioController,
+    Admin\ComentarioController as AdminComentarioController,
     UserController,
     EstanteriaController,
     NoticiaController,
@@ -108,7 +109,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::view('/admin/actividades', 'admin.actividades')->name('admin.actividades');
     Route::view('/admin/librosSugeridos', 'admin.librosSugeridos')->name('admin.librosSugeridos');
     Route::view('/admin/estanterias', 'admin.estanterias')->name('admin.estanterias');
-    Route::view('/admin/comentarios', 'admin.comentarios')->name('admin.comentarios');
     Route::view('/admin/tarjetaPersonal', 'admin.tarjetaPersonal')->name('admin.tarjetaPersonal');
     Route::view('/admin/mis-libros', 'admin.mis-libros')->name('admin.mis-libros');
     Route::view('/admin/sobreNosotros', 'admin.sobreNosotros')->name('admin.sobreNosotros');
@@ -130,6 +130,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::patch('/admin/eventos/{evento}', [EventoController::class, 'update'])->name('admin.eventos.update');
     Route::delete('/admin/eventos/{evento}', [EventoController::class, 'destroy'])->name('admin.eventos.destroy');
     Route::get('/admin/eventos/{evento}', [EventoController::class, 'show'])->name('admin.eventos.show');
+
+    // Routes for managing comments
+    Route::get('/admin/comentarios', [AdminComentarioController::class, 'index'])->name('admin.comentarios.index');
+    Route::delete('/admin/comentarios/{id}', [AdminComentarioController::class, 'destroy'])->name('admin.comentarios.destroy');
 });
 
 // Authentication routes

@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comentario;
-use App\Models\Libro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ComentarioController extends Controller
 {
-
     public function index()
     {
         // Carga todos los comentarios junto con la información del usuario asociado
@@ -23,8 +21,6 @@ class ComentarioController extends Controller
             return view('libros.detalle', ['comentarios' => $comentarios]);
         }
     }
-
-
 
     public function store(Request $request)
     {
@@ -58,4 +54,3 @@ class ComentarioController extends Controller
         return back()->with('success', 'Comentario eliminado con éxito.');
     }
 }
-

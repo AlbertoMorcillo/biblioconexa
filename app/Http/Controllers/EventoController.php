@@ -15,11 +15,7 @@ class EventoController extends Controller
 
         if (Auth::check() && Auth::user()->isAdmin) {
             return view('admin.eventos.index', compact('eventos'));
-        } elseif (Auth::check()) {
-            return view('usuarioLogged.eventos.index', compact('eventos'));
-        } else {
-            return view('usuarioNoRegistrado.eventos.index', compact('eventos'));
-        }
+        } 
     }
 
     public function create()

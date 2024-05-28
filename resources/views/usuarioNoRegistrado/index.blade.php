@@ -22,6 +22,7 @@
 </div>
 
 <!-- Sección de actividades -->
+
 <section class="seccion-actividades" aria-label="Sección de actividades">
     <h1 class="seccion-titulo" tabindex="0">Actividades y eventos</h1>
 
@@ -42,9 +43,11 @@
         @endforeach
     </div>
     <div class="botonDirigir">
-        <button type="button" class="btn button" id="verActividadesBoton" aria-label="Botón que te dirige a ver más actividades">Ver más actividades</button>
+        <button type="button" class="btn button" id="verActividadesBoton" aria-label="Botón que te dirige a ver más actividades">Ver más eventos</button>
     </div>
 </section>
+
+
 <!-- Final de sección de actividades -->
 
 <!-- Sección de noticias -->

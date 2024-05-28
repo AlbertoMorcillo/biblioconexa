@@ -62,7 +62,6 @@ Route::middleware('auth')->group(function () {
         'autores' => AutorController::class,
         'categorias' => CategoriaController::class,
         'librosSugeridos' => LibroSugeridoController::class,
-        'eventos' => EventoController::class,
         'estanterias' => EstanteriaController::class,
         'comentarios' => ComentarioController::class,
         'estanteriasLibros' => EstanteriaLibroController::class,

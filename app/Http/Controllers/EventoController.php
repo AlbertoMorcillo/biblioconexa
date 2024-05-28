@@ -12,7 +12,14 @@ class EventoController extends Controller
     public function index()
     {
         $eventos = Evento::paginate(6);
-        return view('admin.eventos.index', compact('eventos'));
+
+        if (Auth::check() && Auth::user()->isAdmin) {
+            return view('admin.eventos.index', compact('eventos'));
+        } elseif (Auth::check()) {
+            return view('usuarioLogged.eventos.index', compact('eventos'));
+        } else {
+            return view('usuarioNoRegistrado.eventos.index', compact('eventos'));
+        }
     }
 
     public function create()
@@ -30,7 +37,7 @@ class EventoController extends Controller
             'hora' => 'required|date_format:H:i',
             'sala' => 'nullable|string|max:255',
             'UsuarioDNI' => 'required|string|max:9',
-            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048' // Imagen requerida
+            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
         ]);
 
         $fecha = $request->input('fecha');
@@ -43,7 +50,7 @@ class EventoController extends Controller
         $evento->hora = $hora;
         $evento->sala = $request->input('sala');
         $evento->UsuarioDNI = $request->input('UsuarioDNI');
-        $evento->user_id = Auth::id(); // Guardar el id del usuario actual
+        $evento->user_id = Auth::id();
 
         if ($request->hasFile('imagen')) {
             $evento->imagen = $request->file('imagen')->store('eventos', 'public');
@@ -81,7 +88,7 @@ class EventoController extends Controller
             'hora' => 'required|date_format:H:i',
             'sala' => 'nullable|string|max:255',
             'UsuarioDNI' => 'required|string|max:9',
-            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048' // Imagen requerida
+            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
         ]);
 
         $fecha = $request->input('fecha');

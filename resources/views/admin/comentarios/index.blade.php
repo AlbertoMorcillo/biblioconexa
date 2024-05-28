@@ -29,7 +29,7 @@
     <form action="{{ route('admin.comentarios.index') }}" method="GET" class="mb-4">
         <div class="input-group">
             <input type="text" name="search" class="form-control" placeholder="Buscar por usuario" value="{{ request('search') }}">
-            <button class="btn btn-primary" type="submit">Buscar</button>
+            <button class="btn button" type="submit">Buscar</button>
         </div>
     </form>
 
@@ -53,7 +53,7 @@
                     <td>{{ Str::limit($comentario->texto, 50) }}</td>
                     <td>{{ $comentario->created_at->format('d/m/Y H:i') }}</td>
                     <td>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $comentario->id }}">
+                        <button type="button" class="btn danger-button" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $comentario->id }}">
                             Eliminar
                         </button>
                     </td>
@@ -80,8 +80,8 @@
                         @csrf
                         @method('DELETE')
                     </form>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger" id="confirmDeleteButton">Eliminar</button>
+                    <button type="button" class="btn secondary-button" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn button-danger" id="confirmDeleteButton">Eliminar</button>
                 </div>
             </div>
         </div>

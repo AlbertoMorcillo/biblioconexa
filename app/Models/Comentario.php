@@ -21,4 +21,12 @@ class Comentario extends Model
         return $this->hasOne(Puntuacion::class, 'external_id', 'external_id')
                     ->where('user_id', $this->user_id);
     }
+
+    public function getLibroAttribute()
+    {
+        $client = new \GuzzleHttp\Client();
+        $response = $client->get('https://openlibrary.org/works/' . $this->external_id . '.json');
+        $bookDetails = json_decode($response->getBody()->getContents(), true);
+        return $bookDetails;
+    }
 }

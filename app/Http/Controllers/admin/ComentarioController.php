@@ -10,7 +10,7 @@ class ComentarioController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Comentario::with('usuario');
+        $query = Comentario::with(['usuario']);
 
         if ($request->filled('search')) {
             $query->whereHas('usuario', function($q) use ($request) {

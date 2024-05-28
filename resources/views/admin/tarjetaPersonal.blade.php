@@ -14,6 +14,13 @@
     <section aria-label="Sección informativa sobre la tarjeta personal">
         <h1 class="seccion-titulo">Tarjeta personal</h1>
         <div class="container">
+
+            @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+            @endif
+
             @if (session('success'))
                 <div class="alert alert-success" role="alert">
                     {{ session('success') }}

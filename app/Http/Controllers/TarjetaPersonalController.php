@@ -13,6 +13,9 @@ class TarjetaPersonalController extends Controller
         $tarjetas = TarjetaPersonal::all();
 
         if (auth()->check()) {
+            if (auth()->user()->isAdmin) { // Verifica si el usuario es administrador
+                return view('admin.tarjetaPersonal', ['tarjetas' => $tarjetas]);
+            }
             return view('usuarioLogged.tarjetaPersonal-logged', ['tarjetas' => $tarjetas]);
         } else {
             return view('usuarioNoRegistrado.tarjetaPersonal', ['tarjetas' => $tarjetas]);
@@ -26,7 +29,7 @@ class TarjetaPersonalController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
             'primer_apellido' => 'required|string|max:255',
             'segundo_apellido' => 'nullable|string|max:255',
@@ -34,18 +37,21 @@ class TarjetaPersonalController extends Controller
             'telefono' => 'required|string|max:15',
             'genero' => 'required|in:Hombre,Mujer,No binario,Privado',
             'fecha_nacimiento' => 'required|date',
-            'dni' => 'required|string|max:9'
+            'dni' => 'required|string|max:9|regex:/^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i'
         ]);
 
-        $tarjeta = new TarjetaPersonal($request->all());
+        // Validación del DNI
+        if (!$this->validarDNI($validatedData['dni'])) {
+            return redirect()->back()->withErrors(['dni' => 'DNI no válido. La letra de control no coincide.'])->withInput();
+        }
 
-        if (auth()->check()) {
-            $tarjeta->user_id = auth()->id();
+        $user = User::where('dni', $validatedData['dni'])->first();
+
+        if ($user) {
+            $tarjeta = new TarjetaPersonal($validatedData);
+            $tarjeta->user_id = $user->id;
         } else {
-            $user = User::where('dni', $request->dni)->first();
-            if ($user) {
-                $tarjeta->user_id = $user->id;
-            }
+            return redirect()->back()->withErrors(['dni' => 'Usuario con el DNI proporcionado no encontrado.'])->withInput();
         }
 
         $tarjeta->save();
@@ -65,7 +71,7 @@ class TarjetaPersonalController extends Controller
 
     public function update(Request $request, TarjetaPersonal $tarjetaPersonal)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
             'primer_apellido' => 'required|string|max:255',
             'segundo_apellido' => 'nullable|string|max:255',
@@ -75,7 +81,7 @@ class TarjetaPersonalController extends Controller
             'fecha_nacimiento' => 'required|date'
         ]);
 
-        $tarjetaPersonal->update($request->all());
+        $tarjetaPersonal->update($validatedData);
 
         return redirect()->route('tarjetaPersonal.index')->with('success', 'Tarjeta personal actualizada con éxito.');
     }
@@ -84,5 +90,13 @@ class TarjetaPersonalController extends Controller
     {
         $tarjetaPersonal->delete();
         return redirect()->route('tarjetaPersonal.index')->with('success', 'Tarjeta personal eliminada con éxito.');
+    }
+
+    private function validarDNI($dni)
+    {
+        $numero = substr($dni, 0, -1);
+        $letra = substr($dni, -1);
+        $letras = 'TRWAGMYFPDXBNJZSQVHLCKET';
+        return $letras[$numero % 23] === strtoupper($letra);
     }
 }

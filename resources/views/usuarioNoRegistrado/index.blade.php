@@ -56,7 +56,7 @@
 <!-- Sección de noticias -->
 <section class="seccion-actividades" aria-label="Sección de noticias">
     <h1 class="seccion-titulo" tabindex="0">Noticias</h1>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-0 mt-4">
+    <div class="flex">
         @foreach ($noticias as $noticia)
             <div class="col mb-4 mt-4">
                 <div class="card shadow-sm bg-blue h-100">

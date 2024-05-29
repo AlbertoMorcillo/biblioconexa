@@ -1,10 +1,9 @@
-@extends('layouts.general-logged')
+@extends('layouts.general')
 
 @section('title', 'Catálogo')
 
 @section('extra-css')
     <!-- Aquí puedes agregar CSS adicional específico de esta página si es necesario -->
-
 @endsection
 
 @section('extra-js')
@@ -30,76 +29,4 @@
     </form>
     <p class="search-instructions">Pulsa Enter o haz clic en la lupa para buscar</p>
 </section>
-
-
-    <section aria-label="Sección de novedades sobre libros" class="mt-3">
-
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-0">
-            <div class="col">
-                <div class="card shadow-sm">
-                    <a href="#" class="link-libros"
-                        aria-label="Información del libro que si aprietas te lleva al libro específico.">
-                        <img class="card-img-top" src="{{ asset('images/libros/sapiens.jpg') }}"
-                            alt="Imagen de la portada del libro" width="100%" height="225" />
-                        <div class="card-body">
-                            <h5 class="card-title titulo-libro" aria-label="Título del libro">Sapiens: De animales a dioses
-                            </h5>
-                            <p class="card-text nombre-autor" aria-label="Nombre del autor">Yuval Noah Harari</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <!-- <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-
-            <div class="col">
-                <div class="card shadow-sm">
-                    <a href="#" class="link-libros"
-                        aria-label="Información del libro que si aprietas te lleva al libro específico.">
-                        <img class="card-img-top" src="{{ asset('images/libros/murakami.jpg') }}"
-                            alt="Imagen de la portada del libro" width="100%" height="225" />
-                        <div class="card-body">
-                            <h5 class="card-title titulo-libro" aria-label="Título del libro">La ciudad y sus muros
-                                inciertos</h5>
-                            <p class="card-text nombre-autor" aria-label="Nombre del autor">Haruki Murakami</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <!-- <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-
-            <div class="col">
-                <div class="card shadow-sm">
-                    <a href="#" class="link-libros"
-                        aria-label="Información del libro que si aprietas te lleva al libro específico.">
-                        <img class="card-img-top" src="{{ asset('images/libros/yumi.jpg') }}"
-                            alt="Imagen de la portada del libro" width="100%" height="225" />
-                        <div class="card-body">
-                            <h5 class="card-title titulo-libro" aria-label="Título del libro">Yumi y el pintor de pesadillas
-                            </h5>
-                            <p class="card-text nombre-autor" aria-label="Nombre del autor">Brandon Sanderson</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <!-- <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </section>
 @endsection

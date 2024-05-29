@@ -41,7 +41,7 @@ Route::post('/tarjetaPersonal', [TarjetaPersonalController::class, 'store'])->na
 
 // Ruta para mostrar el detalle de una noticia
 Route::get('/noticias/{noticia}', [NoticiaController::class, 'show'])->name('noticias.show');
-
+Route::get('/catalogo', [OpenLibraryBooksController::class, 'search'])->name('search-books');
 // Ruta para mostrar el detalle de un evento
 Route::get('/eventos/{evento}', [EventoController::class, 'show'])->name('eventos.show');
 

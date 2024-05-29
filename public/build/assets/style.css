@@ -454,6 +454,13 @@ button:hover,
 }
 
 /* Estilos para las tarjetas de actividades */
+
+.seccion-actividades {
+    padding: 2rem;
+    background-color: #f5f5dc;
+    justify-content: center;
+}
+
 .card-actividad {
     width: 314px;
     height: 413px;
@@ -497,10 +504,7 @@ button:hover,
 }
 
 /* Estilos adicionales para la sección de actividades */
-.seccion-actividades {
-    padding: 2rem;
-    background-color: #f5f5dc;
-}
+
 
 /* Estilos para la sección de novedades */
 .card-noticias {

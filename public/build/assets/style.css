@@ -1111,3 +1111,9 @@ body.loading * {
     margin-bottom: 5px;
 }
 
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}

@@ -8,6 +8,7 @@
 
 @section('extra-js')
 <script defer src="{{ asset('js/redireccionarANoticias.js') }}"></script>
+<script defer src="{{ asset('js/redireccionarAEventos.js') }}"></script>
 @endsection
 
 @section('content')

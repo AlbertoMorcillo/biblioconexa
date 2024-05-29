@@ -13,7 +13,7 @@
                     <li><a class="dropdown-item" href="{{ route('admin.tarjetaPersonal') }}">Tarjeta personal</a></li>
                 </ul>
             </li>
-            <a href="{{ route('admin.actividades') }}" class="nav-link">Actividades</a>
+            <a href="{{ route('admin.eventos.index') }}" class="nav-link">Actividades</a>
             <a href="{{ route('admin.noticias.index') }}" class="nav-link">Noticias</a>
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" id="bibliotecaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

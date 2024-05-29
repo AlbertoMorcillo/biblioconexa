@@ -1,121 +1,44 @@
 @extends('layouts.general-logged')
 
-@section('title', 'Actividades')
-
-@section('extra-css')
-    <!-- Aquí puedes agregar CSS adicional específico de esta página si es necesario -->
-
-@endsection
-
-@section('extra-js')
-@endsection
+@section('title', 'Eventos')
 
 @section('content')
-    <section class="seccion-actividades" aria-label="Sección de noticias">
-        <h1 class="seccion-titulo">Actividades</h1>
-        <div class="filter-container mt-3 mb-5">
-            <label for="sort-order" class="filter-label">Ordenar por:</label>
-            <select id="sort-order" class="filter-select">
-                <option value="most-recent">Más recientes</option>
-                <option value="oldest">Más antiguas</option>
-                <!-- Añade más opciones de filtro si es necesario -->
-            </select>
-        </div>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-0">
-            <div class="col">
-                <div class="card card-actividad shadow-sm">
-                    <a href="#" class="link-libros" aria-label="Información de la actividad que si aprietas te lleva a la actividad específico.">
-                        <img class="card-actividad-img-top" src="{{ asset('images/actividades/lectura-conjunta-principito.jpg') }}" alt="Imagen de la actividad" />
-                        <div class="card-actividad-body">
-                            <h5 class="titulo-actividad" aria-label="Titulo de la actividad">¡Lectura conjunta de El Principito!</h5>
-                            <p class="horario-actividad" aria-label="Horario de la actividad">10:30</p>
-                            <p class="sala-actividad" aria-label="Sala de la actividad">Sala Cervantes</p>
+<section class="seccion-actividades" aria-label="Sección de actividades">
+    <h1 class="seccion-titulo" tabindex="0">Actividades y eventos</h1>
+    <div class="filter-container mb-4">
+        <form method="GET" action="{{ route('actividades.logged') }}">
+            <div class="form-group">
+                <label for="sort">Ordenar por:</label>
+                <select name="sort" id="sort" class="form-control">
+                    <option value="most-recent" {{ request('sort') == 'most-recent' ? 'selected' : '' }}>Más recientes</option>
+                    <option value="oldest" {{ request('sort') == 'oldest' ? 'selected' : '' }}>Más antiguas</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="search">Buscar:</label>
+                <input type="text" name="search" id="search" class="form-control" placeholder="Buscar actividades" value="{{ request('search') }}">
+            </div>
+            <button type="submit" class="btn button mt-4">Aplicar filtros</button>
+        </form>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-0 mt-4">
+        @foreach ($eventos as $evento)
+            <div class="col mb-4 mt-4">
+                <div class="card shadow-sm bg-blue h-100">
+                    <a href="{{ route('eventos.show', $evento->id) }}" class="link-libros" aria-label="Información del evento que si aprietas te lleva al evento específico.">
+                        <img class="card-img-top-eventos" src="{{ $evento->imagen ? asset('storage/' . $evento->imagen) : asset('images/admin/eventos.jpg') }}" alt="Imagen del evento" width="100%" height="225" />
+                        <div class="card-body">
+                            <h5 class="titulo-actividad" aria-label="Titulo del evento">{{ Str::limit($evento->titulo, 20) }}</h5>
+                            <p class="card-text">{{ Str::limit($evento->descripcion, 50) }}</p>
+                            <p class="card-text mb-1"><small class="text-muted">{{ $evento->fecha->format('d/m/Y H:i') }}</small></p>
                         </div>
                     </a>
                 </div>
             </div>
-            <div class="col">
-                <div class="card card-actividad shadow-sm">
-                    <a href="#" class="link-libros" aria-label="Información de la actividad que si aprietas te lleva a la actividad específico.">
-                        <img class="card-actividad-img-top" src="{{ asset('images/actividades/recomendaciones-iniciarte-literatura-japonesa.jpg') }}" alt="Imagen de la actividad" />
-                        <div class="card-actividad-body">
-                            <h5 class="titulo-actividad" aria-label="Titulo de la actividad">¡Introducción a la literatura japonesa!</h5>
-                            <p class="horario-actividad" aria-label="Horario de la actividad">15:00</p>
-                            <p class="sala-actividad" aria-label="Sala de la actividad">Sala Platón</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card card-actividad shadow-sm">
-                    <a href="#" class="link-libros" aria-label="Información de la actividad que si aprietas te lleva a la actividad específico.">
-                        <img class="card-actividad-img-top" src="{{ asset('images/actividades/aprende-escribir-libro.jpg') }}" alt="Imagen de la actividad" />
-                        <div class="card-actividad-body">
-                            <h5 class="titulo-actividad" aria-label="Titulo de la actividad">¡Aprende a escribir un libro!</h5>
-                            <p class="horario-actividad" aria-label="Horario de la actividad">16:00</p>
-                            <p class="sala-actividad" aria-label="Sala de la actividad">Sala Virgilio</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-0">
-            <div class="col">
-                <div class="card card-actividad shadow-sm">
-                    <a href="#" class="link-libros" aria-label="Información de la actividad que si aprietas te lleva a la actividad específico.">
-                        <img class="card-actividad-img-top" src="{{ asset('images/actividades/lectura-conjunta-principito.jpg') }}" alt="Imagen de la actividad" />
-                        <div class="card-actividad-body">
-                            <h5 class="titulo-actividad" aria-label="Titulo de la actividad">¡Lectura conjunta de El Principito!</h5>
-                            <p class="horario-actividad" aria-label="Horario de la actividad">10:30</p>
-                            <p class="sala-actividad" aria-label="Sala de la actividad">Sala Cervantes</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card card-actividad shadow-sm">
-                    <a href="#" class="link-libros" aria-label="Información de la actividad que si aprietas te lleva a la actividad específico.">
-                        <img class="card-actividad-img-top" src="{{ asset('images/actividades/recomendaciones-iniciarte-literatura-japonesa.jpg') }}" alt="Imagen de la actividad" />
-                        <div class="card-actividad-body">
-                            <h5 class="titulo-actividad" aria-label="Titulo de la actividad">¡Introducción a la literatura japonesa!</h5>
-                            <p class="horario-actividad" aria-label="Horario de la actividad">15:00</p>
-                            <p class="sala-actividad" aria-label="Sala de la actividad">Sala Platón</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card card-actividad shadow-sm">
-                    <a href="#" class="link-libros" aria-label="Información de la actividad que si aprietas te lleva a la actividad específico.">
-                        <img class="card-actividad-img-top" src="{{ asset('images/actividades/aprende-escribir-libro.jpg') }}" alt="Imagen de la actividad" />
-                        <div class="card-actividad-body">
-                            <h5 class="titulo-actividad" aria-label="Titulo de la actividad">¡Aprende a escribir un libro!</h5>
-                            <p class="horario-actividad" aria-label="Horario de la actividad">16:00</p>
-                            <p class="sala-actividad" aria-label="Sala de la actividad">Sala Virgilio</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-
-        <nav aria-label="Paginación para ver más noticias">
-            <ul class="pagination justify-content-center pagination-custom">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <!-- !Añadir que si el usuario esta en esa página que en la clase se ponga active -->
-                <li class="page-item">
-                    <a class="page-link" href="#">Siguiente</a>
-                </li>
-            </ul>
-        </nav>
-
-    </section>
+        @endforeach
+    </div>
+    <div class="pagination justify-content-center mt-4">
+        {{ $eventos->links() }}
+    </div>
+</section>
 @endsection

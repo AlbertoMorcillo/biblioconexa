@@ -119,4 +119,76 @@ class EventoController extends Controller
 
         return redirect()->route('admin.eventos.index')->with('success', 'Evento eliminado correctamente.');
     }
+
+    public function actividadesNoRegistrado(Request $request)
+    {
+        $query = Evento::query();
+
+        if ($request->filled('search')) {
+            $query->where('titulo', 'like', '%' . $request->search . '%')
+                  ->orWhere('descripcion', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('sort')) {
+            if ($request->sort == 'oldest') {
+                $query->orderBy('fecha', 'asc');
+            } else {
+                $query->orderBy('fecha', 'desc');
+            }
+        } else {
+            $query->orderBy('fecha', 'desc');
+        }
+
+        $eventos = $query->paginate(6);
+
+        return view('usuarioNoRegistrado.actividades', compact('eventos'));
+    }
+
+    public function actividadesLogged(Request $request)
+    {
+        $query = Evento::query();
+
+        if ($request->filled('search')) {
+            $query->where('titulo', 'like', '%' . $request->search . '%')
+                  ->orWhere('descripcion', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('sort')) {
+            if ($request->sort == 'oldest') {
+                $query->orderBy('fecha', 'asc');
+            } else {
+                $query->orderBy('fecha', 'desc');
+            }
+        } else {
+            $query->orderBy('fecha', 'desc');
+        }
+
+        $eventos = $query->paginate(6);
+
+        return view('usuarioLogged.actividades-logged', compact('eventos'));
+    }
+
+    public function adminActividades(Request $request)
+    {
+        $query = Evento::query();
+
+        if ($request->filled('search')) {
+            $query->where('titulo', 'like', '%' . $request->search . '%')
+                  ->orWhere('descripcion', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('sort')) {
+            if ($request->sort == 'oldest') {
+                $query->orderBy('fecha', 'asc');
+            } else {
+                $query->orderBy('fecha', 'desc');
+            }
+        } else {
+            $query->orderBy('fecha', 'desc');
+        }
+
+        $eventos = $query->paginate(6);
+
+        return view('admin.actividades', compact('eventos'));
+    }
 }

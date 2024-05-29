@@ -25,6 +25,7 @@ use App\Http\Controllers\{
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/noticias', [NoticiaController::class, 'noticias'])->name('noticias.index');
 Route::get('/eventos', [EventoController::class, 'index'])->name('eventos.index');
+Route::get('/actividades', [EventoController::class, 'actividadesNoRegistrado'])->name('actividades.noRegistrado');
 Route::view('/catalogo', 'usuarioNoRegistrado.catalogo')->name('catalogo');
 Route::view('/sobreNosotros', 'usuarioNoRegistrado.sobreNosotros')->name('sobreNosotros');
 Route::view('/horarioCalendario', 'usuarioNoRegistrado.horarioCalendario')->name('horarioCalendario');
@@ -56,6 +57,7 @@ Route::middleware('auth')->group(function () {
 // Routes for registered users
 Route::middleware('auth')->group(function () {
     Route::get('/index-logged', [HomeController::class, 'indexLogged'])->name('index-logged');
+    Route::get('/actividades-logged', [EventoController::class, 'actividadesLogged'])->name('actividades.logged');
 
     Route::resources([
         'users' => UserController::class,
@@ -106,6 +108,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::view('/admin/categorias', 'admin.categorias')->name('admin.categorias');
     Route::view('/admin/autores', 'admin.autores')->name('admin.autores');
     Route::view('/admin/actividades', 'admin.actividades')->name('admin.actividades');
+    Route::get('/admin/actividades', [EventoController::class, 'adminActividades'])->name('admin.actividades');
     Route::view('/admin/librosSugeridos', 'admin.librosSugeridos')->name('admin.librosSugeridos');
     Route::view('/admin/estanterias', 'admin.estanterias')->name('admin.estanterias');
     Route::view('/admin/tarjetaPersonal', 'admin.tarjetaPersonal')->name('admin.tarjetaPersonal');

@@ -53,7 +53,7 @@ class UserController extends Controller
             'name' => $request->name,
             'surname' => $request->surname,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make($request->password), // Encriptamos la contraseña
             'phone' => $request->phone,
             'birthdate' => $request->birthdate,
             'isAdmin' => $request->isAdmin,

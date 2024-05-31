@@ -1,4 +1,4 @@
-@extends('layouts.general')
+@extends('layouts.general-admin')
 
 @section('title', 'Catálogo')
 

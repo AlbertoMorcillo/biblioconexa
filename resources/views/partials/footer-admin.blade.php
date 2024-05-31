@@ -22,10 +22,12 @@
           </ul>
         </div>
         <div class="col-md-3 seccion-enlace" aria-label="Sección de enlaces de noticias y actividades">
-          <h5>Noticias y actividades</h5>
+          <h5>Gestion</h5>
           <ul class="nav flex-column">
+            <li class="nav-item mb-2"><a href="{{ route('admin.comentarios.index') }}" class="nav-link p-0">Comentarios</a></li>
             <li class="nav-item mb-2"><a href="{{ route('admin.noticias.index') }}" class="nav-link p-0">Noticias</a></li>
-            <li class="nav-item mb-2"><a href="{{ route('admin.actividades') }}" class="nav-link p-0">Actividades</a></li>
+            <li class="nav-item mb-2"><a href="{{ route('admin.eventos.index') }}" class="nav-link p-0">Actividades</a></li>
+            <li class="nav-item mb-2"><a href="{{ route('admin.usuarios.index') }}" class="nav-link p-0">Usuarios</a></li>
           </ul>
         </div>
         <div class="col-md-3 seccion-enlace" aria-label="Sección de enlaces de información sobre la biblioteca">

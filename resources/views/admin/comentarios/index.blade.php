@@ -28,7 +28,7 @@
 
     <form action="{{ route('admin.comentarios.index') }}" method="GET" class="mb-4">
         <div class="input-group">
-            <input type="text" name="search" class="form-control" placeholder="Buscar por usuario" value="{{ request('search') }}">
+            <input type="text" name="search" class="form-control" placeholder="Buscar por usuario" value="{{ request('search') }}" aria-label="Aquí puedes buscar comentarios poniendo el nombre del usuario">
             <button class="btn button" type="submit">Buscar</button>
         </div>
     </form>
@@ -81,7 +81,7 @@
                         @method('DELETE')
                     </form>
                     <button type="button" class="btn secondary-button" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn button-danger" id="confirmDeleteButton">Eliminar</button>
+                    <button type="button" class="btn danger-button" id="confirmDeleteButton">Eliminar</button>
                 </div>
             </div>
         </div>

@@ -72,6 +72,8 @@ class EventoController extends Controller
 
     public function edit(Evento $evento)
     {
+        $evento->hora = \Carbon\Carbon::parse($evento->hora)->format('H:i');
+
         return view('admin.eventos.edit', compact('evento'));
     }
 
@@ -92,7 +94,7 @@ class EventoController extends Controller
 
         $evento->titulo = $request->input('titulo');
         $evento->descripcion = $request->input('descripcion');
-        $evento->fecha = "$fecha $hora:00";
+        $evento->fecha = "$fecha $hora";
         $evento->hora = $hora;
         $evento->sala = $request->input('sala');
         $evento->UsuarioDNI = $request->input('UsuarioDNI');

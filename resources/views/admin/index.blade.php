@@ -12,7 +12,7 @@
 @section('content')
 <div class="banner">
     <div class="banner-text">
-        <h1 class="logo" aria-label="Nombre de la Biblioteca">BibloConexa - Panel de Administración</h1>
+        <h1 class="logo" aria-label="Nombre de la Biblioteca">BiblioConexa - Panel de Administración</h1>
     </div>
     <div class="banner-image">
         <img src="{{ asset('images/corpo/Tsundoku-cuando-en-las-estanterias-se-acumulan-docenas-de-libros-sin-leer.jpg') }}" alt="Imagen principal al lado del logo">
